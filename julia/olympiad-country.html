@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Olympiad Shelf · страноведение</title>
+<!-- Страноведение одной страницей: материалы открываются целиком и без изменений. -->
+<style>
+:root{--accent:#1e4d3b;--paper:#f5f0e6}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:var(--paper);font:15px/1.4 'Onest','Segoe UI',system-ui,sans-serif}
+.top{height:58px;display:flex;align-items:center;gap:6px;padding:0 20px;background:var(--accent);color:#fff}
+.top a,.top button{color:inherit;text-decoration:none;border:0;background:none;font:600 14.5px/1 inherit;font-family:inherit;padding:9px 14px;border-radius:999px;cursor:pointer;opacity:.78;white-space:nowrap}
+.top a:hover,.top button:hover{opacity:1;background:rgba(255,255,255,.1)}
+.top .brand{font:700 17px Georgia,serif;opacity:1;padding-left:0}
+.top .on{opacity:1;background:var(--paper);color:var(--accent)}
+.top .sep{width:1px;height:26px;background:rgba(255,255,255,.3);margin:0 10px}
+.top .ext{margin-left:auto;font-size:13px;font-weight:500}
+iframe{display:block;width:100%;height:calc(100vh - 58px);border:0;background:#fff}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="olympiad-hub-general.html">Olympiad Shelf</a>
+  <a href="olympiad-hub-general.html">Общая</a>
+  <a class="on" href="olympiad-country.html">Страноведение</a>
+  <span class="sep"></span>
+  <nav class="tabs" style="display:flex;gap:4px"></nav>
+  <a class="ext" target="_blank" rel="noopener">открыть отдельно ↗</a>
+</header>
+<iframe title="Материал"></iframe>
+<script>
+const TABS = [
+  ['world', 'The UK & the English-Speaking World', 'olympiad-english-speaking-world.html'],
+  ['lists', 'Справочник', 'olympiad-country-studies-lists.html'],
+  ['quest', 'Culture Quest', 'olympiad-culture-quest.html'],
+  ['usa', 'США · урок', 'usa-lesson.html'],
+  ['usahw', 'США · домашка', 'usa-homework.html'],
+];
+const nav = document.querySelector('.tabs'), frame = document.querySelector('iframe'), ext = document.querySelector('.ext');
+function open(id) {
+  const t = TABS.find(x => x[0] === id) || TABS[0];
+  if (!frame.src.endsWith(t[2])) frame.src = t[2];
+  ext.href = t[2];
+  nav.querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.id === t[0]));
+  history.replaceState(null, '', '#' + t[0]);
+  frame.focus();
+}
+TABS.forEach(([id, name]) => {
+  const b = document.createElement('button'); b.textContent = name; b.dataset.id = id;
+  b.onclick = () => open(id); nav.append(b);
+});
+open(location.hash.slice(1));
+frame.addEventListener('load', () => frame.focus());
+</script>
+</body>
+</html>
