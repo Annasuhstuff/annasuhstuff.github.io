@@ -39,6 +39,8 @@ a{color:#b86d00}
 .desk a.nav .sc{margin-left:auto;font:600 11px var(--mono);color:var(--desk-muted)}
 .desk a.nav.on .sc{color:#1a1300}
 .desk a.nav .sc.ok{color:#6fe0b0}
+.desk a.nav.send{background:#2a9fd8;color:#fff;margin-top:6px;font-weight:600}
+.desk a.nav.send:hover{background:#238bbd}
 
 /* ---------- stage ---------- */
 .stage{overflow:auto;position:relative}
@@ -215,7 +217,8 @@ function desk() {
    <h4>Lifehacks</h4>${HACKS.map(h => `<a class="nav ${cur === 'hack-' + h.id ? 'on' : ''}" href="#hack-${h.id}">${esc(h.title)}</a>`).join('')}
    <h4>Tasks</h4><a class="nav ${cur === 'tasks' ? 'on' : ''}" href="#tasks">All tasks · filters</a>
    ${[1, 2, 3].map(l => `<h4 style="color:${LV[l][2]}">${LV[l][0]} · ${LV[l][1]}</h4>` + TASKS.filter(t => t.level === l).map(t => `<a class="nav ${cur === 't-' + t.id ? 'on' : ''}" href="#t-${t.id}"><span class="lv" style="background:${LV[l][2]}"></span>${esc(t.title)}${scoreTag(t)}</a>`).join('')).join('')}
-   <h4>Results</h4><a class="nav ${cur === 'results' ? 'on' : ''}" href="#results">My results</a>`;
+   <h4>Results</h4><a class="nav ${cur === 'results' ? 'on' : ''}" href="#results">My results</a><a class="nav send" href="#results" data-quicksend>📨 Send results to Anya</a>`;
+  const q = d.querySelector('[data-quicksend]'); q.onclick = e => { e.preventDefault(); sendSummary(); };
   const on = d.querySelector('.nav.on'); if (on) on.scrollIntoView({block: 'nearest'});
 }
 
@@ -360,15 +363,17 @@ function actions(t, d) {
   const act = $('.actions'), after = $('.after');
   if (!d.checked) {
     const answered = t.parts.reduce((s, p, pi) => s + (p.t === 'multi' ? (d.a[pi] || []).length : Object.values(d.a[pi] || {}).filter(x => x !== undefined && x !== '').length), 0);
-    act.innerHTML = `<button class="btn amber" data-check>Check answers</button><span class="muted">answered ${answered} · empty answers count as wrong, so always guess</span>`;
+    act.innerHTML = `<button class="btn amber" data-check>Check answers</button><button class="btn tg" data-checksend>📨 Check &amp; send to Anya</button><span class="muted">answered ${answered} · empty answers count as wrong, so always guess</span>`;
     after.innerHTML = `<details class="hack"><summary><b class="k" style="display:inline">Lifehack for this task</b> — open it only if you are stuck</summary><p style="margin:8px 0 0">${esc(t.hack)}</p></details>`;
-    $('[data-check]').onclick = () => {
+    const doCheck = () => {
       d.checked = true; d.mode = ST.mode;
       const s = score(t, d), prev = ST.res[t.id];
       ST.res[t.id] = {score: s, max: t.max, mode: ST.mode, date: new Date().toISOString(), best: Math.max(s, prev ? prev.best || prev.score : 0)};
       save(); drawParts(t, d); desk();
       $('.result') && $('.result').scrollIntoView({behavior: 'smooth', block: 'center'});
     };
+    $('[data-check]').onclick = doCheck;
+    $('[data-checksend]').onclick = () => { doCheck(); send(report(t, d)); const b = $('[data-send]'); if (b) b.textContent = '📨 Sent? Send again'; };
     return;
   }
   const s = score(t, d), pct = s / t.max;
@@ -421,13 +426,15 @@ function results() {
     <div class="actions"><button class="btn tg" data-sendall ${done.length ? '' : 'disabled'}>📨 Send the summary to Anya</button><button class="btn ghost" data-reset>Reset all results</button></div>` + navBtns();
 }
 function bindResults() {
-  const b = $('[data-sendall]'); if (b) b.onclick = () => {
+  const b = $('[data-sendall]'); if (b) b.onclick = sendSummary;
+  $('[data-reset]').onclick = () => { if (confirm('Erase all your listening results and answers?')) { ST.res = {}; ST.drafts = {}; save(); render(); } };
+}
+function sendSummary() {
     const done = TASKS.filter(t => ST.res[t.id]);
+    if (!done.length) { alert('Do at least one task first — press “Check answers”, then send.'); return; }
     const lines = [`🎧 Listening Lab · ${STUDENT} · summary`, `${done.length}/${TASKS.length} tasks done`, ''];
     [1, 2, 3].forEach(l => { const ts = done.filter(t => t.level === l); if (!ts.length) return; lines.push(`${LV[l][0]} · ${LV[l][1]}`); ts.forEach(t => { const r = ST.res[t.id]; lines.push(`${r.best === t.max ? '✅' : r.best / t.max >= .6 ? '🟡' : '❌'} ${t.title} (${t.region} ${t.year}) — best ${r.best}/${t.max}`); }); lines.push(''); });
     send(lines.join('\n'));
-  };
-  $('[data-reset]').onclick = () => { if (confirm('Erase all your listening results and answers?')) { ST.res = {}; ST.drafts = {}; save(); render(); } };
 }
 
 go(location.hash.slice(1) || 'start');
