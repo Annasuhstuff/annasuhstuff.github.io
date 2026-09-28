@@ -1,0 +1,990 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Discovering the USA — States, Cities &amp; Country Studies (B2)</title>
+<style>
+  :root {
+    --paper:   #FAF6FB;
+    --surface: #FFFFFF;
+    --ink:     #443F58;
+    --ink-soft:#7A7391;
+    --ink-faint:#ABA4BE;
+    --line:    #ECE4F1;
+
+    --c-connect:  #8A6FD1;  --c-connect-t:  #EFEAFB;
+    --c-remember: #2FA48C;  --c-remember-t: #E2F4EF;
+    --c-olympiad: #D0669B;  --c-olympiad-t: #FBE6F1;
+
+    --good:#2FA47F; --good-t:#E3F5EE;
+    --bad: #DE7189; --bad-t: #FBE7EC;
+
+    --marker: rgba(255,221,140,.62);
+    --shadow: 0 1px 2px rgba(90,70,120,.05), 0 10px 30px rgba(120,90,160,.09);
+
+    --accent: var(--c-connect);
+    --accent-tint: var(--c-connect-t);
+
+    --font-display: "Trebuchet MS", ui-rounded, "SF Pro Rounded", "Segoe UI", system-ui, sans-serif;
+    --font-body: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:#201B2B; --surface:#2A2438; --ink:#EDE7F5; --ink-soft:#B7AECB; --ink-faint:#837a97; --line:#392F4C;
+      --c-connect:#B7A2F0; --c-connect-t:rgba(150,120,225,.17);
+      --c-remember:#5FD0B6; --c-remember-t:rgba(80,200,170,.15);
+      --c-olympiad:#F09BC4; --c-olympiad-t:rgba(230,120,175,.16);
+      --good:#5FCB9E; --good-t:rgba(60,180,130,.16); --bad:#F090A2; --bad-t:rgba(224,116,138,.16);
+      --marker:rgba(255,220,150,.24);
+      --shadow:0 1px 2px rgba(0,0,0,.3), 0 12px 34px rgba(0,0,0,.42);
+    }
+  }
+  :root[data-theme="light"]{
+    --paper:#FAF6FB; --surface:#FFFFFF; --ink:#443F58; --ink-soft:#7A7391; --ink-faint:#ABA4BE; --line:#ECE4F1;
+    --c-connect:#8A6FD1; --c-connect-t:#EFEAFB; --c-remember:#2FA48C; --c-remember-t:#E2F4EF; --c-olympiad:#D0669B; --c-olympiad-t:#FBE6F1;
+    --good:#2FA47F; --good-t:#E3F5EE; --bad:#DE7189; --bad-t:#FBE7EC; --marker:rgba(255,221,140,.62);
+    --shadow:0 1px 2px rgba(90,70,120,.05),0 10px 30px rgba(120,90,160,.09);
+  }
+  :root[data-theme="dark"]{
+    --paper:#201B2B; --surface:#2A2438; --ink:#EDE7F5; --ink-soft:#B7AECB; --ink-faint:#837a97; --line:#392F4C;
+    --c-connect:#B7A2F0; --c-connect-t:rgba(150,120,225,.17); --c-remember:#5FD0B6; --c-remember-t:rgba(80,200,170,.15);
+    --c-olympiad:#F09BC4; --c-olympiad-t:rgba(230,120,175,.16); --good:#5FCB9E; --good-t:rgba(60,180,130,.16);
+    --bad:#F090A2; --bad-t:rgba(224,116,138,.16); --marker:rgba(255,220,150,.24);
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 34px rgba(0,0,0,.42);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; }
+  body {
+    background: radial-gradient(1100px 600px at 100% -10%, var(--c-olympiad-t), transparent 60%), var(--paper);
+    color: var(--ink); font-family: var(--font-body); line-height: 1.5;
+    -webkit-font-smoothing: antialiased; overflow: hidden;
+  }
+  .deck { position: relative; height: 100dvh; width: 100%; }
+
+  .topbar { position: fixed; top:0; left:0; right:0; z-index:30; display:flex; align-items:center; gap:.9rem;
+    padding:.7rem clamp(.9rem,3vw,2rem); background: color-mix(in srgb, var(--paper) 84%, transparent);
+    backdrop-filter: blur(8px); border-bottom:1px solid var(--line); }
+  .brand { display:flex; align-items:baseline; gap:.5rem; font-size:.82rem; white-space:nowrap; }
+  .brand b { font-family: var(--font-display); font-weight:700; font-size:.98rem; }
+  .brand .lvl { font-family: var(--font-mono); font-size:.66rem; letter-spacing:.08em; color: var(--c-olympiad);
+    background: var(--c-olympiad-t); border-radius:999px; padding:.14rem .5rem; }
+  .progress { flex:1; height:6px; background: var(--line); border-radius:999px; overflow:hidden; min-width:40px; }
+  .progress > i { display:block; height:100%; width:0; border-radius:999px;
+    background: linear-gradient(90deg, var(--c-connect), var(--c-remember), var(--c-olympiad)); transition: width .35s ease; }
+  .counter { font-family: var(--font-mono); font-size:.74rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; white-space:nowrap; }
+
+  .slide { position:absolute; inset:0; display:flex; flex-direction:column;
+    padding: clamp(3.2rem,6.5vh,4.4rem) clamp(1rem,4vw,3rem) clamp(3.6rem,7vh,4.4rem);
+    opacity:0; visibility:hidden; transform: translateY(10px);
+    transition: opacity .4s ease, transform .4s ease, visibility .4s; overflow:hidden; }
+  .slide.active { opacity:1; visibility:visible; transform:none; }
+  .inner { width:100%; max-width:62rem; margin:auto; max-height:100%; overflow-y:auto; overflow-x:hidden; padding:.2rem; scrollbar-width:thin; }
+
+  .eyebrow { display:inline-flex; align-items:center; gap:.5rem; font-family: var(--font-mono); font-size:.72rem; font-weight:600;
+    letter-spacing:.12em; text-transform:uppercase; color: var(--accent); margin:0 0 .9rem; }
+  .eyebrow .num { color: var(--ink-faint); }
+  .eyebrow .dot { width:7px; height:7px; border-radius:50%; background: var(--accent); }
+  .eyebrow .time { color: var(--ink-faint); font-weight:500; }
+
+  h1,h2,h3 { font-family: var(--font-display); font-weight:700; text-wrap:balance; margin:0; line-height:1.14; }
+  h1 { font-size: clamp(2rem,6vw,3.4rem); }
+  h2 { font-size: clamp(1.4rem,3.8vw,2.3rem); margin-bottom:.4rem; }
+  h3 { font-size:1.02rem; }
+  .lead { color: var(--ink-soft); font-size: clamp(1rem,2.2vw,1.15rem); max-width:48ch; margin:.8rem 0 0; }
+  .instr { color: var(--ink-soft); font-size:.92rem; margin:.5rem 0 0; }
+  p { margin:.55rem 0; }
+  .hl { background: linear-gradient(180deg, transparent 56%, var(--marker) 56% 92%, transparent 92%); padding:0 .08em; border-radius:3px; }
+  .en-note { color: var(--ink-faint); font-style: italic; font-size:.9em; }
+
+  .title-kicker { font-family: var(--font-mono); font-size:.78rem; letter-spacing:.18em; text-transform:uppercase; color: var(--c-olympiad); }
+  .title-meta { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1.6rem; }
+  .chip { font-size:.82rem; padding:.4rem .8rem; border-radius:999px; border:1px solid var(--line); background: var(--surface); color: var(--ink-soft); box-shadow: var(--shadow); }
+
+  .slide--statement { align-items:center; text-align:center; }
+  .slide--statement .inner { text-align:center; display:flex; flex-direction:column; align-items:center; }
+  .slide--statement h2 { font-size: clamp(1.9rem,6vw,3.4rem); }
+  .big-badge { font-family: var(--font-mono); font-size:.74rem; letter-spacing:.14em; text-transform:uppercase; color: var(--accent);
+    background: var(--accent-tint); padding:.42rem .95rem; border-radius:999px; margin-bottom:1.3rem; }
+
+  .q-list { list-style:none; margin:1.2rem 0 0; padding:0; display:grid; gap:.6rem; }
+  .q-list li { display:flex; gap:.75rem; align-items:flex-start; background: var(--surface); border:1px solid var(--line);
+    border-radius:16px; padding:.75rem .95rem; box-shadow: var(--shadow); font-size:1.02rem; }
+  .q-list li::before { content: attr(data-n); flex:none; font-family: var(--font-mono); font-size:.72rem; font-weight:700;
+    color: var(--accent); background: var(--accent-tint); width:1.55rem; height:1.55rem; border-radius:9px; display:grid; place-items:center; margin-top:.08rem; }
+  .notes { width:100%; margin-top:1rem; min-height:4.4rem; resize:vertical; font:inherit; color: var(--ink);
+    background: var(--surface); border:1px dashed color-mix(in srgb, var(--accent) 45%, var(--line)); border-radius:14px; padding:.7rem .9rem; box-shadow: var(--shadow); }
+  .notes::placeholder { color: var(--ink-faint); }
+
+  .grid { display:grid; gap:.75rem; margin-top:1.1rem; }
+  .g2 { grid-template-columns: repeat(2,1fr); }
+  .g3 { grid-template-columns: repeat(3,1fr); }
+  @media (max-width:680px){ .g2,.g3 { grid-template-columns:1fr; } }
+  .card { background: var(--surface); border:1px solid var(--line); border-radius:18px; padding:1rem 1.1rem; box-shadow: var(--shadow); }
+  .card h3 { display:flex; align-items:center; gap:.5rem; margin-bottom:.5rem; font-family: var(--font-body); font-weight:700;
+    font-size:.76rem; text-transform:uppercase; letter-spacing:.07em; color: var(--accent); }
+  .card ul { margin:0; padding-left:1.1rem; }
+  .card li { margin:.28rem 0; }
+  .card .ex { font-family: var(--font-display); font-style: italic; }
+  .chips { display:flex; flex-wrap:wrap; gap:.4rem; margin-top:.6rem; }
+  .chips .sig { font-family: var(--font-mono); font-size:.72rem; padding:.2rem .55rem; border-radius:8px;
+    background: var(--accent-tint); color: var(--accent); }
+  .prompt-bank { margin-top:.9rem; padding:.75rem 1rem; border-left:3px solid var(--accent); background: var(--accent-tint); border-radius:0 12px 12px 0; font-size:.96rem; }
+  .prompt-bank b { color: var(--accent); }
+  .trap { margin-top:.9rem; padding:.75rem 1rem; border-left:3px solid var(--bad); background: var(--bad-t); border-radius:0 12px 12px 0; font-size:.96rem; }
+  .trap b { color: var(--bad); }
+  .trap .arw { font-family: var(--font-mono); }
+
+  /* Gap-fill exercises */
+  .exset { list-style:none; margin:1rem 0 0; padding:0; display:grid; gap:.55rem; }
+  .exq { background: var(--surface); border:1px solid var(--line); border-radius:14px; padding:.6rem .85rem;
+    box-shadow: var(--shadow); display:flex; align-items:center; justify-content:space-between; gap:.7rem; flex-wrap:wrap; }
+  .exq .q { font-size:1.02rem; line-height:1.9; }
+  .exq .q em { color: var(--ink-faint); font-style: italic; font-family: var(--font-mono); font-size:.82em; }
+  .gap { font:inherit; color: var(--ink); background: var(--accent-tint); border:none; border-bottom:2px solid var(--accent);
+    border-radius:8px 8px 3px 3px; padding:.12rem .5rem; width:8rem; max-width:60vw; text-align:center; }
+  .gap.w-lg { width:12rem; }
+  .gap.gap-s { width:6rem; }
+  .gap:focus { outline:none; box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent); }
+  .gap.ok { border-color: var(--good); background: var(--good-t); color: var(--ink); }
+  .gap.no { border-color: var(--bad); background: var(--bad-t); }
+  .v { font-family: var(--font-mono); font-size:.82rem; font-weight:700; min-width:1.5rem; white-space:nowrap; }
+  .v.good { color: var(--good); }
+  .v.bad { color: var(--bad); }
+
+  /* Open cloze paragraph */
+  .cloze { background: var(--surface); border:1px solid var(--line); border-radius:16px; padding:1rem 1.2rem;
+    box-shadow: var(--shadow); line-height: 2.5; font-size:1.05rem; margin-top:1rem; }
+  .cloze .cz { display:inline; }
+  .cloze .cz .num { font-family: var(--font-mono); font-size:.68rem; color: var(--accent); vertical-align:super; margin-right:.1rem; }
+
+  /* Multiple choice */
+  .mcset { list-style:none; margin:1rem 0 0; padding:0; display:grid; gap:.7rem; }
+  .mcq { background: var(--surface); border:1px solid var(--line); border-radius:14px; padding:.75rem .95rem; box-shadow: var(--shadow); }
+  .mcq .q { font-size:1.02rem; font-weight:600; margin-bottom:.55rem; }
+  .opts { display:grid; gap:.4rem; grid-template-columns: repeat(2,1fr); }
+  @media (max-width:600px){ .opts { grid-template-columns:1fr; } }
+  .opt { text-align:left; font:inherit; font-size:.96rem; cursor:pointer; background: var(--paper); color: var(--ink);
+    border:1px solid var(--line); border-radius:10px; padding:.45rem .7rem; transition: border-color .15s, background .15s; }
+  .opt:hover { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
+  .opt.sel { border-color: var(--accent); background: var(--accent-tint); }
+  .opt.correct { border-color: var(--good); background: var(--good-t); color: var(--ink); font-weight:700; }
+  .opt.wrong { border-color: var(--bad); background: var(--bad-t); }
+
+  /* Reading text */
+  .reading { background: var(--surface); border:1px solid var(--line); border-radius:16px; padding:1rem 1.2rem;
+    box-shadow: var(--shadow); font-size:1rem; line-height:1.7; margin-top:.6rem; max-height:34vh; overflow-y:auto; }
+  .reading p { margin:.4rem 0; }
+
+  .extools { display:flex; flex-wrap:wrap; align-items:center; gap:.5rem; margin-top:1rem; }
+  .extools button { font:inherit; font-size:.82rem; cursor:pointer; border-radius:999px; padding:.4rem .95rem; box-shadow: var(--shadow); }
+  .extools .check { background: var(--accent); color:#fff; border:1px solid var(--accent); }
+  .extools .show, .extools .clear { background: var(--surface); color: var(--ink-soft); border:1px solid var(--line); }
+  .extools button:hover { filter: brightness(1.03); }
+  .extools .score { font-family: var(--font-mono); font-size:.82rem; font-weight:700; color: var(--accent); margin-left:.2rem; }
+
+  .steps { list-style:none; margin:1.1rem 0 0; padding:0; display:grid; gap:.55rem; }
+  .steps li { display:flex; gap:.85rem; align-items:flex-start; }
+  .steps .st-n { flex:none; width:1.9rem; height:1.9rem; border-radius:50%; background: var(--accent); color:#fff; display:grid; place-items:center; font-family: var(--font-mono); font-weight:700; font-size:.85rem; }
+  .steps .st-b { background: var(--surface); border:1px solid var(--line); border-radius:12px; padding:.55rem .85rem; flex:1; box-shadow: var(--shadow); }
+  .steps .st-b b { color: var(--accent); }
+
+  /* ===== USA add-ons: interactive map, city chips, video ===== */
+  .maphint { color: var(--ink-soft); font-size:.92rem; margin:.35rem 0 0; }
+  .mapgrid { display:grid; grid-template-columns: minmax(0,1.25fr) minmax(0,1fr); gap:1.1rem; align-items:start; margin-top:1rem; }
+  @media (max-width:760px){ .mapgrid { grid-template-columns:1fr; } }
+  .tilemap { display:grid; grid-template-columns: repeat(11, 1fr); gap:4px; }
+  .tile { font-family: var(--font-mono); font-size: clamp(.48rem,1.35vw,.72rem); font-weight:700; aspect-ratio:1/1;
+    border:1px solid transparent; border-radius:6px; cursor:pointer; color: var(--ink); display:grid; place-items:center; padding:0;
+    transition: transform .1s, box-shadow .1s; }
+  .tile:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+  .tile.on { outline:2px solid var(--accent); box-shadow:0 0 0 3px var(--accent-tint); transform: translateY(-2px); z-index:2; }
+  .region-west  { background: var(--c-connect-t);  color: var(--c-connect); }
+  .region-mw    { background: var(--c-remember-t); color: var(--c-remember); }
+  .region-south { background: var(--c-olympiad-t); color: var(--c-olympiad); }
+  .region-ne    { background: var(--good-t);       color: var(--good); }
+  .tile.dc { background: var(--bad-t); color: var(--bad); }
+  .maplegend { display:flex; flex-wrap:wrap; gap:.5rem 1rem; margin-top:.6rem; font-size:.72rem; color: var(--ink-soft); }
+  .maplegend span { display:inline-flex; align-items:center; gap:.35rem; }
+  .maplegend i { width:12px; height:12px; border-radius:4px; display:inline-block; }
+
+  .citybar { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1rem; }
+  .citychip { font:inherit; font-size:.92rem; font-weight:600; cursor:pointer; border:1px solid var(--line); background: var(--surface);
+    color: var(--ink); border-radius:999px; padding:.45rem .95rem; box-shadow: var(--shadow); transition: border-color .12s, background .12s; }
+  .citychip:hover { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
+  .citychip.on { background: var(--accent); color:#fff; border-color: var(--accent); }
+
+  .factbox { margin-top:.9rem; background: var(--surface); border:1px solid var(--line); border-left:4px solid var(--accent);
+    border-radius:14px; padding:.9rem 1.1rem; box-shadow: var(--shadow); min-height:5rem; }
+  .factbox .fb-name { font-family: var(--font-display); font-weight:700; font-size:1.18rem; color: var(--accent); line-height:1.2; }
+  .factbox .fb-cap { font-size:.9rem; color: var(--ink-soft); margin:.25rem 0; }
+  .factbox .fb-fact { font-size:1rem; margin-top:.15rem; }
+  .factbox .fb-hint { color: var(--ink-faint); font-size:.96rem; }
+
+  .videowrap { max-width:44rem; margin:1rem auto 0; }
+  .video16 { position:relative; width:100%; padding-top:56.25%; border-radius:16px; overflow:hidden; box-shadow: var(--shadow); border:1px solid var(--line); background:#000; }
+  .video16 iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
+  .videometa { display:flex; flex-wrap:wrap; gap:.4rem .9rem; align-items:center; justify-content:space-between; margin-top:.55rem; font-size:.85rem; color: var(--ink-soft); }
+  .videometa a { color: var(--accent); font-weight:600; text-decoration:none; }
+  .videometa a:hover { text-decoration:underline; }
+  .watchfor { margin-top:.85rem; padding:.7rem 1rem; border-left:3px solid var(--accent); background: var(--accent-tint); border-radius:0 12px 12px 0; font-size:.95rem; }
+  .watchfor b { color: var(--accent); }
+  .watchfor ul { margin:.35rem 0 0; padding-left:1.1rem; }
+  .watchfor li { margin:.15rem 0; }
+
+  .nav { position: fixed; bottom:0; left:0; right:0; z-index:30; display:flex; align-items:center; justify-content:space-between; gap:1rem;
+    padding:.65rem clamp(.9rem,3vw,2rem); background: color-mix(in srgb, var(--paper) 84%, transparent); backdrop-filter: blur(8px); border-top:1px solid var(--line); }
+  .phase-label { font-family: var(--font-mono); font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; color: var(--ink-soft); }
+  .phase-label .pd { display:inline-block; width:9px; height:9px; border-radius:50%; background: var(--accent); margin-right:.45rem; vertical-align:middle; }
+  .nav-btns { display:flex; gap:.5rem; }
+  .nav button { font:inherit; font-size:.85rem; cursor:pointer; background: var(--surface); color: var(--ink); border:1px solid var(--line);
+    border-radius:11px; padding:.45rem .95rem; box-shadow: var(--shadow); }
+  .nav button:hover:not(:disabled) { border-color: color-mix(in srgb, var(--accent) 50%, var(--line)); color: var(--accent); }
+  .nav button:disabled { opacity:.4; cursor:default; }
+  .nav .kbd-hint { font-family: var(--font-mono); font-size:.66rem; color: var(--ink-faint); }
+  @media (max-width:560px){ .nav .kbd-hint { display:none; } }
+
+  :focus-visible { outline:2px solid var(--accent); outline-offset:2px; border-radius:6px; }
+
+  .phase-connect  { --accent: var(--c-connect);  --accent-tint: var(--c-connect-t); }
+  .phase-remember { --accent: var(--c-remember); --accent-tint: var(--c-remember-t); }
+  .phase-olympiad { --accent: var(--c-olympiad); --accent-tint: var(--c-olympiad-t); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .slide { transition: opacity .01s; transform:none; }
+    .progress > i { transition:none; }
+  }
+</style>
+</head>
+<body>
+<div class="deck">
+  <div class="topbar">
+    <div class="brand"><b>Discovering the USA 🇺🇸</b><span class="lvl">B2 · Country studies</span></div>
+    <div class="progress"><i id="bar"></i></div>
+    <div class="counter"><span id="cur">1</span> / <span id="total">0</span></div>
+  </div>
+
+  <!-- 1 TITLE -->
+  <section class="slide phase-remember active" data-phase="USA">
+    <div class="inner">
+      <div class="title-kicker">Country studies · лингвострановедение · 90 min</div>
+      <h1 style="margin-top:.7rem">The United <span class="hl">States</span> of America 🦅</h1>
+      <p class="lead">One country, fifty states, three time zones and almost every landscape on Earth. Today we explore its <b>territory, nature, animals, states and big cities</b> — and turn it into easy olympiad points.</p>
+      <div class="title-meta">
+        <span class="chip">🗣️ Speaking warm-up</span>
+        <span class="chip">🌎 Territory &amp; nature</span>
+        <span class="chip">🐻 Animals</span>
+        <span class="chip">🗺️ 50 states (click the map!)</span>
+        <span class="chip">🏙️ Big cities</span>
+        <span class="chip">🗽 Symbols &amp; culture</span>
+        <span class="chip">🏆 Olympiad test</span>
+      </div>
+      <p class="instr" style="margin-top:1.4rem">▶ Use the <b>arrow keys</b> (or the buttons below) to move. In every task: type or click your answer, then press <b>Check ✓</b>.</p>
+    </div>
+  </section>
+
+  <!-- 2 SPEAKING WARM-UP -->
+  <section class="slide phase-connect" data-phase="Warm-up">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">02</span><span class="dot"></span> Speaking · Warm-up <span class="time">· ~8 min</span></div>
+      <h2>What do you know about <span class="hl">America</span>? 🗣️</h2>
+      <p class="instr">Before we learn anything new — <b>you talk</b>. Try to speak for 2–3 minutes. Use the prompts and give as many facts as you can. There are no wrong answers here!</p>
+      <ul class="q-list">
+        <li data-n="1"><span>When you hear <b>"the USA"</b>, what are the <b>first three things</b> that come into your mind?</span></li>
+        <li data-n="2"><span>Which <b>American cities</b> can you name? Which one would you most like to visit, and why?</span></li>
+        <li data-n="3"><span>What do you know about American <b>nature</b> — mountains, rivers, deserts, national parks?</span></li>
+        <li data-n="4"><span>Name some famous <b>American people</b> (actors, singers, sportspeople, presidents).</span></li>
+        <li data-n="5"><span>American <b>food, films, music, sport</b> — what is popular? What have you tried or watched?</span></li>
+        <li data-n="6"><span>Have you (or your family) ever <b>been to the USA</b>? Would you like to? Why / why not?</span></li>
+      </ul>
+      <textarea class="notes" placeholder="✍️ Jot down key words as you speak (or let your teacher note your best ideas here)…"></textarea>
+    </div>
+  </section>
+
+  <!-- 3 GUESS: TRUE OR FALSE -->
+  <section class="slide phase-connect" data-phase="Warm-up">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">03</span><span class="dot"></span> Speaking · Guess before you know</div>
+      <h2>True or false? Guess first! 🤔</h2>
+      <p class="instr">Say <b>True</b> or <b>False</b> out loud and give a reason — <em>"I think it's… because…"</em>. Then press <b>Check</b> to see how much you already know.</p>
+      <ul class="mcset">
+        <li class="mcq" data-c="0"><div class="q">1. The USA has <b>no official language</b> at the national level.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">2. Washington, D.C. is <b>one of the 50 states</b>.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">3. <b>Alaska</b> is the largest US state by area.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">4. <b>New York</b> is the capital of the USA.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">5. More than <b>300 million people</b> live in the USA.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">6. The <b>White House</b> is in New York City.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button></div></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+      <p class="instr">🔎 We'll come back to every one of these facts in the lesson — see how many you can turn from a guess into knowledge.</p>
+    </div>
+  </section>
+
+  <!-- 4 VIDEO 1: USA IN 5 MINUTES -->
+  <section class="slide phase-connect" data-phase="Warm-up">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">04</span><span class="dot"></span> Watch · The USA in five minutes 📺</div>
+      <h2>A quick tour of the USA</h2>
+      <div class="videowrap">
+        <div class="video16">
+          <iframe src="https://www.youtube-nocookie.com/embed/atZvLpk2NgM?rel=0" title="USA Facts for Kids — American Culture in 5 minutes" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="videometa">
+          <span>🎬 "USA Facts — American Culture in 5 minutes" · Happy Okapi</span>
+          <a href="https://www.youtube.com/watch?v=atZvLpk2NgM" target="_blank" rel="noopener">Open on YouTube ↗</a>
+        </div>
+      </div>
+      <div class="watchfor"><b>👂 Watch and listen for →</b>
+        <ul>
+          <li>What is the <b>capital</b> of the USA?</li>
+          <li>Name <b>two</b> things the country is famous for.</li>
+          <li>Which <b>foods</b> are mentioned?</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 FAST FACTS -->
+  <section class="slide phase-remember" data-phase="Discover">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">05</span><span class="dot"></span> Discover · The basics</div>
+      <h2>USA — the fast facts</h2>
+      <div class="grid g2">
+        <div class="card"><h3>Country &amp; state</h3>
+          <ul>
+            <li>Full name: <b>the United States of America</b> (the USA / the US / the States)</li>
+            <li>Capital: <b>Washington, D.C.</b> · Currency: <b>the US dollar ($)</b></li>
+            <li><b>50 states</b> + the federal district of <b>Washington, D.C.</b></li>
+            <li>Population: about <b>335 million</b> (3rd largest in the world)</li>
+            <li>Language: English — but there is <b>no official language</b> in law</li>
+          </ul>
+        </div>
+        <div class="card"><h3>Symbols &amp; history</h3>
+          <ul>
+            <li>Flag: the <b>Stars and Stripes</b> — <b>50 stars</b> (states) + <b>13 stripes</b> (first colonies)</li>
+            <li>First president: <b>George Washington</b></li>
+            <li>Independence Day: <b>4 July 1776</b> (from Britain)</li>
+            <li>National bird: the <b>bald eagle</b> 🦅</li>
+            <li>Motto: <em>"In God We Trust"</em> · nickname: <em>"the Land of the Free"</em></li>
+          </ul>
+        </div>
+      </div>
+      <div class="trap"><b>⚠️ Classic olympiad trap <span class="arw">→</span></b> the <b>biggest city</b> is <b>New York</b>, but the <b>capital</b> is <b>Washington, D.C.</b> And D.C. (the District of Columbia) is <b>not a state</b>!</div>
+    </div>
+  </section>
+
+  <!-- 6 TERRITORY & GEOGRAPHY -->
+  <section class="slide phase-remember" data-phase="Discover">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">06</span><span class="dot"></span> Discover · Territory</div>
+      <h2>A country the size of a continent 🌎</h2>
+      <div class="grid g2">
+        <div class="card"><h3>Size &amp; position</h3>
+          <ul>
+            <li>One of the <b>largest countries</b> on Earth (about <b>9.8 million km²</b>)</li>
+            <li>Washed by <b>two oceans</b>: the <b>Atlantic</b> (east) and the <b>Pacific</b> (west)</li>
+            <li>Neighbours: <b>Canada</b> to the north, <b>Mexico</b> to the south</li>
+            <li><b>Alaska</b> and <b>Hawaii</b> are separated from the other 48 states</li>
+            <li>So wide it has <b>6 time zones</b> — when New York wakes up, Los Angeles is still asleep</li>
+          </ul>
+        </div>
+        <div class="card"><h3>Four regions</h3>
+          <ul>
+            <li><b>The Northeast</b> — old cities: New York, Boston, Washington</li>
+            <li><b>The South</b> — warm &amp; sunny: Florida, Texas, Georgia</li>
+            <li><b>The Midwest</b> — flat farmland &amp; the Great Lakes: Chicago</li>
+            <li><b>The West</b> — mountains, deserts &amp; the Pacific: California</li>
+          </ul>
+        </div>
+      </div>
+      <div class="trap"><b>⚠️ Don't mix them up <span class="arw">→</span></b> <b>Alaska</b> = the <b>largest</b> state (area), but <b>California</b> = the <b>most populous</b> (most people). The 48 joined states are called the <em>"lower 48"</em> or <em>contiguous</em> states.</div>
+    </div>
+  </section>
+
+  <!-- 7 NATURE & LANDSCAPES -->
+  <section class="slide phase-remember" data-phase="Discover">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">07</span><span class="dot"></span> Discover · Nature</div>
+      <h2>Nature &amp; famous landscapes 🏔️</h2>
+      <div class="grid g3">
+        <div class="card"><h3>Mountains &amp; canyons</h3>
+          <ul>
+            <li><b>The Rocky Mountains</b> — the great range of the West</li>
+            <li><b>The Appalachians</b> — older mountains in the East</li>
+            <li><b>The Grand Canyon</b> (Arizona) — a natural wonder</li>
+            <li><b>Denali</b> (Alaska) — the highest peak in North America</li>
+          </ul>
+        </div>
+        <div class="card"><h3>Water</h3>
+          <ul>
+            <li><b>The Mississippi</b> &amp; <b>Missouri</b> — the longest rivers</li>
+            <li><b>The Great Lakes</b> — five huge lakes shared with Canada</li>
+            <li><b>Niagara Falls</b> — famous waterfalls on the border</li>
+          </ul>
+        </div>
+        <div class="card"><h3>Extremes &amp; parks</h3>
+          <ul>
+            <li><b>Yellowstone</b> — the <b>first national park</b> (1872), geysers &amp; bison</li>
+            <li><b>Death Valley</b> — the hottest, driest, lowest place</li>
+            <li><b>The Mojave</b> &amp; other deserts of the Southwest</li>
+            <li><b>The Everglades</b> (Florida) — wetlands full of alligators</li>
+          </ul>
+        </div>
+      </div>
+      <p class="instr">🌡️ From frozen Alaska to tropical Hawaii and hot Florida, the USA has <b>almost every climate on Earth</b>.</p>
+    </div>
+  </section>
+
+  <!-- 8 VIDEO 2: NATIONAL PARKS -->
+  <section class="slide phase-remember" data-phase="Discover">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">08</span><span class="dot"></span> Watch · American nature 📺</div>
+      <h2>The most beautiful US national parks</h2>
+      <div class="videowrap">
+        <div class="video16">
+          <iframe src="https://www.youtube-nocookie.com/embed/tOHZ1mcAK8s?rel=0" title="Top 13 US National Parks in 4K" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="videometa">
+          <span>🎬 "Top 13 US National Parks" [4K] · Amazing Places on Our Planet</span>
+          <a href="https://www.youtube.com/watch?v=tOHZ1mcAK8s" target="_blank" rel="noopener">Open on YouTube ↗</a>
+        </div>
+      </div>
+      <div class="watchfor"><b>👀 Watch a minute or two, then say →</b>
+        <ul>
+          <li>Which park looks the <b>most amazing</b> to you? Why?</li>
+          <li>Describe what you see using <b>adjectives</b>: <em>huge, colourful, wild, peaceful…</em></li>
+          <li>Would you rather visit a <b>desert</b>, a <b>forest</b> or a <b>canyon</b>?</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 ANIMALS -->
+  <section class="slide phase-remember" data-phase="Discover">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">09</span><span class="dot"></span> Discover · Wildlife</div>
+      <h2>American animals 🐻🦅</h2>
+      <div class="grid g3">
+        <div class="card"><h3>National symbols</h3>
+          <ul>
+            <li>🦅 <b>Bald eagle</b> — the national bird (on the coat of arms)</li>
+            <li>🦬 <b>American bison</b> (buffalo) — the national mammal</li>
+          </ul>
+        </div>
+        <div class="card"><h3>The wild West &amp; North</h3>
+          <ul>
+            <li>🐻 <b>Grizzly bear</b> &amp; black bear</li>
+            <li>🫎 <b>Moose</b> and <b>elk</b> in the northern forests</li>
+            <li>🐺 <b>Coyote</b>, <b>wolf</b> and <b>bobcat</b></li>
+          </ul>
+        </div>
+        <div class="card"><h3>The warm South</h3>
+          <ul>
+            <li>🐊 <b>Alligator</b> — in Florida's swamps</li>
+            <li>🐍 <b>Rattlesnake</b> — a desert snake with a warning "rattle"</li>
+            <li>🦝 <b>Raccoon</b> — the clever "masked" city animal</li>
+          </ul>
+        </div>
+      </div>
+      <div class="trap"><b>⚠️ Careful <span class="arw">→</span></b> the plural of <em>bison</em> is <b>bison</b> (no -s!), like <em>deer → deer</em> and <em>fish → fish</em>. And a <b>buffalo</b> and a <b>bison</b> are the same animal in American English.</div>
+    </div>
+  </section>
+
+  <!-- 10 INTERACTIVE MAP -->
+  <section class="slide phase-remember" data-phase="Discover">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">10</span><span class="dot"></span> Discover · The 50 states (interactive) 🗺️</div>
+      <h2>Click a state on the map</h2>
+      <p class="maphint">Each square is a state (roughly where it is on the map). <b>Click one</b> to see its capital and a fun fact. Try the big ones first: <b>CA, TX, FL, NY, AK</b> — and find <b>MA</b> for Boston!</p>
+      <div class="mapgrid reveal">
+        <div>
+          <div class="tilemap">
+            <button class="tile region-west" style="grid-column:1;grid-row:1" data-name="Alaska (AK)" data-cap="Juneau" data-fact="The largest state by area — bought from Russia in 1867. It has the highest peak in North America, Denali, and is separated from the other states by Canada.">AK</button>
+            <button class="tile region-ne" style="grid-column:11;grid-row:1" data-name="Maine (ME)" data-cap="Augusta" data-fact="The most north-eastern state — famous for forests, lighthouses and delicious lobster.">ME</button>
+
+            <button class="tile region-ne" style="grid-column:10;grid-row:2" data-name="Vermont (VT)" data-cap="Montpelier" data-fact="Green mountains, skiing and maple syrup on your pancakes.">VT</button>
+            <button class="tile region-ne" style="grid-column:11;grid-row:2" data-name="New Hampshire (NH)" data-cap="Concord" data-fact="Its state motto is 'Live Free or Die'. Famous for bright red-and-gold autumn forests.">NH</button>
+
+            <button class="tile region-west" style="grid-column:1;grid-row:3" data-name="Washington (WA)" data-cap="Olympia" data-fact="Rainy and green, home to Seattle, Microsoft, Boeing and the first Starbucks. Don't confuse it with Washington, D.C.!">WA</button>
+            <button class="tile region-west" style="grid-column:2;grid-row:3" data-name="Idaho (ID)" data-cap="Boise" data-fact="Wild mountains and rivers — and the potatoes on your plate probably came from here.">ID</button>
+            <button class="tile region-west" style="grid-column:3;grid-row:3" data-name="Montana (MT)" data-cap="Helena" data-fact="'Big Sky Country' — huge, empty and mountainous, next to Canada.">MT</button>
+            <button class="tile region-mw" style="grid-column:4;grid-row:3" data-name="North Dakota (ND)" data-cap="Bismarck" data-fact="Cold northern plains, wheat fields and oil.">ND</button>
+            <button class="tile region-mw" style="grid-column:5;grid-row:3" data-name="Minnesota (MN)" data-cap="Saint Paul" data-fact="The 'Land of 10,000 Lakes' — and some of the coldest winters in the country.">MN</button>
+            <button class="tile region-mw" style="grid-column:6;grid-row:3" data-name="Illinois (IL)" data-cap="Springfield" data-fact="Home to Chicago, the third-biggest US city — but the capital is little Springfield, not Chicago!">IL</button>
+            <button class="tile region-mw" style="grid-column:7;grid-row:3" data-name="Wisconsin (WI)" data-cap="Madison" data-fact="'America's Dairyland' — famous for milk and cheese.">WI</button>
+            <button class="tile region-mw" style="grid-column:9;grid-row:3" data-name="Michigan (MI)" data-cap="Lansing" data-fact="Surrounded by the Great Lakes. Detroit, 'Motor City', is the home of the US car industry.">MI</button>
+            <button class="tile region-ne" style="grid-column:10;grid-row:3" data-name="New York (NY)" data-cap="Albany" data-fact="Home to New York City — but the state capital is little Albany, NOT NYC. A favourite olympiad trap!">NY</button>
+            <button class="tile region-ne" style="grid-column:11;grid-row:3" data-name="Massachusetts (MA)" data-cap="Boston" data-fact="Home to Boston, Harvard and MIT. The Pilgrims landed here in 1620 and the American Revolution began here.">MA</button>
+
+            <button class="tile region-west" style="grid-column:1;grid-row:4" data-name="Oregon (OR)" data-cap="Salem" data-fact="Green forests, a wild Pacific coast and deep-blue Crater Lake.">OR</button>
+            <button class="tile region-west" style="grid-column:2;grid-row:4" data-name="Nevada (NV)" data-cap="Carson City" data-fact="Mostly desert — but home to Las Vegas and its bright casinos.">NV</button>
+            <button class="tile region-west" style="grid-column:3;grid-row:4" data-name="Wyoming (WY)" data-cap="Cheyenne" data-fact="The least crowded state. Home to Yellowstone, the world's first national park.">WY</button>
+            <button class="tile region-mw" style="grid-column:4;grid-row:4" data-name="South Dakota (SD)" data-cap="Pierre" data-fact="Home of Mount Rushmore, with four giant presidents carved into the rock.">SD</button>
+            <button class="tile region-mw" style="grid-column:5;grid-row:4" data-name="Iowa (IA)" data-cap="Des Moines" data-fact="Endless corn fields — and its vote traditionally opens every presidential election.">IA</button>
+            <button class="tile region-mw" style="grid-column:6;grid-row:4" data-name="Indiana (IN)" data-cap="Indianapolis" data-fact="Famous for the Indy 500, one of the world's biggest car races.">IN</button>
+            <button class="tile region-mw" style="grid-column:7;grid-row:4" data-name="Ohio (OH)" data-cap="Columbus" data-fact="The 'birthplace of aviation and astronauts' — Neil Armstrong, the first man on the Moon, was from Ohio.">OH</button>
+            <button class="tile region-ne" style="grid-column:8;grid-row:4" data-name="Pennsylvania (PA)" data-cap="Harrisburg" data-fact="Philadelphia is here — where the Declaration of Independence was signed in 1776. Home of the Liberty Bell.">PA</button>
+            <button class="tile region-ne" style="grid-column:9;grid-row:4" data-name="New Jersey (NJ)" data-cap="Trenton" data-fact="Small but very crowded, right next to New York City.">NJ</button>
+            <button class="tile region-ne" style="grid-column:10;grid-row:4" data-name="Connecticut (CT)" data-cap="Hartford" data-fact="One of the smallest — and richest — states, close to New York.">CT</button>
+            <button class="tile region-ne" style="grid-column:11;grid-row:4" data-name="Rhode Island (RI)" data-cap="Providence" data-fact="The smallest state of all — you can drive across it in under an hour.">RI</button>
+
+            <button class="tile region-west" style="grid-column:1;grid-row:5" data-name="California (CA)" data-cap="Sacramento" data-fact="The most populous state. Home to Hollywood, Silicon Valley and giant sequoia trees. Its biggest city is Los Angeles — NOT the capital, Sacramento.">CA</button>
+            <button class="tile region-west" style="grid-column:2;grid-row:5" data-name="Utah (UT)" data-cap="Salt Lake City" data-fact="Red-rock deserts, national parks and the huge, salty Great Salt Lake.">UT</button>
+            <button class="tile region-west" style="grid-column:3;grid-row:5" data-name="Colorado (CO)" data-cap="Denver" data-fact="The Rocky Mountains and ski resorts — Denver is the 'Mile-High City'.">CO</button>
+            <button class="tile region-mw" style="grid-column:4;grid-row:5" data-name="Nebraska (NE)" data-cap="Lincoln" data-fact="Great Plains farmland — corn, cattle and huge open skies.">NE</button>
+            <button class="tile region-mw" style="grid-column:5;grid-row:5" data-name="Missouri (MO)" data-cap="Jefferson City" data-fact="The 'Gateway to the West', marked by the shining Gateway Arch in St Louis.">MO</button>
+            <button class="tile region-south" style="grid-column:6;grid-row:5" data-name="Kentucky (KY)" data-cap="Frankfort" data-fact="Famous for horse racing (the Kentucky Derby) and fried chicken (KFC).">KY</button>
+            <button class="tile region-south" style="grid-column:7;grid-row:5" data-name="West Virginia (WV)" data-cap="Charleston" data-fact="Almost entirely mountains — the green Appalachians.">WV</button>
+            <button class="tile region-south" style="grid-column:8;grid-row:5" data-name="Virginia (VA)" data-cap="Richmond" data-fact="The 'birthplace of presidents' — eight US presidents were born here.">VA</button>
+            <button class="tile region-south" style="grid-column:9;grid-row:5" data-name="Maryland (MD)" data-cap="Annapolis" data-fact="It wraps around Washington, D.C. on one side and is famous for crabs.">MD</button>
+            <button class="tile region-south" style="grid-column:10;grid-row:5" data-name="Delaware (DE)" data-cap="Dover" data-fact="The very first state to join the USA (1787) — 'The First State'.">DE</button>
+
+            <button class="tile region-west" style="grid-column:2;grid-row:6" data-name="Arizona (AZ)" data-cap="Phoenix" data-fact="Home to the Grand Canyon, one of the Seven Natural Wonders of the World. Hot desert everywhere.">AZ</button>
+            <button class="tile region-west" style="grid-column:3;grid-row:6" data-name="New Mexico (NM)" data-cap="Santa Fe" data-fact="Desert, strong Native American culture — and where the first atomic bomb was tested.">NM</button>
+            <button class="tile region-mw" style="grid-column:4;grid-row:6" data-name="Kansas (KS)" data-cap="Topeka" data-fact="Flat prairie and wheat — the home of Dorothy in 'The Wizard of Oz'.">KS</button>
+            <button class="tile region-south" style="grid-column:5;grid-row:6" data-name="Arkansas (AR)" data-cap="Little Rock" data-fact="Rice fields, forests and diamonds — and the home state of President Bill Clinton.">AR</button>
+            <button class="tile region-south" style="grid-column:6;grid-row:6" data-name="Tennessee (TN)" data-cap="Nashville" data-fact="The home of country music (Nashville) and of Elvis Presley (Memphis).">TN</button>
+            <button class="tile region-south" style="grid-column:7;grid-row:6" data-name="North Carolina (NC)" data-cap="Raleigh" data-fact="Where the Wright brothers made the world's first aeroplane flight in 1903.">NC</button>
+            <button class="tile region-south" style="grid-column:8;grid-row:6" data-name="South Carolina (SC)" data-cap="Columbia" data-fact="Warm beaches and history — the American Civil War began here in 1861.">SC</button>
+            <button class="tile dc" style="grid-column:9;grid-row:6" data-name="Washington, D.C." data-cap="— (it IS the capital)" data-fact="NOT a state! This is the federal capital of the USA — home to the White House, Congress and the Supreme Court.">DC</button>
+
+            <button class="tile region-south" style="grid-column:4;grid-row:7" data-name="Oklahoma (OK)" data-cap="Oklahoma City" data-fact="Cowboy and Native American history, right in the middle of 'Tornado Alley'.">OK</button>
+            <button class="tile region-south" style="grid-column:5;grid-row:7" data-name="Louisiana (LA)" data-cap="Baton Rouge" data-fact="French heritage, jazz and the Mardi Gras carnival. Biggest city: New Orleans.">LA</button>
+            <button class="tile region-south" style="grid-column:6;grid-row:7" data-name="Mississippi (MS)" data-cap="Jackson" data-fact="Named after the great river, and the birthplace of the blues.">MS</button>
+            <button class="tile region-south" style="grid-column:7;grid-row:7" data-name="Alabama (AL)" data-cap="Montgomery" data-fact="A centre of the civil-rights movement — Rosa Parks refused to give up her bus seat in Montgomery.">AL</button>
+            <button class="tile region-south" style="grid-column:8;grid-row:7" data-name="Georgia (GA)" data-cap="Atlanta" data-fact="The home of Coca-Cola and CNN; Atlanta hosted the 1996 Olympic Games.">GA</button>
+
+            <button class="tile region-west" style="grid-column:1;grid-row:8" data-name="Hawaii (HI)" data-cap="Honolulu" data-fact="A chain of volcanic islands in the Pacific — the only US state made entirely of islands.">HI</button>
+            <button class="tile region-south" style="grid-column:4;grid-row:8" data-name="Texas (TX)" data-cap="Austin" data-fact="The second-largest state — oil, cowboys and 'everything is bigger in Texas'. Biggest city: Houston, not the capital Austin.">TX</button>
+            <button class="tile region-south" style="grid-column:9;grid-row:8" data-name="Florida (FL)" data-cap="Tallahassee" data-fact="The 'Sunshine State': beaches, Disney World, alligators and NASA's Kennedy Space Center. Biggest city: Miami.">FL</button>
+          </div>
+          <div class="maplegend">
+            <span><i style="background:var(--c-connect)"></i>West</span>
+            <span><i style="background:var(--c-remember)"></i>Midwest</span>
+            <span><i style="background:var(--c-olympiad)"></i>South</span>
+            <span><i style="background:var(--good)"></i>Northeast</span>
+            <span><i style="background:var(--bad)"></i>D.C.</span>
+          </div>
+        </div>
+        <div class="factbox">
+          <div class="fb-hint">👆 Click any state to see its <b>capital</b> and a <b>fun fact</b> here.<br><br>Notice how often the <b>capital is NOT the biggest city</b> — that's exactly what olympiads love to test.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 VIDEO 3: 50 STATES SONG -->
+  <section class="slide phase-remember" data-phase="Discover">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">11</span><span class="dot"></span> Watch · The 50 states song 🎵</div>
+      <h2>All 50 states &amp; capitals — in a song</h2>
+      <div class="videowrap">
+        <div class="video16">
+          <iframe src="https://www.youtube-nocookie.com/embed/KQEHLMyAWeY?rel=0" title="The 50 States and Capitals Song" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="videometa">
+          <span>🎬 "The 50 States and Capitals Song" · KLT (KidsLearningTube)</span>
+          <a href="https://www.youtube.com/watch?v=KQEHLMyAWeY" target="_blank" rel="noopener">Open on YouTube ↗</a>
+        </div>
+      </div>
+      <div class="watchfor"><b>🎧 Listen for →</b>
+        <ul>
+          <li>Which state comes <b>first</b> in the song? <span class="en-note">(Hint: alphabetical order!)</span></li>
+          <li>Catch <b>three capitals</b> you didn't know and write them down.</li>
+          <li>Can you find those three states on the map from the last slide?</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 BIG CITIES INTERACTIVE -->
+  <section class="slide phase-remember" data-phase="Discover">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">12</span><span class="dot"></span> Discover · Big cities (interactive) 🏙️</div>
+      <h2>Click a city to learn about it</h2>
+      <p class="maphint">These are the cities olympiads love to ask about. <b>Boston</b> and <b>Washington, D.C.</b> come up a lot — click each one.</p>
+      <div class="reveal">
+        <div class="citybar">
+          <button class="citychip" data-name="New York City 🗽 (New York)" data-cap="Nickname: 'The Big Apple'" data-fact="The biggest US city (about 8.5 million people). Home to the Statue of Liberty, Times Square, Central Park and Wall Street. It is NOT the capital of the country.">New York</button>
+          <button class="citychip" data-name="Washington, D.C. 🏛️" data-cap="The capital of the USA" data-fact="The nation's capital — home to the White House, the Capitol (Congress) and the Supreme Court. It is a special district, not part of any state.">Washington, D.C.</button>
+          <button class="citychip" data-name="Los Angeles 🎬 (California)" data-cap="Nickname: 'The City of Angels'" data-fact="The second-biggest US city and the centre of the film industry — Hollywood is here. Sunny beaches and heavy traffic.">Los Angeles</button>
+          <button class="citychip" data-name="Chicago 🌆 (Illinois)" data-cap="Nickname: 'The Windy City'" data-fact="The third-biggest US city, on Lake Michigan. Famous for tall skyscrapers, deep-dish pizza and cold, windy winters.">Chicago</button>
+          <button class="citychip" data-name="Boston 🎓 (Massachusetts)" data-cap="One of the oldest US cities" data-fact="A key place in American history — the Boston Tea Party (1773) helped start the Revolution. Home to Harvard and MIT, two world-famous universities.">Boston</button>
+          <button class="citychip" data-name="San Francisco 🌉 (California)" data-cap="Northern California" data-fact="Famous for the orange Golden Gate Bridge, steep hills, cable cars, fog — and nearby Silicon Valley, the world's tech capital.">San Francisco</button>
+          <button class="citychip" data-name="Miami 🌴 (Florida)" data-cap="Southern Florida" data-fact="A warm, sunny beach city with strong Latin-American culture and a gateway to the Caribbean.">Miami</button>
+          <button class="citychip" data-name="Las Vegas 🎰 (Nevada)" data-cap="In the Nevada desert" data-fact="A city of casinos, giant hotels and bright shows, built in the middle of the desert. Nickname: 'Sin City'.">Las Vegas</button>
+          <button class="citychip" data-name="New Orleans 🎷 (Louisiana)" data-cap="On the Mississippi" data-fact="The birthplace of jazz, famous for its French Quarter and the colourful Mardi Gras carnival.">New Orleans</button>
+          <button class="citychip" data-name="Seattle ☕ (Washington)" data-cap="Pacific Northwest" data-fact="A rainy, green tech city — the home of Starbucks, Microsoft, Amazon and the Space Needle tower.">Seattle</button>
+          <button class="citychip" data-name="Philadelphia 🔔 (Pennsylvania)" data-cap="The first capital of the USA" data-fact="Where the USA was born — the Declaration of Independence was signed here in 1776. Home of the Liberty Bell.">Philadelphia</button>
+          <button class="citychip" data-name="Houston 🚀 (Texas)" data-cap="The biggest city in Texas" data-fact="The centre of the US oil industry and home to NASA's Mission Control — the first word said from the Moon was 'Houston'.">Houston</button>
+        </div>
+        <div class="factbox">
+          <div class="fb-hint">👆 Click a city above to read about it.<br><br><b>Remember:</b> the biggest cities (New York, Los Angeles, Chicago) are <b>not</b> capitals. The country's capital is <b>Washington, D.C.</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13 SYMBOLS & CULTURE -->
+  <section class="slide phase-remember" data-phase="Discover">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">13</span><span class="dot"></span> Discover · Symbols &amp; culture</div>
+      <h2>Symbols everyone should know 🗽</h2>
+      <div class="grid g3">
+        <div class="card"><h3>Monuments</h3>
+          <ul>
+            <li>🗽 <b>Statue of Liberty</b> (New York) — a gift from <b>France</b> in 1886</li>
+            <li>🗿 <b>Mount Rushmore</b> (S. Dakota) — 4 presidents in rock</li>
+            <li>🏛️ <b>The White House</b> — the president's home in D.C.</li>
+            <li>🌉 <b>Golden Gate Bridge</b> (San Francisco)</li>
+          </ul>
+        </div>
+        <div class="card"><h3>Pop culture</h3>
+          <ul>
+            <li>🎬 <b>Hollywood</b> — films &amp; movie stars (Los Angeles)</li>
+            <li>🎶 Jazz, blues, country, hip-hop, rock 'n' roll</li>
+            <li>🍔 Fast food: burgers, hot dogs, donuts, apple pie</li>
+            <li>🛣️ <b>Route 66</b> — the famous cross-country road</li>
+          </ul>
+        </div>
+        <div class="card"><h3>Sport &amp; holidays</h3>
+          <ul>
+            <li>🏈 American football · ⚾ baseball · 🏀 basketball</li>
+            <li>🦃 <b>Thanksgiving</b> (4th Thursday of November)</li>
+            <li>🎃 <b>Halloween</b> (31 October)</li>
+            <li>🎆 <b>Independence Day</b> (4 July) — fireworks!</li>
+          </ul>
+        </div>
+      </div>
+      <div class="trap"><b>⚠️ Famous facts to remember <span class="arw">→</span></b> the Statue of Liberty was a gift from <b>France</b>; Mount Rushmore shows <b>Washington, Jefferson, Lincoln</b> and <b>Roosevelt</b>; the president lives in the <b>White House</b> in <b>Washington, D.C.</b></div>
+    </div>
+  </section>
+
+  <!-- 14 DIVIDER: OLYMPIAD PRACTICE -->
+  <section class="slide slide--statement phase-olympiad" data-phase="Practice">
+    <div class="inner">
+      <div class="big-badge">Part 2 · Country studies practice</div>
+      <h2>Now let's win some <span class="hl">points</span> 🏆</h2>
+      <p class="lead" style="text-align:center; max-width:44ch">Real olympiad task types about the USA: multiple choice, gap-fill, reading and open cloze. Choose or type, then press <b>Check</b>.</p>
+    </div>
+  </section>
+
+  <!-- 15 COUNTRY STUDIES MCQ -->
+  <section class="slide phase-olympiad" data-phase="Practice">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">15</span><span class="dot"></span> Task · Country studies (multiple choice)</div>
+      <h2>How well do you know the USA?</h2>
+      <ul class="mcset">
+        <li class="mcq" data-c="2"><div class="q">1. What is the capital of the USA?</div><div class="opts"><button class="opt" type="button">A) New York</button><button class="opt" type="button">B) Los Angeles</button><button class="opt" type="button">C) Washington, D.C.</button><button class="opt" type="button">D) Boston</button></div></li>
+        <li class="mcq" data-c="2"><div class="q">2. How many states does the USA have?</div><div class="opts"><button class="opt" type="button">A) 13</button><button class="opt" type="button">B) 48</button><button class="opt" type="button">C) 50</button><button class="opt" type="button">D) 52</button></div></li>
+        <li class="mcq" data-c="2"><div class="q">3. Which is the largest US state by area?</div><div class="opts"><button class="opt" type="button">A) Texas</button><button class="opt" type="button">B) California</button><button class="opt" type="button">C) Alaska</button><button class="opt" type="button">D) Montana</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">4. Which state has the most people?</div><div class="opts"><button class="opt" type="button">A) California</button><button class="opt" type="button">B) Texas</button><button class="opt" type="button">C) New York</button><button class="opt" type="button">D) Florida</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">5. The Statue of Liberty was a gift from…</div><div class="opts"><button class="opt" type="button">A) Britain</button><button class="opt" type="button">B) France</button><button class="opt" type="button">C) Spain</button><button class="opt" type="button">D) Italy</button></div></li>
+        <li class="mcq" data-c="2"><div class="q">6. In which city is Hollywood?</div><div class="opts"><button class="opt" type="button">A) New York</button><button class="opt" type="button">B) Chicago</button><button class="opt" type="button">C) Los Angeles</button><button class="opt" type="button">D) Miami</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">7. Mount Rushmore shows the giant heads of four…</div><div class="opts"><button class="opt" type="button">A) actors</button><button class="opt" type="button">B) presidents</button><button class="opt" type="button">C) generals</button><button class="opt" type="button">D) scientists</button></div></li>
+        <li class="mcq" data-c="2"><div class="q">8. The Boston Tea Party (1773) took place in the state of…</div><div class="opts"><button class="opt" type="button">A) New York</button><button class="opt" type="button">B) Virginia</button><button class="opt" type="button">C) Massachusetts</button><button class="opt" type="button">D) Texas</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">9. Which two states are separated from the main part of the country?</div><div class="opts"><button class="opt" type="button">A) Texas &amp; Florida</button><button class="opt" type="button">B) Alaska &amp; Hawaii</button><button class="opt" type="button">C) California &amp; Nevada</button><button class="opt" type="button">D) Maine &amp; Ohio</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">10. US Independence Day is on…</div><div class="opts"><button class="opt" type="button">A) 4 July</button><button class="opt" type="button">B) 1 January</button><button class="opt" type="button">C) 25 December</button><button class="opt" type="button">D) 14 July</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">11. The Golden Gate Bridge is in…</div><div class="opts"><button class="opt" type="button">A) New York</button><button class="opt" type="button">B) San Francisco</button><button class="opt" type="button">C) Seattle</button><button class="opt" type="button">D) Miami</button></div></li>
+        <li class="mcq" data-c="2"><div class="q">12. New York City's nickname is…</div><div class="opts"><button class="opt" type="button">A) The Windy City</button><button class="opt" type="button">B) The City of Angels</button><button class="opt" type="button">C) The Big Apple</button><button class="opt" type="button">D) Sin City</button></div></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 16 STATES & CAPITALS GAP-FILL -->
+  <section class="slide phase-olympiad" data-phase="Practice">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">16</span><span class="dot"></span> Task · States, capitals &amp; superlatives</div>
+      <h2>Fill in the missing word</h2>
+      <p class="instr">Watch the traps: the capital is often <b>not</b> the biggest city!</p>
+      <ul class="exset">
+        <li class="exq" data-a="washington"><span class="q">1. The capital of the whole country is <input class="gap w-lg" aria-label="answer" autocomplete="off">, D.C.</span><span class="v"></span></li>
+        <li class="exq" data-a="sacramento"><span class="q">2. The capital of California is <input class="gap w-lg" aria-label="answer" autocomplete="off">, not Los Angeles.</span><span class="v"></span></li>
+        <li class="exq" data-a="albany"><span class="q">3. The capital of New York State is <input class="gap w-lg" aria-label="answer" autocomplete="off">, not New York City.</span><span class="v"></span></li>
+        <li class="exq" data-a="springfield"><span class="q">4. The capital of Illinois is <input class="gap w-lg" aria-label="answer" autocomplete="off">, not Chicago.</span><span class="v"></span></li>
+        <li class="exq" data-a="alaska"><span class="q">5. The largest state by area is <input class="gap w-lg" aria-label="answer" autocomplete="off">, bought from Russia.</span><span class="v"></span></li>
+        <li class="exq" data-a="rhode island|rhode-island"><span class="q">6. The smallest state is <input class="gap w-lg" aria-label="answer" autocomplete="off"> (two words).</span><span class="v"></span></li>
+        <li class="exq" data-a="hawaii"><span class="q">7. <input class="gap w-lg" aria-label="answer" autocomplete="off"> is a chain of islands in the Pacific Ocean.</span><span class="v"></span></li>
+        <li class="exq" data-a="texas"><span class="q">8. The second-largest state, famous for cowboys and oil, is <input class="gap w-lg" aria-label="answer" autocomplete="off">.</span><span class="v"></span></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 17 READING TFNS -->
+  <section class="slide phase-olympiad" data-phase="Practice">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">17</span><span class="dot"></span> Task · Reading (True / False / Not stated)</div>
+      <h2>Read, then decide</h2>
+      <div class="reading">
+        <p><b>New York City</b></p>
+        <p>New York City, often called "the Big Apple", is the largest city in the United States, with more than eight million people. It stands on the Atlantic coast, mostly on a group of islands, and is famous all over the world for its tall skyscrapers, yellow taxis and bright lights.</p>
+        <p>The city is made up of five parts, called boroughs: Manhattan, Brooklyn, Queens, the Bronx and Staten Island. Manhattan is the busy heart of the city, where you can find Times Square, Central Park and Wall Street, the centre of American business.</p>
+        <p>Millions of tourists visit every year. Many of them take a boat to see the Statue of Liberty, which was a gift from France in 1886. Others walk through Central Park, a huge green space in the middle of the concrete city, or watch a show on Broadway. Although New York is not the capital of the country, it is often seen as its cultural capital — a place where people from every corner of the world live side by side.</p>
+      </div>
+      <ul class="mcset" style="margin-top:.8rem">
+        <li class="mcq" data-c="0"><div class="q">1. New York City is the largest city in the USA.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button><button class="opt" type="button">C) Not stated</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">2. New York City is the capital of the USA.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button><button class="opt" type="button">C) Not stated</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">3. The city is built only on the mainland, not on islands.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button><button class="opt" type="button">C) Not stated</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">4. The Statue of Liberty was a present from France.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button><button class="opt" type="button">C) Not stated</button></div></li>
+        <li class="mcq" data-c="2"><div class="q">5. Tickets for Broadway shows are expensive.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button><button class="opt" type="button">C) Not stated</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">6. New York City has five boroughs.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button><button class="opt" type="button">C) Not stated</button></div></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 18 OPEN CLOZE -->
+  <section class="slide phase-olympiad" data-phase="Practice">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">18</span><span class="dot"></span> Task · Open cloze</div>
+      <h2>Fill each gap with ONE word</h2>
+      <p class="cloze">
+        The United States
+        <span class="cz" data-a="is"><span class="num">1</span><input class="gap gap-s" aria-label="gap 1" autocomplete="off"></span>
+        one of the largest countries in the world. It is made
+        <span class="cz" data-a="up"><span class="num">2</span><input class="gap gap-s" aria-label="gap 2" autocomplete="off"></span>
+        of fifty states, from Alaska in the north
+        <span class="cz" data-a="to"><span class="num">3</span><input class="gap gap-s" aria-label="gap 3" autocomplete="off"></span>
+        Hawaii in the Pacific Ocean. The country is washed
+        <span class="cz" data-a="by"><span class="num">4</span><input class="gap gap-s" aria-label="gap 4" autocomplete="off"></span>
+        two oceans. There
+        <span class="cz" data-a="are"><span class="num">5</span><input class="gap gap-s" aria-label="gap 5" autocomplete="off"></span>
+        so many landscapes that you can find deserts, mountains and beaches
+        <span class="cz" data-a="in"><span class="num">6</span><input class="gap gap-s" aria-label="gap 6" autocomplete="off"></span>
+        the same country. New York is the biggest city,
+        <span class="cz" data-a="but|while|whereas|although|yet"><span class="num">7</span><input class="gap gap-s" aria-label="gap 7" autocomplete="off"></span>
+        the capital is Washington, D.C. Every year millions of tourists come to see
+        <span class="cz" data-a="its"><span class="num">8</span><input class="gap gap-s" aria-label="gap 8" autocomplete="off"></span>
+        famous sights, such
+        <span class="cz" data-a="as"><span class="num">9</span><input class="gap gap-s" aria-label="gap 9" autocomplete="off"></span>
+        the Statue of Liberty. If you
+        <span class="cz" data-a="have"><span class="num">10</span><input class="gap gap-s" aria-label="gap 10" autocomplete="off"></span>
+        ever been there, you know how big it really is.
+      </p>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 19 FINAL MIXED TEST -->
+  <section class="slide phase-olympiad" data-phase="Challenge">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">19</span><span class="dot"></span> Challenge · Final mini-test 🏁</div>
+      <h2>Everything together</h2>
+      <ul class="mcset">
+        <li class="mcq" data-c="0"><div class="q">1. <em>(Geography)</em> The USA borders two countries: Canada and…</div><div class="opts"><button class="opt" type="button">A) Mexico</button><button class="opt" type="button">B) Cuba</button><button class="opt" type="button">C) Brazil</button><button class="opt" type="button">D) Russia</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">2. <em>(Cities)</em> The third-largest US city, on Lake Michigan, is…</div><div class="opts"><button class="opt" type="button">A) Boston</button><button class="opt" type="button">B) Chicago</button><button class="opt" type="button">C) Houston</button><button class="opt" type="button">D) Seattle</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">3. <em>(Symbols)</em> The national bird of the USA is the…</div><div class="opts"><button class="opt" type="button">A) turkey</button><button class="opt" type="button">B) bald eagle</button><button class="opt" type="button">C) robin</button><button class="opt" type="button">D) swan</button></div></li>
+      </ul>
+      <ul class="exset" style="margin-top:.6rem">
+        <li class="exq" data-a="washington"><span class="q">4. <em>(History)</em> The first US president was George <input class="gap w-lg" aria-label="answer" autocomplete="off">.</span><span class="v"></span></li>
+        <li class="exq" data-a="50|fifty"><span class="q">5. <em>(Facts)</em> The US flag has one star for each state, so it has <input class="gap" aria-label="answer" autocomplete="off"> stars.</span><span class="v"></span></li>
+        <li class="exq" data-a="austin"><span class="q">6. <em>(Capitals)</em> The capital of Texas is <input class="gap w-lg" aria-label="answer" autocomplete="off">, not Houston.</span><span class="v"></span></li>
+        <li class="exq" data-a="mississippi"><span class="q">7. <em>(Nature)</em> The great river that shares its name with a state is the <input class="gap w-lg" aria-label="answer" autocomplete="off">.</span><span class="v"></span></li>
+        <li class="exq" data-a="russia"><span class="q">8. <em>(History)</em> Alaska was bought from <input class="gap w-lg" aria-label="answer" autocomplete="off"> in 1867.</span><span class="v"></span></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 20 WRAP-UP / HOMEWORK -->
+  <section class="slide phase-connect" data-phase="Wrap-up">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">20</span><span class="dot"></span> Wrap-up · Homework</div>
+      <h2>Homework &amp; a big <span class="hl">well done</span> 🌟</h2>
+      <ul class="q-list">
+        <li data-n="1"><span>Learn <b>10 states + their capitals</b> — choose the tricky ones (California→Sacramento, New York→Albany, Texas→Austin, Illinois→Springfield, Florida→Tallahassee).</span></li>
+        <li data-n="2"><span>Make a <b>USA facts card</b>: capital, currency, number of states, first president, national bird, Independence Day.</span></li>
+        <li data-n="3"><span>Choose <b>one city</b> (New York, Boston, Washington…) and prepare a <b>1-minute spoken talk</b> about it.</span></li>
+        <li data-n="4"><span>Redo the <b>country studies quiz</b> and the <b>final test</b> from memory — aim for full marks.</span></li>
+        <li data-n="5"><span><span class="en-note">Optional:</span> write <b>60–80 words</b> — "Which US city would you most like to visit, and why?"</span></li>
+      </ul>
+      <p class="lead">You now know the USA's territory, nature, states and cities — exactly the country-studies facts olympiads test. See you next lesson! 👋🇺🇸</p>
+    </div>
+  </section>
+
+  <nav class="nav">
+    <span class="phase-label"><span class="pd" id="pd"></span><span id="phase">USA</span></span>
+    <span class="kbd-hint">← → arrows to navigate</span>
+    <span class="nav-btns">
+      <button id="prev" aria-label="Previous slide">‹ Back</button>
+      <button id="next" aria-label="Next slide">Next ›</button>
+    </span>
+  </nav>
+</div>
+
+<script>
+  (function () {
+    var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+    var bar = document.getElementById('bar');
+    var cur = document.getElementById('cur');
+    var totalEl = document.getElementById('total');
+    var prev = document.getElementById('prev');
+    var next = document.getElementById('next');
+    var phaseEl = document.getElementById('phase');
+    var pd = document.getElementById('pd');
+    var i = 0;
+    totalEl.textContent = slides.length;
+
+    function phaseName(el){
+      if(el.getAttribute('data-phase')) return el.getAttribute('data-phase');
+      if(el.classList.contains('phase-remember')) return 'Discover';
+      if(el.classList.contains('phase-olympiad')) return 'Practice';
+      return 'Intro';
+    }
+
+    function show(n){
+      i = Math.max(0, Math.min(slides.length-1, n));
+      slides.forEach(function(s,k){ s.classList.toggle('active', k===i); });
+      var active = slides[i];
+      bar.style.width = ((i+1)/slides.length*100) + '%';
+      cur.textContent = i+1;
+      prev.disabled = i===0; next.disabled = i===slides.length-1;
+      phaseEl.textContent = phaseName(active);
+      var cs = getComputedStyle(active);
+      pd.style.background = cs.getPropertyValue('--accent');
+      phaseEl.style.color = cs.getPropertyValue('--accent');
+      var inner = active.querySelector('.inner'); if(inner) inner.scrollTop = 0;
+    }
+    function go(d){ show(i+d); }
+
+    next.addEventListener('click', function(){ go(1); });
+    prev.addEventListener('click', function(){ go(-1); });
+
+    document.addEventListener('keydown', function(e){
+      var t = e.target;
+      if(t && (t.tagName==='INPUT' || t.tagName==='TEXTAREA')) return;
+      // let a focused button handle its own Space/Enter without also changing slide
+      if(t && t.tagName==='BUTTON' && (e.key===' ' || e.key==='Enter')) return;
+      if(e.key==='ArrowRight'||e.key==='PageDown'){ go(1); e.preventDefault(); }
+      else if(e.key==='ArrowLeft'||e.key==='PageUp'){ go(-1); e.preventDefault(); }
+      else if(e.key===' '){ go(1); e.preventDefault(); }
+      else if(e.key==='Home'){ show(0); }
+      else if(e.key==='End'){ show(slides.length-1); }
+    });
+
+    // ---- Answer checking ----
+    function normalize(s){ return (s||'').toLowerCase().replace(/’/g,"'").replace(/\s+/g,' ').trim().replace(/[.,!?;:]+$/,''); }
+    function firstAlt(item){ return (item.getAttribute('data-a')||'').split('|')[0]; }
+    function alts(item){ return (item.getAttribute('data-a')||'').split('|').map(normalize); }
+
+    function checkGaps(items, reveal){
+      var ok = 0, total = 0;
+      items.forEach(function(it){
+        var input = it.querySelector('.gap'); if(!input) return;
+        total++;
+        var v = it.querySelector('.v');
+        if(reveal){
+          input.value = firstAlt(it);
+          input.classList.remove('no'); input.classList.add('ok');
+          if(v){ v.className='v good'; v.textContent='✓'; }
+          ok++; return;
+        }
+        var val = normalize(input.value);
+        input.classList.remove('ok','no'); if(v) v.className='v';
+        if(val === ''){ if(v) v.textContent=''; return; }
+        if(alts(it).indexOf(val) !== -1){ input.classList.add('ok'); if(v){ v.className='v good'; v.textContent='✓'; } ok++; }
+        else { input.classList.add('no'); if(v){ v.className='v bad'; v.textContent='✗ ' + firstAlt(it); } }
+      });
+      return { ok: ok, total: total };
+    }
+
+    function checkMC(set, reveal){
+      var qs = set.querySelectorAll('.mcq'); var ok = 0;
+      qs.forEach(function(q){
+        var opts = q.querySelectorAll('.opt');
+        var c = parseInt(q.getAttribute('data-c'), 10);
+        opts.forEach(function(o){ o.classList.remove('correct','wrong'); });
+        if(reveal){
+          opts.forEach(function(o){ o.classList.remove('sel'); });
+          if(opts[c]){ opts[c].classList.add('sel','correct'); }
+          ok++; return;
+        }
+        var selIdx = -1;
+        opts.forEach(function(o,idx){ if(o.classList.contains('sel')) selIdx = idx; });
+        if(selIdx === -1) return;
+        if(selIdx === c){ opts[selIdx].classList.add('correct'); ok++; }
+        else { opts[selIdx].classList.add('wrong'); if(opts[c]) opts[c].classList.add('correct'); }
+      });
+      return { ok: ok, total: qs.length };
+    }
+
+    document.querySelectorAll('.mcq').forEach(function(q){
+      q.querySelectorAll('.opt').forEach(function(o){
+        o.addEventListener('click', function(){
+          q.querySelectorAll('.opt').forEach(function(x){ x.classList.remove('sel','correct','wrong'); });
+          o.classList.add('sel');
+        });
+      });
+    });
+
+    document.querySelectorAll('.extools').forEach(function(tools){
+      var inner = tools.closest('.inner');
+      var score = tools.querySelector('.score');
+      var exset = inner.querySelector('.exset');
+      var mcset = inner.querySelector('.mcset');
+      var cloze = inner.querySelector('.cloze');
+
+      function run(reveal){
+        var ok = 0, total = 0, r;
+        if(exset){ r = checkGaps(exset.querySelectorAll('.exq'), reveal); ok += r.ok; total += r.total; }
+        if(cloze){ r = checkGaps(cloze.querySelectorAll('.cz'), reveal); ok += r.ok; total += r.total; }
+        if(mcset){ r = checkMC(mcset, reveal); ok += r.ok; total += r.total; }
+        if(score){ score.textContent = ok + ' / ' + total + (ok===total ? '  🎉' : ''); }
+      }
+
+      tools.querySelector('.check').addEventListener('click', function(){ run(false); });
+      tools.querySelector('.show').addEventListener('click', function(){ run(true); });
+      tools.querySelector('.clear').addEventListener('click', function(){
+        inner.querySelectorAll('.gap').forEach(function(g){ g.value=''; g.classList.remove('ok','no'); });
+        inner.querySelectorAll('.v').forEach(function(v){ v.textContent=''; v.className='v'; });
+        inner.querySelectorAll('.opt').forEach(function(o){ o.classList.remove('sel','correct','wrong'); });
+        if(score) score.textContent='';
+      });
+      inner.querySelectorAll('.gap').forEach(function(g){
+        g.addEventListener('keydown', function(e){ if(e.key==='Enter'){ run(false); } });
+      });
+    });
+
+    // ---- Reveal panels (interactive map tiles + city chips) ----
+    document.querySelectorAll('.reveal').forEach(function(group){
+      var box = group.querySelector('.factbox');
+      var items = Array.prototype.slice.call(group.querySelectorAll('[data-name]'));
+      items.forEach(function(it){
+        it.addEventListener('click', function(){
+          items.forEach(function(x){ x.classList.remove('on'); });
+          it.classList.add('on');
+          if(!box) return;
+          var name = it.getAttribute('data-name') || '';
+          var cap = it.getAttribute('data-cap') || '';
+          var fact = it.getAttribute('data-fact') || '';
+          var html = '<div class="fb-name">' + name + '</div>';
+          if(cap){ html += '<div class="fb-cap">🏛️ Capital: <b>' + cap + '</b></div>'; }
+          html += '<div class="fb-fact">' + fact + '</div>';
+          box.innerHTML = html;
+        });
+      });
+    });
+
+    // Touch swipe (ignore form fields & buttons)
+    var x0 = null;
+    document.addEventListener('touchstart', function(e){
+      var t = e.target; if(t && (t.tagName==='INPUT'||t.tagName==='TEXTAREA'||t.tagName==='BUTTON')) { x0=null; return; }
+      x0 = e.touches[0].clientX;
+    }, {passive:true});
+    document.addEventListener('touchend', function(e){
+      if(x0===null) return;
+      var dx = e.changedTouches[0].clientX - x0;
+      if(Math.abs(dx) > 55) go(dx<0 ? 1 : -1);
+      x0 = null;
+    }, {passive:true});
+
+    show(0);
+  })();
+</script>
+</body>
+</html>

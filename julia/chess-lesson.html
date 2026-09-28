@@ -1,0 +1,989 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Story of Chess — Reading &amp; Fun Facts (B1–B2)</title>
+<style>
+  :root {
+    --paper:   #FAF6FB;
+    --surface: #FFFFFF;
+    --ink:     #443F58;
+    --ink-soft:#7A7391;
+    --ink-faint:#ABA4BE;
+    --line:    #ECE4F1;
+
+    --c-connect:  #8A6FD1;  --c-connect-t:  #EFEAFB;
+    --c-remember: #2FA48C;  --c-remember-t: #E2F4EF;
+    --c-olympiad: #D0669B;  --c-olympiad-t: #FBE6F1;
+
+    --good:#2FA47F; --good-t:#E3F5EE;
+    --bad: #DE7189; --bad-t: #FBE7EC;
+
+    --marker: rgba(255,221,140,.62);
+    --shadow: 0 1px 2px rgba(90,70,120,.05), 0 10px 30px rgba(120,90,160,.09);
+
+    --sq-light:#F0E6DA; --sq-dark:#B58863; --sq-ink:#2B2233;
+
+    --accent: var(--c-connect);
+    --accent-tint: var(--c-connect-t);
+
+    --font-display: "Trebuchet MS", ui-rounded, "SF Pro Rounded", "Segoe UI", system-ui, sans-serif;
+    --font-body: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:#201B2B; --surface:#2A2438; --ink:#EDE7F5; --ink-soft:#B7AECB; --ink-faint:#837a97; --line:#392F4C;
+      --c-connect:#B7A2F0; --c-connect-t:rgba(150,120,225,.17);
+      --c-remember:#5FD0B6; --c-remember-t:rgba(80,200,170,.15);
+      --c-olympiad:#F09BC4; --c-olympiad-t:rgba(230,120,175,.16);
+      --good:#5FCB9E; --good-t:rgba(60,180,130,.16); --bad:#F090A2; --bad-t:rgba(224,116,138,.16);
+      --marker:rgba(255,220,150,.24);
+      --shadow:0 1px 2px rgba(0,0,0,.3), 0 12px 34px rgba(0,0,0,.42);
+      --sq-light:#CBBBA6; --sq-dark:#8B6448; --sq-ink:#1B1520;
+    }
+  }
+  :root[data-theme="light"]{
+    --paper:#FAF6FB; --surface:#FFFFFF; --ink:#443F58; --ink-soft:#7A7391; --ink-faint:#ABA4BE; --line:#ECE4F1;
+    --c-connect:#8A6FD1; --c-connect-t:#EFEAFB; --c-remember:#2FA48C; --c-remember-t:#E2F4EF; --c-olympiad:#D0669B; --c-olympiad-t:#FBE6F1;
+    --good:#2FA47F; --good-t:#E3F5EE; --bad:#DE7189; --bad-t:#FBE7EC; --marker:rgba(255,221,140,.62);
+    --shadow:0 1px 2px rgba(90,70,120,.05),0 10px 30px rgba(120,90,160,.09);
+    --sq-light:#F0E6DA; --sq-dark:#B58863; --sq-ink:#2B2233;
+  }
+  :root[data-theme="dark"]{
+    --paper:#201B2B; --surface:#2A2438; --ink:#EDE7F5; --ink-soft:#B7AECB; --ink-faint:#837a97; --line:#392F4C;
+    --c-connect:#B7A2F0; --c-connect-t:rgba(150,120,225,.17); --c-remember:#5FD0B6; --c-remember-t:rgba(80,200,170,.15);
+    --c-olympiad:#F09BC4; --c-olympiad-t:rgba(230,120,175,.16); --good:#5FCB9E; --good-t:rgba(60,180,130,.16);
+    --bad:#F090A2; --bad-t:rgba(224,116,138,.16); --marker:rgba(255,220,150,.24);
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 34px rgba(0,0,0,.42);
+    --sq-light:#CBBBA6; --sq-dark:#8B6448; --sq-ink:#1B1520;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; }
+  body {
+    background: radial-gradient(1100px 600px at 100% -10%, var(--c-connect-t), transparent 60%), var(--paper);
+    color: var(--ink); font-family: var(--font-body); line-height: 1.5;
+    -webkit-font-smoothing: antialiased; overflow: hidden;
+  }
+  .deck { position: relative; height: 100dvh; width: 100%; }
+
+  .topbar { position: fixed; top:0; left:0; right:0; z-index:30; display:flex; align-items:center; gap:.9rem;
+    padding:.7rem clamp(.9rem,3vw,2rem); background: color-mix(in srgb, var(--paper) 84%, transparent);
+    backdrop-filter: blur(8px); border-bottom:1px solid var(--line); }
+  .brand { display:flex; align-items:baseline; gap:.5rem; font-size:.82rem; white-space:nowrap; }
+  .brand b { font-family: var(--font-display); font-weight:700; font-size:.98rem; }
+  .brand .lvl { font-family: var(--font-mono); font-size:.66rem; letter-spacing:.08em; color: var(--c-connect);
+    background: var(--c-connect-t); border-radius:999px; padding:.14rem .5rem; }
+  .progress { flex:1; height:6px; background: var(--line); border-radius:999px; overflow:hidden; min-width:40px; }
+  .progress > i { display:block; height:100%; width:0; border-radius:999px;
+    background: linear-gradient(90deg, var(--c-connect), var(--c-remember), var(--c-olympiad)); transition: width .35s ease; }
+  .counter { font-family: var(--font-mono); font-size:.74rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; white-space:nowrap; }
+
+  .slide { position:absolute; inset:0; display:flex; flex-direction:column;
+    padding: clamp(3.2rem,6.5vh,4.4rem) clamp(1rem,4vw,3rem) clamp(3.6rem,7vh,4.4rem);
+    opacity:0; visibility:hidden; transform: translateY(10px);
+    transition: opacity .4s ease, transform .4s ease, visibility .4s; overflow:hidden; }
+  .slide.active { opacity:1; visibility:visible; transform:none; }
+  .inner { width:100%; max-width:62rem; margin:auto; max-height:100%; overflow-y:auto; overflow-x:hidden; padding:.2rem; scrollbar-width:thin; }
+
+  .eyebrow { display:inline-flex; align-items:center; gap:.5rem; font-family: var(--font-mono); font-size:.72rem; font-weight:600;
+    letter-spacing:.12em; text-transform:uppercase; color: var(--accent); margin:0 0 .9rem; }
+  .eyebrow .num { color: var(--ink-faint); }
+  .eyebrow .dot { width:7px; height:7px; border-radius:50%; background: var(--accent); }
+  .eyebrow .time { color: var(--ink-faint); font-weight:500; }
+
+  h1,h2,h3 { font-family: var(--font-display); font-weight:700; text-wrap:balance; margin:0; line-height:1.14; }
+  h1 { font-size: clamp(2rem,6vw,3.4rem); }
+  h2 { font-size: clamp(1.4rem,3.8vw,2.3rem); margin-bottom:.4rem; }
+  h3 { font-size:1.02rem; }
+  .lead { color: var(--ink-soft); font-size: clamp(1rem,2.2vw,1.15rem); max-width:48ch; margin:.8rem 0 0; }
+  .instr { color: var(--ink-soft); font-size:.92rem; margin:.5rem 0 0; }
+  p { margin:.55rem 0; }
+  .hl { background: linear-gradient(180deg, transparent 56%, var(--marker) 56% 92%, transparent 92%); padding:0 .08em; border-radius:3px; }
+  .en-note { color: var(--ink-faint); font-style: italic; font-size:.9em; }
+  .ru { color: var(--ink-faint); font-size:.88em; }
+
+  .title-kicker { font-family: var(--font-mono); font-size:.78rem; letter-spacing:.18em; text-transform:uppercase; color: var(--c-connect); }
+  .title-meta { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1.6rem; }
+  .chip { font-size:.82rem; padding:.4rem .8rem; border-radius:999px; border:1px solid var(--line); background: var(--surface); color: var(--ink-soft); box-shadow: var(--shadow); }
+
+  .slide--statement { align-items:center; text-align:center; }
+  .slide--statement .inner { text-align:center; display:flex; flex-direction:column; align-items:center; }
+  .slide--statement h2 { font-size: clamp(1.9rem,6vw,3.4rem); }
+  .big-badge { font-family: var(--font-mono); font-size:.74rem; letter-spacing:.14em; text-transform:uppercase; color: var(--accent);
+    background: var(--accent-tint); padding:.42rem .95rem; border-radius:999px; margin-bottom:1.3rem; }
+
+  .q-list { list-style:none; margin:1.2rem 0 0; padding:0; display:grid; gap:.6rem; }
+  .q-list li { display:flex; gap:.75rem; align-items:flex-start; background: var(--surface); border:1px solid var(--line);
+    border-radius:16px; padding:.75rem .95rem; box-shadow: var(--shadow); font-size:1.02rem; }
+  .q-list li::before { content: attr(data-n); flex:none; font-family: var(--font-mono); font-size:.72rem; font-weight:700;
+    color: var(--accent); background: var(--accent-tint); width:1.55rem; height:1.55rem; border-radius:9px; display:grid; place-items:center; margin-top:.08rem; }
+  .notes { width:100%; margin-top:1rem; min-height:4.4rem; resize:vertical; font:inherit; color: var(--ink);
+    background: var(--surface); border:1px dashed color-mix(in srgb, var(--accent) 45%, var(--line)); border-radius:14px; padding:.7rem .9rem; box-shadow: var(--shadow); }
+  .notes::placeholder { color: var(--ink-faint); }
+
+  .grid { display:grid; gap:.75rem; margin-top:1.1rem; }
+  .g2 { grid-template-columns: repeat(2,1fr); }
+  .g3 { grid-template-columns: repeat(3,1fr); }
+  @media (max-width:680px){ .g2,.g3 { grid-template-columns:1fr; } }
+  .card { background: var(--surface); border:1px solid var(--line); border-radius:18px; padding:1rem 1.1rem; box-shadow: var(--shadow); }
+  .card h3 { display:flex; align-items:center; gap:.5rem; margin-bottom:.5rem; font-family: var(--font-body); font-weight:700;
+    font-size:.76rem; text-transform:uppercase; letter-spacing:.07em; color: var(--accent); }
+  .card ul { margin:0; padding-left:1.1rem; }
+  .card li { margin:.28rem 0; }
+  .card .ex { font-family: var(--font-display); font-style: italic; }
+  .chips { display:flex; flex-wrap:wrap; gap:.4rem; margin-top:.6rem; }
+  .chips .sig { font-family: var(--font-mono); font-size:.72rem; padding:.2rem .55rem; border-radius:8px;
+    background: var(--accent-tint); color: var(--accent); }
+  .prompt-bank { margin-top:.9rem; padding:.75rem 1rem; border-left:3px solid var(--accent); background: var(--accent-tint); border-radius:0 12px 12px 0; font-size:.96rem; }
+  .prompt-bank b { color: var(--accent); }
+  .trap { margin-top:.9rem; padding:.75rem 1rem; border-left:3px solid var(--bad); background: var(--bad-t); border-radius:0 12px 12px 0; font-size:.96rem; }
+  .trap b { color: var(--bad); }
+  .trap .arw { font-family: var(--font-mono); }
+
+  /* Gap-fill exercises */
+  .exset { list-style:none; margin:1rem 0 0; padding:0; display:grid; gap:.55rem; }
+  .exq { background: var(--surface); border:1px solid var(--line); border-radius:14px; padding:.6rem .85rem;
+    box-shadow: var(--shadow); display:flex; align-items:center; justify-content:space-between; gap:.7rem; flex-wrap:wrap; }
+  .exq .q { font-size:1.02rem; line-height:1.9; }
+  .exq .q em { color: var(--ink-faint); font-style: italic; font-family: var(--font-mono); font-size:.82em; }
+  .gap { font:inherit; color: var(--ink); background: var(--accent-tint); border:none; border-bottom:2px solid var(--accent);
+    border-radius:8px 8px 3px 3px; padding:.12rem .5rem; width:8rem; max-width:60vw; text-align:center; }
+  .gap.w-lg { width:12rem; }
+  .gap.gap-s { width:6rem; }
+  .gap:focus { outline:none; box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent); }
+  .gap.ok { border-color: var(--good); background: var(--good-t); color: var(--ink); }
+  .gap.no { border-color: var(--bad); background: var(--bad-t); }
+  .v { font-family: var(--font-mono); font-size:.82rem; font-weight:700; min-width:1.5rem; white-space:nowrap; }
+  .v.good { color: var(--good); }
+  .v.bad { color: var(--bad); }
+
+  /* Open cloze paragraph */
+  .cloze { background: var(--surface); border:1px solid var(--line); border-radius:16px; padding:1rem 1.2rem;
+    box-shadow: var(--shadow); line-height: 2.5; font-size:1.05rem; margin-top:1rem; }
+  .cloze .cz { display:inline; }
+  .cloze .cz .num { font-family: var(--font-mono); font-size:.68rem; color: var(--accent); vertical-align:super; margin-right:.1rem; }
+
+  /* Multiple choice */
+  .mcset { list-style:none; margin:1rem 0 0; padding:0; display:grid; gap:.7rem; }
+  .mcq { background: var(--surface); border:1px solid var(--line); border-radius:14px; padding:.75rem .95rem; box-shadow: var(--shadow); }
+  .mcq .q { font-size:1.02rem; font-weight:600; margin-bottom:.55rem; }
+  .opts { display:grid; gap:.4rem; grid-template-columns: repeat(2,1fr); }
+  @media (max-width:600px){ .opts { grid-template-columns:1fr; } }
+  .opt { text-align:left; font:inherit; font-size:.96rem; cursor:pointer; background: var(--paper); color: var(--ink);
+    border:1px solid var(--line); border-radius:10px; padding:.45rem .7rem; transition: border-color .15s, background .15s; }
+  .opt:hover { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
+  .opt.sel { border-color: var(--accent); background: var(--accent-tint); }
+  .opt.correct { border-color: var(--good); background: var(--good-t); color: var(--ink); font-weight:700; }
+  .opt.wrong { border-color: var(--bad); background: var(--bad-t); }
+
+  /* Reading text */
+  .reading { background: var(--surface); border:1px solid var(--line); border-radius:16px; padding:1rem 1.2rem;
+    box-shadow: var(--shadow); font-size:1rem; line-height:1.75; margin-top:.6rem; max-height:46vh; overflow-y:auto; }
+  .reading p { margin:.5rem 0; }
+  .reading .ttl { font-family: var(--font-display); font-weight:700; font-size:1.15rem; color: var(--accent); }
+  .reading .par { font-family: var(--font-mono); font-size:.68rem; color: var(--accent); background: var(--accent-tint);
+    border-radius:6px; padding:.05rem .35rem; margin-right:.4rem; vertical-align:.08em; }
+  .reading b.kw { color: var(--accent); }
+  .glossary { margin-top:.7rem; font-size:.9rem; color: var(--ink-soft); background: var(--accent-tint);
+    border-radius:12px; padding:.6rem .9rem; }
+  .glossary b { color: var(--accent); }
+
+  .extools { display:flex; flex-wrap:wrap; align-items:center; gap:.5rem; margin-top:1rem; }
+  .extools button { font:inherit; font-size:.82rem; cursor:pointer; border-radius:999px; padding:.4rem .95rem; box-shadow: var(--shadow); }
+  .extools .check { background: var(--accent); color:#fff; border:1px solid var(--accent); }
+  .extools .show, .extools .clear { background: var(--surface); color: var(--ink-soft); border:1px solid var(--line); }
+  .extools button:hover { filter: brightness(1.03); }
+  .extools .score { font-family: var(--font-mono); font-size:.82rem; font-weight:700; color: var(--accent); margin-left:.2rem; }
+
+  .steps { list-style:none; margin:1.1rem 0 0; padding:0; display:grid; gap:.55rem; }
+  .steps li { display:flex; gap:.85rem; align-items:flex-start; }
+  .steps .st-n { flex:none; width:1.9rem; height:1.9rem; border-radius:50%; background: var(--accent); color:#fff; display:grid; place-items:center; font-family: var(--font-mono); font-weight:700; font-size:.85rem; }
+  .steps .st-b { background: var(--surface); border:1px solid var(--line); border-radius:12px; padding:.55rem .85rem; flex:1; box-shadow: var(--shadow); }
+  .steps .st-b b { color: var(--accent); }
+
+  /* ===== Chess add-ons ===== */
+  .boardgrid { display:grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap:1.1rem; align-items:start; margin-top:.9rem; }
+  @media (max-width:760px){ .boardgrid { grid-template-columns:1fr; } }
+  .board { display:grid; grid-template-columns: repeat(8,1fr); width:100%; max-width:26rem; aspect-ratio:1/1;
+    border:3px solid var(--sq-dark); border-radius:10px; overflow:hidden; box-shadow: var(--shadow); }
+  .sq { display:grid; place-items:center; font-size: clamp(1rem,3.4vw,1.9rem); line-height:1; padding:0; border:0;
+    color: var(--sq-ink); background: var(--sq-light); font-family: "Segoe UI Symbol","Noto Sans Symbols2","DejaVu Sans",serif; }
+  .board > :nth-child(16n+2), .board > :nth-child(16n+4), .board > :nth-child(16n+6), .board > :nth-child(16n+8),
+  .board > :nth-child(16n+9), .board > :nth-child(16n+11), .board > :nth-child(16n+13), .board > :nth-child(16n+15) { background: var(--sq-dark); }
+  button.sq { cursor:pointer; transition: transform .1s, box-shadow .1s; }
+  button.sq:hover { transform: scale(1.12); z-index:2; }
+  button.sq.on { outline:3px solid var(--accent); outline-offset:-3px; transform: scale(1.12); z-index:3; }
+  .sq.w { color:#FFFDF8; text-shadow:0 1px 2px rgba(0,0,0,.45); }
+  .boardnote { font-size:.86rem; color: var(--ink-soft); margin-top:.5rem; }
+
+  .piecebar { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.9rem; }
+  .pchip { font:inherit; font-size:.92rem; font-weight:600; cursor:pointer; border:1px solid var(--line); background: var(--surface);
+    color: var(--ink); border-radius:999px; padding:.45rem .95rem; box-shadow: var(--shadow); transition: border-color .12s, background .12s; }
+  .pchip:hover { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
+  .pchip.on { background: var(--accent); color:#fff; border-color: var(--accent); }
+
+  .factbox { margin-top:.9rem; background: var(--surface); border:1px solid var(--line); border-left:4px solid var(--accent);
+    border-radius:14px; padding:.9rem 1.1rem; box-shadow: var(--shadow); min-height:5rem; }
+  .factbox .fb-name { font-family: var(--font-display); font-weight:700; font-size:1.18rem; color: var(--accent); line-height:1.2; }
+  .factbox .fb-cap { font-size:.9rem; color: var(--ink-soft); margin:.25rem 0; }
+  .factbox .fb-fact { font-size:1rem; margin-top:.15rem; }
+  .factbox .fb-hint { color: var(--ink-faint); font-size:.96rem; }
+
+  .timeline { list-style:none; margin:1rem 0 0; padding:0 0 0 1.1rem; border-left:2px dashed color-mix(in srgb, var(--accent) 45%, var(--line)); display:grid; gap:.6rem; }
+  .timeline li { position:relative; background: var(--surface); border:1px solid var(--line); border-radius:12px;
+    padding:.55rem .9rem; box-shadow: var(--shadow); font-size:.98rem; }
+  .timeline li::before { content:""; position:absolute; left:-1.42rem; top:1rem; width:10px; height:10px; border-radius:50%;
+    background: var(--accent); box-shadow:0 0 0 3px var(--accent-tint); }
+  .timeline .yr { font-family: var(--font-mono); font-size:.74rem; font-weight:700; color: var(--accent); margin-right:.5rem; }
+
+  .tbl { width:100%; border-collapse:collapse; margin-top:1rem; background: var(--surface); border-radius:14px; overflow:hidden; box-shadow: var(--shadow); font-size:.96rem; }
+  .tbl th, .tbl td { border:1px solid var(--line); padding:.45rem .7rem; text-align:left; }
+  .tbl th { background: var(--accent-tint); color: var(--accent); font-size:.76rem; text-transform:uppercase; letter-spacing:.06em; }
+
+  .nav { position: fixed; bottom:0; left:0; right:0; z-index:30; display:flex; align-items:center; justify-content:space-between; gap:1rem;
+    padding:.65rem clamp(.9rem,3vw,2rem); background: color-mix(in srgb, var(--paper) 84%, transparent); backdrop-filter: blur(8px); border-top:1px solid var(--line); }
+  .phase-label { font-family: var(--font-mono); font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; color: var(--ink-soft); }
+  .phase-label .pd { display:inline-block; width:9px; height:9px; border-radius:50%; background: var(--accent); margin-right:.45rem; vertical-align:middle; }
+  .nav-btns { display:flex; gap:.5rem; }
+  .nav button { font:inherit; font-size:.85rem; cursor:pointer; background: var(--surface); color: var(--ink); border:1px solid var(--line);
+    border-radius:11px; padding:.45rem .95rem; box-shadow: var(--shadow); }
+  .nav button:hover:not(:disabled) { border-color: color-mix(in srgb, var(--accent) 50%, var(--line)); color: var(--accent); }
+  .nav button:disabled { opacity:.4; cursor:default; }
+  .nav .kbd-hint { font-family: var(--font-mono); font-size:.66rem; color: var(--ink-faint); }
+  @media (max-width:560px){ .nav .kbd-hint { display:none; } }
+
+  :focus-visible { outline:2px solid var(--accent); outline-offset:2px; border-radius:6px; }
+
+  .phase-connect  { --accent: var(--c-connect);  --accent-tint: var(--c-connect-t); }
+  .phase-remember { --accent: var(--c-remember); --accent-tint: var(--c-remember-t); }
+  .phase-olympiad { --accent: var(--c-olympiad); --accent-tint: var(--c-olympiad-t); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .slide { transition: opacity .01s; transform:none; }
+    .progress > i { transition:none; }
+  }
+</style>
+</head>
+<body>
+<div class="deck">
+  <div class="topbar">
+    <div class="brand"><b>The Story of Chess ♟️</b><span class="lvl">B1–B2 · Reading</span></div>
+    <div class="progress"><i id="bar"></i></div>
+    <div class="counter"><span id="cur">1</span> / <span id="total">0</span></div>
+  </div>
+
+  <!-- 1 TITLE -->
+  <section class="slide phase-connect active" data-phase="Chess">
+    <div class="inner">
+      <div class="title-kicker">Reading · history · fun facts · 80–90 min</div>
+      <h1 style="margin-top:.7rem">The Game of <span class="hl">Kings</span> ♚</h1>
+      <p class="lead">A game that is <b>1,500 years old</b>, was born in India, changed its rules in Spain, travelled into space — and is still played by about 600 million people today. Let's read its story and steal some olympiad points on the way.</p>
+      <div class="title-meta">
+        <span class="chip">🗣️ Speaking warm-up</span>
+        <span class="chip">♟️ The pieces (click the board!)</span>
+        <span class="chip">📖 Reading 1 · Who invented chess?</span>
+        <span class="chip">📖 Reading 2 · How they played</span>
+        <span class="chip">🤯 Reading 3 · Fun facts</span>
+        <span class="chip">🔤 Vocabulary &amp; idioms</span>
+        <span class="chip">🏆 Olympiad practice</span>
+      </div>
+      <p class="instr" style="margin-top:1.4rem">▶ Use the <b>arrow keys</b> (or the buttons below) to move. In every task: type or click your answer, then press <b>Check ✓</b>.</p>
+    </div>
+  </section>
+
+  <!-- 2 SPEAKING WARM-UP -->
+  <section class="slide phase-connect" data-phase="Warm-up">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">02</span><span class="dot"></span> Speaking · Warm-up <span class="time">· ~7 min</span></div>
+      <h2>Before we read 🗣️</h2>
+      <p class="instr">Answer out loud in full sentences. Try to speak for 2–3 minutes. There are no wrong answers here — only short ones!</p>
+      <ul class="q-list">
+        <li data-n="1"><span>Can you play chess? Who taught you — or who could teach you?</span></li>
+        <li data-n="2"><span>Where do you think chess <b>comes from</b>? How old do you think it is? <span class="ru">(угадай, потом проверим)</span></span></li>
+        <li data-n="3"><span>Why do people call chess <b>"the game of kings"</b> and <b>"a sport for the mind"</b>?</span></li>
+        <li data-n="4"><span>Is chess a <b>sport</b>, a <b>science</b> or an <b>art</b>? Give at least one argument for each.</span></li>
+        <li data-n="5"><span>Which board games are popular in Russia? Do young people still play them, or only online games?</span></li>
+        <li data-n="6"><span>Have you heard of <b>Magnus Carlsen</b>, <b>Garry Kasparov</b> or the series <b>"The Queen's Gambit"</b>?</span></li>
+      </ul>
+      <div class="prompt-bank"><b>Useful language →</b> <em>I've always thought that… · As far as I know, it dates back to… · I'd say it's more of a … than a … · It's believed that…</em></div>
+    </div>
+  </section>
+
+  <!-- 3 GUESS FIRST -->
+  <section class="slide phase-connect" data-phase="Warm-up">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">03</span><span class="dot"></span> Guess before you know</div>
+      <h2>True or false? 🤔</h2>
+      <p class="instr">Say <b>True</b> or <b>False</b> out loud and give a reason — <em>"I think it's false because…"</em>. Then press <b>Check</b>. Everything here comes back later in the reading texts.</p>
+      <ul class="mcset">
+        <li class="mcq" data-c="1"><div class="q">1. Chess was invented in Russia.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">2. The word <b>checkmate</b> comes from Persian.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">3. The queen has always been the strongest piece on the board.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">4. There are more possible chess games than atoms in the observable universe.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">5. People have played chess in space.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">6. A computer first beat a world champion in a match in the 1990s.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button></div></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 4 THE BOARD: interactive pieces -->
+  <section class="slide phase-remember" data-phase="Vocabulary">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">04</span><span class="dot"></span> Vocabulary · The pieces <span class="time">· click the board!</span></div>
+      <h2>Meet the <span class="hl">pieces</span> ♜♞♝♛♚♟</h2>
+      <p class="instr">This is the <b>starting position</b>. Click any piece (or any button below the board) to learn its English name, how it moves, and where its name came from.</p>
+      <div class="reveal">
+        <div class="boardgrid">
+          <div>
+            <div class="board" id="board">
+              <button class="sq d" type="button" data-name="Rook ♜ <span class='ru'>— ладья</span>" data-cap="Moves: in straight lines, forwards, backwards and sideways" data-fact="In the very first version of chess this piece was a <b>war chariot</b>. Its English name comes from the Persian word <b>rukh</b>, meaning 'chariot' — not from the Russian 'ладья' (boat). Value: 5 points.">♜</button>
+              <button class="sq" type="button" data-name="Knight ♞ <span class='ru'>— конь</span>" data-cap="Moves: in an L-shape — two squares one way, then one to the side" data-fact="The only piece that can <b>jump over</b> other pieces. In Russian it is 'конь' (horse), but in English never say <em>horse</em> — say <b>knight</b> (the 'k' is silent: /naɪt/). Value: 3 points.">♞</button>
+              <button class="sq d" type="button" data-name="Bishop ♝ <span class='ru'>— слон</span>" data-cap="Moves: diagonally, as far as it likes" data-fact="Originally an <b>elephant</b> (that is why Russian kept 'слон'). The Arabs called it <b>al-fil</b> = 'the elephant'. The English turned it into a churchman — a bishop — because its top looked like a bishop's hat. Value: 3 points.">♝</button>
+              <button class="sq" type="button" data-name="Queen ♛ <span class='ru'>— ферзь</span>" data-cap="Moves: in any direction, any distance — the strongest piece" data-fact="For 900 years this piece was a <b>vizier</b> (the king's adviser) and it was almost the <b>weakest</b> piece: one square diagonally. Around 1475 in Spain and Italy it suddenly became the queen — and the most powerful piece on the board. Value: 9 points.">♛</button>
+              <button class="sq d" type="button" data-name="King ♚ <span class='ru'>— король</span>" data-cap="Moves: one square in any direction" data-fact="The king is never actually captured — the game ends the moment he cannot escape. That is <b>checkmate</b>. He is weak but priceless: lose him and you lose everything.">♚</button>
+              <button class="sq" type="button" data-name="Bishop ♝ <span class='ru'>— слон</span>" data-cap="Moves: diagonally, as far as it likes" data-fact="Each player has two bishops: one stays on light squares for the whole game, the other on dark squares. They can never meet!">♝</button>
+              <button class="sq d" type="button" data-name="Knight ♞ <span class='ru'>— конь</span>" data-cap="Moves: in an L-shape" data-fact="A knight in the corner is weak, a knight in the centre is strong. English players say: <em>'A knight on the rim is dim.'</em>">♞</button>
+              <button class="sq" type="button" data-name="Rook ♜ <span class='ru'>— ладья</span>" data-cap="Moves: in straight lines" data-fact="The rook is the only piece that helps the king in <b>castling</b> <span class='ru'>(рокировка)</span> — the one move where two pieces move at the same time.">♜</button>
+              <button class="sq" type="button" data-name="Pawn ♟ <span class='ru'>— пешка</span>" data-cap="Moves: one square forward, but captures diagonally" data-fact="The word <b>pawn</b> comes from Latin <em>pedo</em> — 'foot soldier'. Pawns can never go backwards, but if a pawn reaches the other side of the board it is <b>promoted</b> <span class='ru'>(превращается)</span> — usually into a queen. Value: 1 point.">♟</button>
+              <button class="sq d" type="button" data-name="Pawn ♟ <span class='ru'>— пешка</span>" data-cap="Moves: one square forward, captures diagonally" data-fact="'Pawns are the soul of chess,' said the French player Philidor in the 18th century. Weak alone, dangerous together.">♟</button>
+              <button class="sq" type="button" data-name="Pawn ♟ <span class='ru'>— пешка</span>" data-cap="Moves: one square forward, captures diagonally" data-fact="In English a <b>pawn</b> also means a person who is used by more powerful people: <em>'He was just a pawn in their game.'</em>">♟</button>
+              <button class="sq d" type="button" data-name="Pawn ♟ <span class='ru'>— пешка</span>" data-cap="Moves: one square forward, captures diagonally" data-fact="On its first move a pawn may jump two squares. This rule was added in Europe around the 15th century to make the game faster.">♟</button>
+              <button class="sq" type="button" data-name="Pawn ♟ <span class='ru'>— пешка</span>" data-cap="Moves: one square forward, captures diagonally" data-fact="Eight pawns per player, 16 in total — half of all the pieces on the board are pawns.">♟</button>
+              <button class="sq d" type="button" data-name="Pawn ♟ <span class='ru'>— пешка</span>" data-cap="Moves: one square forward, captures diagonally" data-fact="A pawn can capture a passing pawn 'in passing' — the strange French rule <b>en passant</b> <span class='ru'>(взятие на проходе)</span>.">♟</button>
+              <button class="sq" type="button" data-name="Pawn ♟ <span class='ru'>— пешка</span>" data-cap="Moves: one square forward, captures diagonally" data-fact="Theoretically you could have <b>nine queens</b> at once: your original queen plus eight promoted pawns.">♟</button>
+              <button class="sq d" type="button" data-name="Pawn ♟ <span class='ru'>— пешка</span>" data-cap="Moves: one square forward, captures diagonally" data-fact="Verbs you need: to <b>push</b> a pawn, to <b>capture / take</b> a piece, to <b>promote</b> a pawn, to <b>defend</b> and to <b>attack</b>.">♟</button>
+              <div class="sq"></div><div class="sq d"></div><div class="sq"></div><div class="sq d"></div><div class="sq"></div><div class="sq d"></div><div class="sq"></div><div class="sq d"></div>
+              <div class="sq d"></div><div class="sq"></div><div class="sq d"></div><div class="sq"></div><div class="sq d"></div><div class="sq"></div><div class="sq d"></div><div class="sq"></div>
+              <div class="sq"></div><div class="sq d"></div><div class="sq"></div><div class="sq d"></div><div class="sq"></div><div class="sq d"></div><div class="sq"></div><div class="sq d"></div>
+              <div class="sq d"></div><div class="sq"></div><div class="sq d"></div><div class="sq"></div><div class="sq d"></div><div class="sq"></div><div class="sq d"></div><div class="sq"></div>
+              <button class="sq w" type="button" data-name="White pawn ♙ <span class='ru'>— белая пешка</span>" data-cap="White always moves first" data-fact="White plays the first move — a small but real advantage. In English we say <em>'to have the white pieces'</em> or <em>'to play White'</em>.">♙</button>
+              <button class="sq d w" type="button" data-name="White pawn ♙" data-cap="One square forward, captures diagonally" data-fact="The row of pawns in front of the king is called the <b>pawn shield</b>. Never move it without a reason!">♙</button>
+              <button class="sq w" type="button" data-name="White pawn ♙" data-cap="One square forward" data-fact="The most popular first move in the world is <b>1.e4</b> — pushing the king's pawn two squares.">♙</button>
+              <button class="sq d w" type="button" data-name="White pawn ♙" data-cap="One square forward" data-fact="A pawn that has no enemy pawns in front of it is called a <b>passed pawn</b> <span class='ru'>(проходная пешка)</span> — very dangerous in the endgame.">♙</button>
+              <button class="sq w" type="button" data-name="White pawn ♙" data-cap="One square forward" data-fact="Two pawns on the same line are 'doubled pawns' — usually a weakness.">♙</button>
+              <button class="sq d w" type="button" data-name="White pawn ♙" data-cap="One square forward" data-fact="An <b>opening</b> is the first stage of the game, then comes the <b>middlegame</b>, then the <b>endgame</b>.">♙</button>
+              <button class="sq w" type="button" data-name="White pawn ♙" data-cap="One square forward" data-fact="A <b>gambit</b> is an opening where you give away a pawn on purpose to get a better position. In everyday English, an 'opening gambit' means a first clever move in a conversation or a negotiation.">♙</button>
+              <button class="sq d w" type="button" data-name="White pawn ♙" data-cap="One square forward" data-fact="If neither side can win, the game is a <b>draw</b> <span class='ru'>(ничья)</span>. Half a point each.">♙</button>
+              <button class="sq d w" type="button" data-name="White rook ♖ <span class='ru'>— ладья</span>" data-cap="Straight lines only" data-fact="Rooks are slow at the start and terrible in the endgame — for your opponent. Two rooks working together on one line are called 'doubled rooks'.">♖</button>
+              <button class="sq w" type="button" data-name="White knight ♘ <span class='ru'>— конь</span>" data-cap="The L-shape jumper" data-fact="A knight needs <b>at least</b> 2 moves to reach a square a rook reaches in one — but it is the only piece that can jump.">♘</button>
+              <button class="sq d w" type="button" data-name="White bishop ♗ <span class='ru'>— слон</span>" data-cap="Diagonals only" data-fact="Two bishops together are called 'the bishop pair' and are worth a little more than a bishop and a knight.">♗</button>
+              <button class="sq w" type="button" data-name="White queen ♕ <span class='ru'>— ферзь</span>" data-cap="Any direction, any distance" data-fact="Remember the rule: <b>the queen goes on her own colour</b> — the white queen starts on a light square, the black queen on a dark one.">♕</button>
+              <button class="sq d w" type="button" data-name="White king ♔ <span class='ru'>— король</span>" data-cap="One square in any direction" data-fact="<b>Check</b> = the king is attacked. <b>Checkmate</b> = attacked and there is no escape — game over. <b>Stalemate</b> <span class='ru'>(пат)</span> = not in check, but no legal move at all — a draw!">♔</button>
+              <button class="sq w" type="button" data-name="White bishop ♗" data-cap="Diagonals only" data-fact="In French the bishop is 'le fou' (the fool / jester), in German 'der Läufer' (the runner). Every language kept a different picture of the same piece.">♗</button>
+              <button class="sq d w" type="button" data-name="White knight ♘" data-cap="The L-shape jumper" data-fact="Knights are best in closed positions full of pawns; bishops prefer open boards.">♘</button>
+              <button class="sq w" type="button" data-name="White rook ♖" data-cap="Straight lines only" data-fact="A rook is worth about 5 pawns, so winning a rook for a knight is called 'winning the exchange'.">♖</button>
+            </div>
+            <p class="boardnote">♟ = black pieces (they always start at the top), ♙ = white (at the bottom). 64 squares, 32 pieces, 8 files (a–h) and 8 ranks (1–8).</p>
+          </div>
+          <div>
+            <div class="piecebar">
+              <button class="pchip" type="button" data-name="the board <span class='ru'>— доска</span>" data-cap="chessboard · squares · files · ranks" data-fact="The board has <b>64 squares</b> in 8 columns (called <b>files</b>, a–h) and 8 rows (called <b>ranks</b>, 1–8). Every square has an address, like <b>e4</b>. Golden rule: <em>white on the right</em> — the bottom-right square must be light.">🔲 The board</button>
+              <button class="pchip" type="button" data-name="Verbs of the game" data-cap="what you actually do" data-fact="to <b>make a move</b> · to <b>capture / take</b> a piece · to <b>attack</b> and <b>defend</b> · to <b>castle</b> <span class='ru'>(рокироваться)</span> · to <b>promote</b> a pawn · to <b>resign</b> <span class='ru'>(сдаться)</span> · to <b>offer a draw</b> · to <b>win / lose / draw</b> a game.">🎯 Key verbs</button>
+              <button class="pchip" type="button" data-name="check · checkmate · stalemate" data-cap="the three words everyone confuses" data-fact="<b>Check</b> = your king is under attack, you must react. <b>Checkmate</b> = under attack with no escape — you lose. <b>Stalemate</b> <span class='ru'>(пат)</span> = your king is NOT under attack but you have no legal move — the game is a <b>draw</b>. Many players have saved a lost game this way!">⚔️ Check or mate?</button>
+              <button class="pchip" type="button" data-name="Values of the pieces" data-cap="how strong is what" data-fact="pawn = 1 · knight = 3 · bishop = 3 · rook = 5 · queen = 9 · king = ∞ (priceless). These numbers are not official rules — they are just a way of thinking about a trade.">💎 Values</button>
+              <button class="pchip" type="button" data-name="Titles" data-cap="from beginner to legend" data-fact="The highest title is <b>Grandmaster (GM)</b>, then <b>International Master (IM)</b>. Your strength is measured by a number called a <b>rating</b> (the Elo rating). A beginner has about 800; a grandmaster over 2500.">🏅 Titles &amp; rating</button>
+            </div>
+            <div class="factbox"><div class="fb-hint">👆 Click a piece on the board — or a button above — and its story appears here.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 READING 1 -->
+  <section class="slide phase-remember" data-phase="Reading 1">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">05</span><span class="dot"></span> Reading 1 · Who invented chess? <span class="time">· ~8 min</span></div>
+      <h2>The <span class="hl">birth</span> of a game 🇮🇳</h2>
+      <p class="instr">Read the text once quickly. Don't stop at every unknown word — guess from context. The words in <b>bold</b> are explained under the text.</p>
+      <div class="reading">
+        <p class="ttl">Four armies on one board</p>
+        <p><span class="par">1</span>Nobody knows the name of the person who invented chess, and it is quite possible that nobody ever will. What historians do agree on is <b class="kw">where</b> and roughly <b class="kw">when</b> it happened: in northern India, some time before the year 600. The game was called <b>chaturanga</b>, a Sanskrit word meaning "four divisions" — the four parts of an ancient Indian army: the infantry, the cavalry, the elephants and the chariots. Look at a modern chessboard and you can still see them: the pawns are the foot soldiers, the knights are the horsemen, the bishops were once elephants, and the rooks were war chariots.</p>
+        <p><span class="par">2</span>A famous legend tells a different story. A wise man, it is said, invented the game for a bored king. The king was so <b>delighted</b> that he offered the inventor any <b>reward</b> he wanted. The wise man asked for something that sounded modest: one grain of rice on the first square of the board, two on the second, four on the third, and so on, doubling each time. The king laughed and agreed — and then his mathematicians discovered that there was not enough rice in the whole world to pay him. The story is almost certainly not true, but it is still the best way ever invented to explain how fast numbers can grow.</p>
+        <p><span class="par">3</span>From India the game travelled west to Persia, where it became <b>shatranj</b>. The Persians introduced two words that we still shout today. When a player attacked the king, he said <em>"Shah!"</em> — "King!". When the king could not escape, he said <em>"Shah mat!"</em> — "the king is <b>helpless</b>". Say those two words quickly in English and you get <b>check</b> and <b>checkmate</b>.</p>
+        <p><span class="par">4</span>In the 7th century the Arabs conquered Persia, fell in love with shatranj, and carried it across their empire. By the 10th century it had reached Spain and Italy; a hundred years later it was being played all over Europe, from Sicily to Iceland. The Church was not happy: several bishops tried to <b>ban</b> the game because players gambled on it, and one 12th-century priest, who was forbidden to play, is said to have invented the folding chessboard so that his board would look like two harmless books on a shelf.</p>
+      </div>
+      <div class="glossary"><b>Glossary:</b> a division <span class="ru">— род войск</span> · infantry <span class="ru">— пехота</span> · cavalry <span class="ru">— конница</span> · a chariot <span class="ru">— колесница</span> · delighted <span class="ru">— в восторге</span> · a reward <span class="ru">— награда</span> · a grain <span class="ru">— зёрнышко</span> · to double <span class="ru">— удваивать</span> · helpless <span class="ru">— беспомощный</span> · to conquer <span class="ru">— завоевать</span> · to ban <span class="ru">— запрещать</span> · to gamble <span class="ru">— играть на деньги</span> · folding <span class="ru">— складной</span></div>
+    </div>
+  </section>
+
+  <!-- 6 READING 1 TASKS -->
+  <section class="slide phase-remember" data-phase="Reading 1">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">06</span><span class="dot"></span> Task · True / False / Not stated</div>
+      <h2>Did you read carefully? 🔎</h2>
+      <p class="instr"><b>Not stated</b> = the text does not tell us, even if you think you know the answer from somewhere else. This is the classic olympiad trap!</p>
+      <ul class="mcset">
+        <li class="mcq" data-c="1"><div class="q">1. Historians know exactly who invented chess.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button><button class="opt" type="button">C) Not stated</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">2. The name <em>chaturanga</em> refers to the four parts of an army.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button><button class="opt" type="button">C) Not stated</button></div></li>
+        <li class="mcq" data-c="2"><div class="q">3. The king in the legend punished the wise man for being greedy.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button><button class="opt" type="button">C) Not stated</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">4. The words <em>check</em> and <em>checkmate</em> come from Persian.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button><button class="opt" type="button">C) Not stated</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">5. The Arabs learnt the game from the Indians directly.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button><button class="opt" type="button">C) Not stated</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">6. Some churchmen wanted to stop people playing chess.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button><button class="opt" type="button">C) Not stated</button></div></li>
+        <li class="mcq" data-c="2"><div class="q">7. The folding chessboard is still used by players today.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button><button class="opt" type="button">C) Not stated</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">8. Chess reached Iceland before it reached Spain.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button><button class="opt" type="button">C) Not stated</button></div></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 7 VOCAB FROM READING 1 -->
+  <section class="slide phase-remember" data-phase="Reading 1">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">07</span><span class="dot"></span> Task · Vocabulary from the text</div>
+      <h2>Find the word 🔤</h2>
+      <p class="instr">All the answers are <b>in Reading 1</b>. Write <b>one word</b> in each gap, exactly as it appears in the text.</p>
+      <ul class="exset">
+        <li class="exq" data-a="cavalry"><span class="q">1. Soldiers who fight on horses are the <input class="gap" aria-label="answer" autocomplete="off">. <em>(par. 1)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="chariots|chariot"><span class="q">2. Ancient armies fought from <input class="gap" aria-label="answer" autocomplete="off"> — vehicles pulled by horses. <em>(par. 1)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="reward"><span class="q">3. Something you get for doing something good: a <input class="gap" aria-label="answer" autocomplete="off">. <em>(par. 2)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="doubling|double"><span class="q">4. Making a number twice as big is <input class="gap" aria-label="answer" autocomplete="off"> it. <em>(par. 2)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="helpless"><span class="q">5. Unable to do anything to protect yourself: <input class="gap" aria-label="answer" autocomplete="off">. <em>(par. 3)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="conquered|conquer"><span class="q">6. The Arabs <input class="gap" aria-label="answer" autocomplete="off"> Persia — they took control of it by war. <em>(par. 4)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="ban"><span class="q">7. To officially say that something is not allowed is to <input class="gap" aria-label="answer" autocomplete="off"> it. <em>(par. 4)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="forbidden"><span class="q">8. The priest was <input class="gap" aria-label="answer" autocomplete="off"> to play — he was not allowed. <em>(par. 4)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="modest"><span class="q">9. His request sounded small and not greedy — it sounded <input class="gap" aria-label="answer" autocomplete="off">. <em>(par. 2)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="delighted"><span class="q">10. Very pleased and happy: <input class="gap" aria-label="answer" autocomplete="off">. <em>(par. 2)</em></span><span class="v"></span></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 8 READING 2 -->
+  <section class="slide phase-remember" data-phase="Reading 2">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">08</span><span class="dot"></span> Reading 2 · How did they play? <span class="time">· ~8 min</span></div>
+      <h2>The game that kept <span class="hl">changing</span> ⏳</h2>
+      <p class="instr">The chess of 1200 was <b>not</b> the chess we play now. Read and find out what changed — and who changed it.</p>
+      <div class="reading">
+        <p class="ttl">The slow game and the mad queen</p>
+        <p><span class="par">1</span>If you sat down opposite a medieval player, you would recognise the board, but you would probably lose your patience long before you lost the game. Old chess was <b>painfully slow</b>. The queen — who was then a male adviser called a <em>vizier</em> — could move only one square diagonally. The bishop, still an elephant, jumped exactly two squares and could reach only eight squares on the whole board. Pawns moved one step at a time; there was no castling. Games could last for days, and players often started from fixed positions to skip the boring beginning.</p>
+        <p><span class="par">2</span>Then, quite suddenly, everything changed. Around <b>1475</b>, somewhere in Spain or Italy, the vizier turned into a queen and was given the power to move as far as she liked in any direction. The bishop was set free at the same time. Contemporary players were shocked by the speed of the new game and gave it a nickname: <em>scacchi alla rabiosa</em> — "mad queen chess". Nobody knows exactly who suggested the change, but historians point out that Europe was then ruled by several very powerful queens, and Isabella of Castile was on the Spanish throne. Whatever the reason, the new rules spread across Europe in about fifty years, and the game we play today was essentially born.</p>
+        <p><span class="par">3</span>Two problems remained. The first was that there was no agreement about the details: castling, <em>en passant</em> and stalemate worked differently in different countries, and travelling players had to ask about the local rules before they sat down. The second was time. In the 19th century a player could think about a single move for two hours; in one famous match a game had to be stopped because both players had fallen asleep. In 1861 sand-glasses were used in a match in England, and in 1883 the first mechanical <b>chess clock</b> appeared. Suddenly thinking too long could cost you the game.</p>
+        <p><span class="par">4</span>The modern era began with two events. The first international tournament was held in London in 1851 and was won by a German teacher, Adolf Anderssen. Thirty-five years later, in 1886, Wilhelm Steinitz beat Johannes Zukertort in a match and became the first official <b>World Champion</b> — a title that has never been vacant since. Steinitz also changed the way people thought about the game: instead of wild attacks, he taught that you should build up small advantages patiently. Many players found this deeply boring. He was right anyway.</p>
+      </div>
+      <div class="glossary"><b>Glossary:</b> medieval <span class="ru">— средневековый</span> · patience <span class="ru">— терпение</span> · an adviser <span class="ru">— советник</span> · fixed <span class="ru">— заранее заданный</span> · contemporary <span class="ru">— тогдашний, современный тому времени</span> · a throne <span class="ru">— трон</span> · essentially <span class="ru">— по сути</span> · an agreement <span class="ru">— договорённость</span> · a sand-glass <span class="ru">— песочные часы</span> · vacant <span class="ru">— свободный, незанятый</span> · an advantage <span class="ru">— преимущество</span></div>
+    </div>
+  </section>
+
+  <!-- 9 READING 2 TASKS -->
+  <section class="slide phase-remember" data-phase="Reading 2">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">09</span><span class="dot"></span> Task · Multiple choice (reading comprehension)</div>
+      <h2>Choose the best answer 📖</h2>
+      <p class="instr">Careful — in olympiad reading tasks the wrong options usually contain <b>real words from the text</b> in the wrong combination.</p>
+      <ul class="mcset">
+        <li class="mcq" data-c="2"><div class="q">1. Why does the writer say you would "lose your patience" against a medieval player?</div><div class="opts"><button class="opt" type="button">A) Because medieval players cheated</button><button class="opt" type="button">B) Because the board looked different</button><button class="opt" type="button">C) Because the old game was extremely slow</button><button class="opt" type="button">D) Because there were no clocks</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">2. In old chess, the piece in the queen's place was…</div><div class="opts"><button class="opt" type="button">A) an elephant that jumped two squares</button><button class="opt" type="button">B) a male adviser who moved one square diagonally</button><button class="opt" type="button">C) the strongest piece on the board</button><button class="opt" type="button">D) a foot soldier</button></div></li>
+        <li class="mcq" data-c="3"><div class="q">3. The nickname "mad queen chess" tells us that people at the time were…</div><div class="opts"><button class="opt" type="button">A) angry with Queen Isabella</button><button class="opt" type="button">B) sure that the change was a mistake</button><button class="opt" type="button">C) unable to learn the new rules</button><button class="opt" type="button">D) surprised by how fast the new game was</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">4. According to the text, historians…</div><div class="opts"><button class="opt" type="button">A) have proved that Isabella changed the rules</button><button class="opt" type="button">B) can only suggest a possible reason for the change</button><button class="opt" type="button">C) believe the change happened in India</button><button class="opt" type="button">D) think the new rules took 500 years to spread</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">5. Before the 19th century, travelling players had a problem because…</div><div class="opts"><button class="opt" type="button">A) the rules were not the same everywhere</button><button class="opt" type="button">B) chess was banned in many countries</button><button class="opt" type="button">C) there were no international tournaments</button><button class="opt" type="button">D) they could not find opponents</button></div></li>
+        <li class="mcq" data-c="2"><div class="q">6. The chess clock changed the game because…</div><div class="opts"><button class="opt" type="button">A) it made games longer</button><button class="opt" type="button">B) it woke sleeping players up</button><button class="opt" type="button">C) time became part of the fight</button><button class="opt" type="button">D) it replaced the referee</button></div></li>
+        <li class="mcq" data-c="3"><div class="q">7. What is the writer's attitude to Steinitz in the last sentence?</div><div class="opts"><button class="opt" type="button">A) He thinks Steinitz was a boring man</button><button class="opt" type="button">B) He disagrees with Steinitz's ideas</button><button class="opt" type="button">C) He is sorry for Steinitz</button><button class="opt" type="button">D) He admits Steinitz was correct, even if unpopular</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">8. "A title that has never been vacant since" means that…</div><div class="opts"><button class="opt" type="button">A) there has always been a world champion since 1886</button><button class="opt" type="button">B) nobody has ever lost the title</button><button class="opt" type="button">C) the title is given every year</button><button class="opt" type="button">D) the title was invented in 1851</button></div></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 10 TIMELINE -->
+  <section class="slide phase-remember" data-phase="Reading 2">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">10</span><span class="dot"></span> Recap · 1,500 years in one screen</div>
+      <h2>The road from India to your phone 🗺️</h2>
+      <ul class="timeline">
+        <li><span class="yr">c. 550</span><b>India</b> — <em>chaturanga</em>: four armies, four types of piece.</li>
+        <li><span class="yr">c. 600</span><b>Persia</b> — <em>shatranj</em>. "Shah mat!" gives us <em>checkmate</em>.</li>
+        <li><span class="yr">7th c.</span><b>The Arab world</b> — the Arabs conquer Persia and take the game with them; the first books about openings are written.</li>
+        <li><span class="yr">c. 1000</span><b>Europe</b> — chess arrives through Spain and Italy and reaches the far north within 200 years.</li>
+        <li><span class="yr">1125</span>A priest invents the <b>folding board</b> to hide his games.</li>
+        <li><span class="yr">1474</span>One of the <b>first books printed in English</b> is about chess, published by William Caxton.</li>
+        <li><span class="yr">c. 1475</span><b>Spain / Italy</b> — the queen becomes the strongest piece: "mad queen chess". Modern rules are born.</li>
+        <li><span class="yr">1851</span>The <b>first international tournament</b>, London.</li>
+        <li><span class="yr">1883</span>The first mechanical <b>chess clock</b>.</li>
+        <li><span class="yr">1886</span><b>Wilhelm Steinitz</b> becomes the first official World Champion.</li>
+        <li><span class="yr">1970</span>Chess is played <b>in space</b>: the crew of Soyuz-9 against ground control.</li>
+        <li><span class="yr">1997</span>The computer <b>Deep Blue</b> beats World Champion Garry Kasparov in a match.</li>
+        <li><span class="yr">2020</span><b>"The Queen's Gambit"</b> appears on Netflix and online chess explodes worldwide.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 11 READING 3: FUN FACTS -->
+  <section class="slide phase-olympiad" data-phase="Reading 3">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">11</span><span class="dot"></span> Reading 3 · Fun facts <span class="time">· ~7 min</span></div>
+      <h2>Numbers that don't fit in your <span class="hl">head</span> 🤯</h2>
+      <div class="reading">
+        <p class="ttl">Six impossible things about chess</p>
+        <p><span class="par">1</span>Start with the mathematics, because it is the most frightening part. After each player has made just one move, 400 different positions are possible. After two moves each, there are 72,084. After three, over nine million. After four, more than <b>288 billion</b>. The total number of games that could theoretically be played is somewhere around 10<sup>120</sup> — a number so enormous that it comfortably beats the number of atoms in the observable universe. Every time you sit down to play, you are almost certainly making a game that has never been played before in human history.</p>
+        <p><span class="par">2</span>Real games, fortunately, are shorter — though not always. The longest tournament game on record was played in Belgrade in 1989 between Ivan Nikolić and Goran Arsović. It lasted 269 moves and more than twenty hours, and after all that effort it ended in a <b>draw</b>. In theory, a single game could last 5,949 moves before the rules force it to stop.</p>
+        <p><span class="par">3</span>Chess also travels well. In June 1970 the cosmonauts of Soyuz-9 played a game against two colleagues on the ground — the first chess match between space and Earth. It, too, was a draw. Back on this planet, the German-born player Timur Gareyev once played 48 games at the same time <b>blindfolded</b>, riding an exercise bike while he did it.</p>
+        <p><span class="par">4</span>Machines took longer to arrive. In 1997 an IBM computer called Deep Blue beat the World Champion Garry Kasparov 3½–2½. Kasparov, who had won easily the year before, could not believe that a machine had played so creatively and accused IBM of cheating; no evidence was ever found. Today a free chess app on an ordinary phone is far stronger than Deep Blue ever was, and no human being has any realistic chance against it.</p>
+        <p><span class="par">5</span>Finally, chess is bigger than ever. About 600 million adults play, and when the Netflix series <em>The Queen's Gambit</em> came out in 2020, sales of chess sets rose by more than 100% and millions of new players appeared online. For a game invented for kings and fought over by bishops, that is not a bad result after fifteen centuries.</p>
+      </div>
+      <div class="glossary"><b>Glossary:</b> frightening <span class="ru">— пугающий</span> · enormous <span class="ru">— огромный</span> · observable <span class="ru">— наблюдаемый</span> · on record <span class="ru">— зафиксированный</span> · effort <span class="ru">— усилие</span> · blindfolded <span class="ru">— с завязанными глазами</span> · to accuse <span class="ru">— обвинять</span> · evidence <span class="ru">— доказательства</span> · sales rose <span class="ru">— продажи выросли</span></div>
+    </div>
+  </section>
+
+  <!-- 12 FUN FACTS INTERACTIVE -->
+  <section class="slide phase-olympiad" data-phase="Fun facts">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">12</span><span class="dot"></span> Fun facts · click and collect</div>
+      <h2>Ten more facts to steal 💡</h2>
+      <p class="instr">Click a card, read the fact, then <b>say it back</b> in your own words. Perfect material for a speaking task or an essay.</p>
+      <div class="reveal">
+        <div class="piecebar">
+          <button class="pchip" type="button" data-name="The second book ever printed in English 📚" data-fact="William Caxton's <em>The Game and Playe of the Chesse</em> (1474) is one of the very first books ever printed in English. It is not really a chess manual — it uses the pieces to explain how society should be organised.">📚 A very old book</button>
+          <button class="pchip" type="button" data-name="Chess boxing 🥊" data-fact="A real sport invented in 2003: opponents play four minutes of speed chess, then box for three minutes, then play again — eleven rounds in total. You can win by checkmate <b>or</b> by knockout.">🥊 Chess boxing</button>
+          <button class="pchip" type="button" data-name="The Lewis Chessmen 🧔" data-fact="In 1831 a group of 12th-century chess pieces carved from walrus ivory was found on the Isle of Lewis in Scotland. Several of them are biting their shields with a worried expression — they are the oldest 'grumpy' chess faces in Europe.">🧔 The Lewis Chessmen</button>
+          <button class="pchip" type="button" data-name="The Turk 🤖" data-fact="In 1770 a machine called 'the Turk' amazed Europe by beating Napoleon and Benjamin Franklin at chess. It was a fake: a very small, very good human player was hidden inside the box. The trick worked for 84 years.">🤖 The fake robot</button>
+          <button class="pchip" type="button" data-name="The shortest possible checkmate ♟️" data-fact="'Fool's mate' — checkmate in <b>two moves</b>. All White has to do is move two pawns badly. It never happens between good players, but it makes a wonderful party trick.">⚡ Mate in two</button>
+          <button class="pchip" type="button" data-name="The word 'rook' 🏰" data-fact="It has nothing to do with towers or castles. It comes from Persian <b>rukh</b>, 'chariot'. Europeans did not know the word, so they drew something that looked like a castle tower — and the name stuck.">🏰 Where 'rook' comes from</button>
+          <button class="pchip" type="button" data-name="Bobby Fischer, 1972 🇺🇸🇷🇺" data-fact="The 1972 world championship match between the American Bobby Fischer and the Soviet Boris Spassky in Iceland was called 'the Match of the Century'. It was played at the height of the Cold War and followed by millions who could not play chess at all.">❄️ The Cold War match</button>
+          <button class="pchip" type="button" data-name="The youngest grandmaster 👦" data-fact="Abhimanyu Mishra became a grandmaster in 2021 at the age of <b>12 years and 4 months</b>. Sergey Karjakin held the record before him — he was 12 years and 7 months old in 2002.">👦 Grandmaster at 12</button>
+          <button class="pchip" type="button" data-name="Chess and the brain 🧠" data-fact="Grandmasters do not calculate more moves than club players — they recognise <b>patterns</b>. A strong player can look at a real position for five seconds and put every piece back correctly, but if the pieces are placed at random, their memory is no better than yours.">🧠 How masters think</button>
+          <button class="pchip" type="button" data-name="Magnus Carlsen 🇳🇴" data-fact="The Norwegian Magnus Carlsen became world champion in 2013 and reached the highest rating ever recorded (2882). In 2023 he simply refused to defend his title again, saying he was not motivated enough.">👑 The bored champion</button>
+        </div>
+        <div class="factbox"><div class="fb-hint">👆 Pick a card. Then tell your teacher the fact <b>without looking</b> — start with <em>"Apparently, …"</em> or <em>"It turns out that …"</em>.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13 READING 3 TASKS -->
+  <section class="slide phase-olympiad" data-phase="Practice">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">13</span><span class="dot"></span> Task · Reading 3 · True / False / Not stated</div>
+      <h2>Back to the facts ✅</h2>
+      <ul class="mcset">
+        <li class="mcq" data-c="0"><div class="q">1. There are more possible chess games than atoms in the observable universe.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button><button class="opt" type="button">C) Not stated</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">2. The longest tournament game ended in a win for Nikolić.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button><button class="opt" type="button">C) Not stated</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">3. The first chess match between space and Earth also ended in a draw.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button><button class="opt" type="button">C) Not stated</button></div></li>
+        <li class="mcq" data-c="2"><div class="q">4. Timur Gareyev won all 48 blindfold games.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button><button class="opt" type="button">C) Not stated</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">5. Kasparov had beaten Deep Blue before their 1997 match.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button><button class="opt" type="button">C) Not stated</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">6. It was proved that IBM had cheated.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button><button class="opt" type="button">C) Not stated</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">7. A modern phone app plays better chess than Deep Blue did.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button><button class="opt" type="button">C) Not stated</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">8. <em>The Queen's Gambit</em> more than doubled sales of chess sets.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button><button class="opt" type="button">C) Not stated</button></div></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 14 LANGUAGE FOCUS: PASSIVE -->
+  <section class="slide phase-olympiad" data-phase="Grammar">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">14</span><span class="dot"></span> Language focus · The language of history</div>
+      <h2>How to talk about the <span class="hl">past</span> of things 🏛️</h2>
+      <p class="instr">Every text you have just read is built on three grammar patterns. Olympiad papers love all three.</p>
+      <div class="grid g3">
+        <div class="card">
+          <h3>1 · Passive voice</h3>
+          <p>We use it when <b>who did it</b> is unknown or unimportant — exactly what happens in history.</p>
+          <ul>
+            <li>Chess <b>was invented</b> in India.</li>
+            <li>The game <b>is played</b> by 600 million people.</li>
+            <li>The rules <b>have been changed</b> many times.</li>
+            <li>The queen <b>was given</b> new powers.</li>
+          </ul>
+          <div class="chips"><span class="sig">be + V3</span><span class="sig">by + agent</span></div>
+        </div>
+        <div class="card">
+          <h3>2 · Reporting beliefs</h3>
+          <p>When we are <b>not sure</b>, English has ready-made phrases:</p>
+          <ul>
+            <li><b>It is said that</b> a wise man invented it.</li>
+            <li>The game <b>is believed to have come</b> from India.</li>
+            <li>He <b>is said to have invented</b> the folding board.</li>
+            <li><b>Apparently / Allegedly</b>, Napoleon lost to a machine.</li>
+          </ul>
+          <div class="chips"><span class="sig">it is said that…</span><span class="sig">is said to have + V3</span></div>
+        </div>
+        <div class="card">
+          <h3>3 · Dates &amp; periods</h3>
+          <ul>
+            <li><b>in</b> 1886 · <b>in</b> the 15th century · <b>in</b> the 1970s</li>
+            <li><b>by</b> the 10th century <span class="ru">(к…)</span></li>
+            <li>It <b>dates back to</b> the 6th century.</li>
+            <li>The game is <b>1,500 years old</b> / it goes back <b>1,500 years</b>.</li>
+            <li>a <b>15th-century</b> book <span class="en-note">(no -s in the adjective!)</span></li>
+          </ul>
+          <div class="chips"><span class="sig">date back to</span><span class="sig">by + time</span></div>
+        </div>
+      </div>
+      <div class="trap"><b>Traps →</b> <span class="arw">✗</span> <em>Chess invented in India.</em> → <span class="arw">✓</span> Chess <b>was</b> invented in India. · <span class="arw">✗</span> <em>in 15 century</em> → <span class="arw">✓</span> in <b>the 15th</b> century · <span class="arw">✗</span> <em>a 500-years-old game</em> → <span class="arw">✓</span> a <b>500-year-old</b> game.</div>
+    </div>
+  </section>
+
+  <!-- 15 PASSIVE PRACTICE -->
+  <section class="slide phase-olympiad" data-phase="Practice">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">15</span><span class="dot"></span> Task · Put the verb in the right form</div>
+      <h2>Active or passive? ⚙️</h2>
+      <p class="instr">Use the verb in brackets. Sometimes you need the <b>passive</b>, sometimes the <b>active</b> — read the whole sentence first.</p>
+      <ul class="exset">
+        <li class="exq" data-a="was invented"><span class="q">1. Chess <input class="gap w-lg" aria-label="answer" autocomplete="off"> in India before the year 600. <em>(invent)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="took|carried|brought"><span class="q">2. The Arabs <input class="gap" aria-label="answer" autocomplete="off"> the game across their empire. <em>(take)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="is called"><span class="q">3. Today the game <input class="gap w-lg" aria-label="answer" autocomplete="off"> chess in English and шахматы in Russian. <em>(call)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="have been played|have been playing"><span class="q">4. Millions of games <input class="gap w-lg" aria-label="answer" autocomplete="off"> online since 2020. <em>(play)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="was won"><span class="q">5. The first international tournament <input class="gap w-lg" aria-label="answer" autocomplete="off"> by Adolf Anderssen. <em>(win)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="beat"><span class="q">6. In 1997 Deep Blue <input class="gap" aria-label="answer" autocomplete="off"> Garry Kasparov. <em>(beat)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="is believed"><span class="q">7. It <input class="gap" aria-label="answer" autocomplete="off"> that the rules changed in Spain. <em>(believe)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="is said"><span class="q">8. The priest <input class="gap" aria-label="answer" autocomplete="off"> to have invented the folding board. <em>(say)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="was being played"><span class="q">9. By 1100 the game <input class="gap w-lg" aria-label="answer" autocomplete="off"> all over Europe. <em>(play — past continuous passive)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="will be remembered"><span class="q">10. Carlsen <input class="gap w-lg" aria-label="answer" autocomplete="off"> as one of the greatest players ever. <em>(remember — future passive)</em></span><span class="v"></span></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 16 WORD FORMATION -->
+  <section class="slide phase-olympiad" data-phase="Practice">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">16</span><span class="dot"></span> Task · Word formation</div>
+      <h2>Change the word 🔧</h2>
+      <p class="instr">Use the word in CAPITALS to form a word that fits the gap. Classic olympiad task — the answer is <b>never</b> the word itself.</p>
+      <ul class="exset">
+        <li class="exq" data-a="inventor"><span class="q">1. The <input class="gap" aria-label="answer" autocomplete="off"> of chess is unknown. <em>(INVENT)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="popularity"><span class="q">2. The <input class="gap" aria-label="answer" autocomplete="off"> of chess grew after 2020. <em>(POPULAR)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="players"><span class="q">3. Six hundred million <input class="gap" aria-label="answer" autocomplete="off"> take part worldwide. <em>(PLAY)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="competition"><span class="q">4. The London <input class="gap w-lg" aria-label="answer" autocomplete="off"> of 1851 was the first of its kind. <em>(COMPETE)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="scientific"><span class="q">5. Steinitz introduced a <input class="gap w-lg" aria-label="answer" autocomplete="off"> approach to the game. <em>(SCIENCE)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="knowledge"><span class="q">6. You need patience as well as <input class="gap w-lg" aria-label="answer" autocomplete="off">. <em>(KNOW)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="championship"><span class="q">7. The world <input class="gap w-lg" aria-label="answer" autocomplete="off"> is held every two years. <em>(CHAMPION)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="traditional"><span class="q">8. The <input class="gap w-lg" aria-label="answer" autocomplete="off"> pieces are made of wood. <em>(TRADITION)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="strategic"><span class="q">9. Chess is a deeply <input class="gap w-lg" aria-label="answer" autocomplete="off"> game. <em>(STRATEGY)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="unknown"><span class="q">10. His name is completely <input class="gap w-lg" aria-label="answer" autocomplete="off"> to historians. <em>(KNOWN)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="length"><span class="q">11. The <input class="gap" aria-label="answer" autocomplete="off"> of the game surprised everyone. <em>(LONG)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="impossible"><span class="q">12. Beating a modern engine is almost <input class="gap w-lg" aria-label="answer" autocomplete="off">. <em>(POSSIBLE)</em></span><span class="v"></span></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 17 OPEN CLOZE -->
+  <section class="slide phase-olympiad" data-phase="Practice">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">17</span><span class="dot"></span> Task · Open cloze</div>
+      <h2>Fill each gap with <span class="hl">ONE</span> word ✍️</h2>
+      <p class="cloze">
+        Chess is one of the oldest games
+        <span class="cz" data-a="in"><span class="num">1</span><input class="gap gap-s" aria-label="gap 1" autocomplete="off"></span>
+        the world. It dates back
+        <span class="cz" data-a="to"><span class="num">2</span><input class="gap gap-s" aria-label="gap 2" autocomplete="off"></span>
+        the sixth century, when it was invented
+        <span class="cz" data-a="in"><span class="num">3</span><input class="gap gap-s" aria-label="gap 3" autocomplete="off"></span>
+        northern India. Nobody knows
+        <span class="cz" data-a="who"><span class="num">4</span><input class="gap gap-s" aria-label="gap 4" autocomplete="off"></span>
+        first thought of it. The game was carried west
+        <span class="cz" data-a="by"><span class="num">5</span><input class="gap gap-s" aria-label="gap 5" autocomplete="off"></span>
+        the Arabs, and
+        <span class="cz" data-a="by"><span class="num">6</span><input class="gap gap-s" aria-label="gap 6" autocomplete="off"></span>
+        the year 1000 it had arrived in Europe. At first the queen was so weak
+        <span class="cz" data-a="that"><span class="num">7</span><input class="gap gap-s" aria-label="gap 7" autocomplete="off"></span>
+        games lasted for days,
+        <span class="cz" data-a="but|although|though"><span class="num">8</span><input class="gap gap-s" aria-label="gap 8" autocomplete="off"></span>
+        around 1475 she was given new powers. There are far
+        <span class="cz" data-a="more"><span class="num">9</span><input class="gap gap-s" aria-label="gap 9" autocomplete="off"></span>
+        possible games than atoms in the universe, so you will probably
+        <span class="cz" data-a="never"><span class="num">10</span><input class="gap gap-s" aria-label="gap 10" autocomplete="off"></span>
+        play the same game twice. If you
+        <span class="cz" data-a="have"><span class="num">11</span><input class="gap gap-s" aria-label="gap 11" autocomplete="off"></span>
+        never tried it, it is not too late: the game has been enjoyed
+        <span class="cz" data-a="for"><span class="num">12</span><input class="gap gap-s" aria-label="gap 12" autocomplete="off"></span>
+        fifteen centuries, and it is not going to disappear now.
+      </p>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 18 IDIOMS -->
+  <section class="slide phase-olympiad" data-phase="Idioms">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">18</span><span class="dot"></span> Vocabulary · Chess in everyday English</div>
+      <h2>Words that escaped from the <span class="hl">board</span> 🗝️</h2>
+      <p class="instr">English is full of chess. You can use every one of these without ever touching a chess piece.</p>
+      <table class="tbl">
+        <tr><th>Expression</th><th>Meaning</th><th>Example</th></tr>
+        <tr><td><b>a pawn</b> (in someone's game)</td><td>a person used by more powerful people <span class="ru">— пешка</span></td><td class="ex">The soldiers were just pawns in a political game.</td></tr>
+        <tr><td><b>(to reach a) stalemate</b></td><td>a situation where nobody can win or move forward <span class="ru">— тупик</span></td><td class="ex">The talks have reached a complete stalemate.</td></tr>
+        <tr><td><b>an opening gambit</b></td><td>a first clever move in a conversation or negotiation</td><td class="ex">"Nice weather" was his usual opening gambit.</td></tr>
+        <tr><td><b>the endgame</b></td><td>the final stage of a long process</td><td class="ex">We are now in the endgame of the negotiations.</td></tr>
+        <tr><td><b>to keep something in check</b></td><td>to keep something under control</td><td class="ex">Try to keep your nerves in check.</td></tr>
+        <tr><td><b>to checkmate someone</b></td><td>to defeat someone completely</td><td class="ex">Their lawyers checkmated us in the first hour.</td></tr>
+        <tr><td><b>to make the first move</b></td><td>to act before the other person does</td><td class="ex">Someone had to make the first move, so I called him.</td></tr>
+        <tr><td><b>to be a move ahead</b></td><td>to be better prepared than your rival</td><td class="ex">She is always one move ahead of everyone else.</td></tr>
+      </table>
+      <ul class="exset">
+        <li class="exq" data-a="stalemate"><span class="q">1. Neither side would give way, so the talks ended in a <input class="gap w-lg" aria-label="answer" autocomplete="off">.</span><span class="v"></span></li>
+        <li class="exq" data-a="pawn"><span class="q">2. He wasn't a real leader — he was just a <input class="gap" aria-label="answer" autocomplete="off"> in their game.</span><span class="v"></span></li>
+        <li class="exq" data-a="check"><span class="q">3. Exercise helps me keep my stress in <input class="gap" aria-label="answer" autocomplete="off">.</span><span class="v"></span></li>
+        <li class="exq" data-a="endgame"><span class="q">4. After two years of work, we've finally reached the <input class="gap w-lg" aria-label="answer" autocomplete="off">.</span><span class="v"></span></li>
+        <li class="exq" data-a="move"><span class="q">5. Don't wait for her to write — make the first <input class="gap" aria-label="answer" autocomplete="off">.</span><span class="v"></span></li>
+        <li class="exq" data-a="gambit"><span class="q">6. Asking about my journey was only his opening <input class="gap" aria-label="answer" autocomplete="off">.</span><span class="v"></span></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 19 ERROR CORRECTION -->
+  <section class="slide phase-olympiad" data-phase="Practice">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">19</span><span class="dot"></span> Task · Error correction</div>
+      <h2>Find the mistake 🩹</h2>
+      <p class="instr">Each sentence has <b>one</b> mistake. Write only the <b>corrected word or words</b> — not the whole sentence.</p>
+      <ul class="exset">
+        <li class="exq" data-a="was invented"><span class="q">1. Chess <em>invented</em> in India about 1,500 years ago. <input class="gap w-lg" aria-label="answer" autocomplete="off"></span><span class="v"></span></li>
+        <li class="exq" data-a="the 15th century|the fifteenth century"><span class="q">2. The rules changed in <em>15 century</em>. <input class="gap w-lg" aria-label="answer" autocomplete="off"></span><span class="v"></span></li>
+        <li class="exq" data-a="a 500-year-old|500-year-old"><span class="q">3. It is <em>a 500-years-old</em> tradition. <input class="gap w-lg" aria-label="answer" autocomplete="off"></span><span class="v"></span></li>
+        <li class="exq" data-a="information"><span class="q">4. He gave me some useful <em>informations</em> about openings. <input class="gap w-lg" aria-label="answer" autocomplete="off"></span><span class="v"></span></li>
+        <li class="exq" data-a="has been playing|has played"><span class="q">5. She <em>plays</em> chess since she was five. <input class="gap w-lg" aria-label="answer" autocomplete="off"></span><span class="v"></span></li>
+        <li class="exq" data-a="advice"><span class="q">6. My coach gave me two <em>advices</em> before the game. <input class="gap w-lg" aria-label="answer" autocomplete="off"></span><span class="v"></span></li>
+        <li class="exq" data-a="to"><span class="q">7. The game is believed <em>on</em> have come from India. <input class="gap w-lg" aria-label="answer" autocomplete="off"></span><span class="v"></span></li>
+        <li class="exq" data-a="won"><span class="q">8. Anderssen <em>win</em> the London tournament in 1851. <input class="gap w-lg" aria-label="answer" autocomplete="off"></span><span class="v"></span></li>
+        <li class="exq" data-a="better than"><span class="q">9. A phone app plays <em>more better as</em> Deep Blue. <input class="gap w-lg" aria-label="answer" autocomplete="off"></span><span class="v"></span></li>
+        <li class="exq" data-a="people"><span class="q">10. Six hundred million <em>peoples</em> play chess. <input class="gap w-lg" aria-label="answer" autocomplete="off"></span><span class="v"></span></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 20 FINAL TEST -->
+  <section class="slide phase-olympiad" data-phase="Final test">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">20</span><span class="dot"></span> Final test · everything together</div>
+      <h2>Ten questions, no looking back 🏆</h2>
+      <ul class="mcset">
+        <li class="mcq" data-c="2"><div class="q">1. Chess was invented in…</div><div class="opts"><button class="opt" type="button">A) Persia</button><button class="opt" type="button">B) Spain</button><button class="opt" type="button">C) India</button><button class="opt" type="button">D) China</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">2. <em>Chaturanga</em> means…</div><div class="opts"><button class="opt" type="button">A) "the king is helpless"</button><button class="opt" type="button">B) "four divisions"</button><button class="opt" type="button">C) "the game of kings"</button><button class="opt" type="button">D) "sixty-four squares"</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">3. The rook was originally a…</div><div class="opts"><button class="opt" type="button">A) chariot</button><button class="opt" type="button">B) tower</button><button class="opt" type="button">C) boat</button><button class="opt" type="button">D) elephant</button></div></li>
+        <li class="mcq" data-c="3"><div class="q">4. The piece that used to be a vizier is now the…</div><div class="opts"><button class="opt" type="button">A) king</button><button class="opt" type="button">B) bishop</button><button class="opt" type="button">C) knight</button><button class="opt" type="button">D) queen</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">5. <b>Stalemate</b> means that…</div><div class="opts"><button class="opt" type="button">A) the king is attacked and cannot escape</button><button class="opt" type="button">B) a player has no legal move but is not in check</button><button class="opt" type="button">C) a pawn becomes a queen</button><button class="opt" type="button">D) both players run out of time</button></div></li>
+        <li class="mcq" data-c="2"><div class="q">6. Choose the correct sentence.</div><div class="opts"><button class="opt" type="button">A) Chess is playing by millions.</button><button class="opt" type="button">B) Chess plays by millions.</button><button class="opt" type="button">C) Chess is played by millions.</button><button class="opt" type="button">D) Chess is play by millions.</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">7. The game … back to the sixth century.</div><div class="opts"><button class="opt" type="button">A) dates</button><button class="opt" type="button">B) goes on</button><button class="opt" type="button">C) takes</button><button class="opt" type="button">D) comes up</button></div></li>
+        <li class="mcq" data-c="3"><div class="q">8. Deep Blue beat Kasparov in…</div><div class="opts"><button class="opt" type="button">A) 1886</button><button class="opt" type="button">B) 1970</button><button class="opt" type="button">C) 2020</button><button class="opt" type="button">D) 1997</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">9. "The negotiations have reached a stalemate" means they…</div><div class="opts"><button class="opt" type="button">A) have finished successfully</button><button class="opt" type="button">B) cannot move forward</button><button class="opt" type="button">C) have just started</button><button class="opt" type="button">D) were cancelled</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">10. It … that a wise man invented the game for a bored king.</div><div class="opts"><button class="opt" type="button">A) is said</button><button class="opt" type="button">B) says</button><button class="opt" type="button">C) is saying</button><button class="opt" type="button">D) said</button></div></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 21 SPEAKING & WRITING -->
+  <section class="slide phase-connect" data-phase="Speaking">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">21</span><span class="dot"></span> Speaking &amp; writing · use what you've read</div>
+      <h2>Now it's your move ♟️🗣️</h2>
+      <p class="instr">Choose two questions and answer them for <b>1–2 minutes each</b>. Use at least three phrases from the box.</p>
+      <ul class="q-list">
+        <li data-n="1"><span>Retell the story of chess in <b>five sentences</b>: India → Persia → the Arab world → Europe → today.</span></li>
+        <li data-n="2"><span>Which fun fact surprised you most, and why? <span class="ru">(объясни, почему именно он)</span></span></li>
+        <li data-n="3"><span>Chess: sport, science or art? Give arguments <b>for both sides</b>, then your own opinion.</span></li>
+        <li data-n="4"><span>Should chess be taught at school like maths? Why / why not?</span></li>
+        <li data-n="5"><span>Computers now play far better than humans. Does that make chess <b>less</b> interesting — or more?</span></li>
+        <li data-n="6"><span>Invent your own piece for a new version of chess. What is it called and how does it move?</span></li>
+      </ul>
+      <div class="prompt-bank"><b>Phrase bank →</b> <em>It dates back to… · It is believed that… · Apparently, … · What surprised me most was… · On the one hand… on the other hand… · There's no doubt that… · To be honest, I'd say…</em></div>
+      <textarea class="notes" placeholder="✍️ Notes for your answer — key words only, not full sentences…"></textarea>
+    </div>
+  </section>
+
+  <!-- 22 HOMEWORK -->
+  <section class="slide phase-connect" data-phase="Homework">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">22</span><span class="dot"></span> Homework <span class="time">· ~40 min</span></div>
+      <h2>Take it home 🏠</h2>
+      <ul class="q-list">
+        <li data-n="1"><span>Learn <b>15 words</b> from today: chaturanga, chariot, cavalry, infantry, vizier, reward, helpless, to conquer, to ban, forbidden, blindfolded, evidence, advantage, a draw, to resign.</span></li>
+        <li data-n="2"><span>Write the <b>timeline of chess</b> from memory — at least eight dates with one sentence each. Use the <b>passive</b> in half of them.</span></li>
+        <li data-n="3"><span>Redo the <b>final test</b> and the <b>word-formation</b> task without looking at the texts. Aim for full marks.</span></li>
+        <li data-n="4"><span>Write <b>100–120 words</b>: <em>"Chess is more than just a game."</em> Do you agree? Use <b>it is believed that</b>, <b>dates back to</b> and one chess idiom.</span></li>
+        <li data-n="5"><span><span class="en-note">Optional:</span> play one game online (lichess.org is free) and describe it in five English sentences — who won, what your best move was, what you would do differently.</span></li>
+      </ul>
+      <p class="lead">You now know where chess came from, how the rules changed, and enough fun facts to win any conversation about it. Good game! 👋♟️</p>
+    </div>
+  </section>
+
+  <nav class="nav">
+    <span class="phase-label"><span class="pd" id="pd"></span><span id="phase">Chess</span></span>
+    <span class="kbd-hint">← → arrows to navigate</span>
+    <span class="nav-btns">
+      <button id="prev" aria-label="Previous slide">‹ Back</button>
+      <button id="next" aria-label="Next slide">Next ›</button>
+    </span>
+  </nav>
+</div>
+<script>
+  (function () {
+    var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+    var bar = document.getElementById('bar');
+    var cur = document.getElementById('cur');
+    var totalEl = document.getElementById('total');
+    var prev = document.getElementById('prev');
+    var next = document.getElementById('next');
+    var phaseEl = document.getElementById('phase');
+    var pd = document.getElementById('pd');
+    var i = 0;
+    totalEl.textContent = slides.length;
+
+    function phaseName(el){
+      if(el.getAttribute('data-phase')) return el.getAttribute('data-phase');
+      if(el.classList.contains('phase-remember')) return 'Discover';
+      if(el.classList.contains('phase-olympiad')) return 'Practice';
+      return 'Intro';
+    }
+
+    function show(n){
+      i = Math.max(0, Math.min(slides.length-1, n));
+      slides.forEach(function(s,k){ s.classList.toggle('active', k===i); });
+      var active = slides[i];
+      bar.style.width = ((i+1)/slides.length*100) + '%';
+      cur.textContent = i+1;
+      prev.disabled = i===0; next.disabled = i===slides.length-1;
+      phaseEl.textContent = phaseName(active);
+      var cs = getComputedStyle(active);
+      pd.style.background = cs.getPropertyValue('--accent');
+      phaseEl.style.color = cs.getPropertyValue('--accent');
+      var inner = active.querySelector('.inner'); if(inner) inner.scrollTop = 0;
+    }
+    function go(d){ show(i+d); }
+
+    next.addEventListener('click', function(){ go(1); });
+    prev.addEventListener('click', function(){ go(-1); });
+
+    document.addEventListener('keydown', function(e){
+      var t = e.target;
+      if(t && (t.tagName==='INPUT' || t.tagName==='TEXTAREA')) return;
+      if(t && t.tagName==='BUTTON' && (e.key===' ' || e.key==='Enter')) return;
+      if(e.key==='ArrowRight'||e.key==='PageDown'){ go(1); e.preventDefault(); }
+      else if(e.key==='ArrowLeft'||e.key==='PageUp'){ go(-1); e.preventDefault(); }
+      else if(e.key===' '){ go(1); e.preventDefault(); }
+      else if(e.key==='Home'){ show(0); }
+      else if(e.key==='End'){ show(slides.length-1); }
+    });
+
+    // ---- Answer checking ----
+    function normalize(s){ return (s||'').toLowerCase().replace(/’/g,"'").replace(/\s+/g,' ').trim().replace(/[.,!?;:]+$/,''); }
+    function firstAlt(item){ return (item.getAttribute('data-a')||'').split('|')[0]; }
+    function alts(item){ return (item.getAttribute('data-a')||'').split('|').map(normalize); }
+
+    function checkGaps(items, reveal){
+      var ok = 0, total = 0;
+      items.forEach(function(it){
+        var input = it.querySelector('.gap'); if(!input) return;
+        total++;
+        var v = it.querySelector('.v');
+        if(reveal){
+          input.value = firstAlt(it);
+          input.classList.remove('no'); input.classList.add('ok');
+          if(v){ v.className='v good'; v.textContent='✓'; }
+          ok++; return;
+        }
+        var val = normalize(input.value);
+        input.classList.remove('ok','no'); if(v) v.className='v';
+        if(val === ''){ if(v) v.textContent=''; return; }
+        if(alts(it).indexOf(val) !== -1){ input.classList.add('ok'); if(v){ v.className='v good'; v.textContent='✓'; } ok++; }
+        else { input.classList.add('no'); if(v){ v.className='v bad'; v.textContent='✗ ' + firstAlt(it); } }
+      });
+      return { ok: ok, total: total };
+    }
+
+    function checkMC(set, reveal){
+      var qs = set.querySelectorAll('.mcq'); var ok = 0;
+      qs.forEach(function(q){
+        var opts = q.querySelectorAll('.opt');
+        var c = parseInt(q.getAttribute('data-c'), 10);
+        opts.forEach(function(o){ o.classList.remove('correct','wrong'); });
+        if(reveal){
+          opts.forEach(function(o){ o.classList.remove('sel'); });
+          if(opts[c]){ opts[c].classList.add('sel','correct'); }
+          ok++; return;
+        }
+        var selIdx = -1;
+        opts.forEach(function(o,idx){ if(o.classList.contains('sel')) selIdx = idx; });
+        if(selIdx === -1) return;
+        if(selIdx === c){ opts[selIdx].classList.add('correct'); ok++; }
+        else { opts[selIdx].classList.add('wrong'); if(opts[c]) opts[c].classList.add('correct'); }
+      });
+      return { ok: ok, total: qs.length };
+    }
+
+    document.querySelectorAll('.mcq').forEach(function(q){
+      q.querySelectorAll('.opt').forEach(function(o){
+        o.addEventListener('click', function(){
+          q.querySelectorAll('.opt').forEach(function(x){ x.classList.remove('sel','correct','wrong'); });
+          o.classList.add('sel');
+        });
+      });
+    });
+
+    document.querySelectorAll('.extools').forEach(function(tools){
+      var inner = tools.closest('.inner');
+      var score = tools.querySelector('.score');
+      var exset = inner.querySelector('.exset');
+      var mcset = inner.querySelector('.mcset');
+      var cloze = inner.querySelector('.cloze');
+
+      function run(reveal){
+        var ok = 0, total = 0, r;
+        if(exset){ r = checkGaps(exset.querySelectorAll('.exq'), reveal); ok += r.ok; total += r.total; }
+        if(cloze){ r = checkGaps(cloze.querySelectorAll('.cz'), reveal); ok += r.ok; total += r.total; }
+        if(mcset){ r = checkMC(mcset, reveal); ok += r.ok; total += r.total; }
+        if(score){ score.textContent = ok + ' / ' + total + (ok===total ? '  🎉' : ''); }
+      }
+
+      tools.querySelector('.check').addEventListener('click', function(){ run(false); });
+      tools.querySelector('.show').addEventListener('click', function(){ run(true); });
+      tools.querySelector('.clear').addEventListener('click', function(){
+        inner.querySelectorAll('.gap').forEach(function(g){ g.value=''; g.classList.remove('ok','no'); });
+        inner.querySelectorAll('.v').forEach(function(v){ v.textContent=''; v.className='v'; });
+        inner.querySelectorAll('.opt').forEach(function(o){ o.classList.remove('sel','correct','wrong'); });
+        if(score) score.textContent='';
+      });
+      inner.querySelectorAll('.gap').forEach(function(g){
+        g.addEventListener('keydown', function(e){ if(e.key==='Enter'){ run(false); } });
+      });
+    });
+
+    // ---- Reveal panels (board pieces + fact chips) ----
+    document.querySelectorAll('.reveal').forEach(function(group){
+      var box = group.querySelector('.factbox');
+      var items = Array.prototype.slice.call(group.querySelectorAll('[data-name]'));
+      items.forEach(function(it){
+        it.addEventListener('click', function(){
+          items.forEach(function(x){ x.classList.remove('on'); });
+          it.classList.add('on');
+          if(!box) return;
+          var name = it.getAttribute('data-name') || '';
+          var cap = it.getAttribute('data-cap') || '';
+          var fact = it.getAttribute('data-fact') || '';
+          var html = '<div class="fb-name">' + name + '</div>';
+          if(cap){ html += '<div class="fb-cap">▸ ' + cap + '</div>'; }
+          html += '<div class="fb-fact">' + fact + '</div>';
+          box.innerHTML = html;
+        });
+      });
+    });
+
+    // Touch swipe (ignore form fields & buttons)
+    var x0 = null;
+    document.addEventListener('touchstart', function(e){
+      var t = e.target; if(t && (t.tagName==='INPUT'||t.tagName==='TEXTAREA'||t.tagName==='BUTTON')) { x0=null; return; }
+      x0 = e.touches[0].clientX;
+    }, {passive:true});
+    document.addEventListener('touchend', function(e){
+      if(x0===null) return;
+      var dx = e.changedTouches[0].clientX - x0;
+      if(Math.abs(dx) > 55) go(dx<0 ? 1 : -1);
+      x0 = null;
+    }, {passive:true});
+
+    show(0);
+  })();
+</script>
+</body>
+</html>

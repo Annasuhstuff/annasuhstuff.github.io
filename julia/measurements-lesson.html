@@ -1,0 +1,1320 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Weights &amp; Measures — Units in the English-speaking World (B1–B2)</title>
+<style>
+  :root {
+    --paper:   #FAF6FB;
+    --surface: #FFFFFF;
+    --ink:     #443F58;
+    --ink-soft:#7A7391;
+    --ink-faint:#ABA4BE;
+    --line:    #ECE4F1;
+
+    --c-connect:  #8A6FD1;  --c-connect-t:  #EFEAFB;
+    --c-remember: #2FA48C;  --c-remember-t: #E2F4EF;
+    --c-olympiad: #D0669B;  --c-olympiad-t: #FBE6F1;
+
+    --good:#2FA47F; --good-t:#E3F5EE;
+    --bad: #DE7189; --bad-t: #FBE7EC;
+
+    --marker: rgba(255,221,140,.62);
+    --shadow: 0 1px 2px rgba(90,70,120,.05), 0 10px 30px rgba(120,90,160,.09);
+
+    --accent: var(--c-connect);
+    --accent-tint: var(--c-connect-t);
+
+    --font-display: "Trebuchet MS", ui-rounded, "SF Pro Rounded", "Segoe UI", system-ui, sans-serif;
+    --font-body: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:#201B2B; --surface:#2A2438; --ink:#EDE7F5; --ink-soft:#B7AECB; --ink-faint:#837a97; --line:#392F4C;
+      --c-connect:#B7A2F0; --c-connect-t:rgba(150,120,225,.17);
+      --c-remember:#5FD0B6; --c-remember-t:rgba(80,200,170,.15);
+      --c-olympiad:#F09BC4; --c-olympiad-t:rgba(230,120,175,.16);
+      --good:#5FCB9E; --good-t:rgba(60,180,130,.16); --bad:#F090A2; --bad-t:rgba(224,116,138,.16);
+      --marker:rgba(255,220,150,.24);
+      --shadow:0 1px 2px rgba(0,0,0,.3), 0 12px 34px rgba(0,0,0,.42);
+    }
+  }
+  :root[data-theme="light"]{
+    --paper:#FAF6FB; --surface:#FFFFFF; --ink:#443F58; --ink-soft:#7A7391; --ink-faint:#ABA4BE; --line:#ECE4F1;
+    --c-connect:#8A6FD1; --c-connect-t:#EFEAFB; --c-remember:#2FA48C; --c-remember-t:#E2F4EF; --c-olympiad:#D0669B; --c-olympiad-t:#FBE6F1;
+    --good:#2FA47F; --good-t:#E3F5EE; --bad:#DE7189; --bad-t:#FBE7EC; --marker:rgba(255,221,140,.62);
+    --shadow:0 1px 2px rgba(90,70,120,.05),0 10px 30px rgba(120,90,160,.09);
+  }
+  :root[data-theme="dark"]{
+    --paper:#201B2B; --surface:#2A2438; --ink:#EDE7F5; --ink-soft:#B7AECB; --ink-faint:#837a97; --line:#392F4C;
+    --c-connect:#B7A2F0; --c-connect-t:rgba(150,120,225,.17); --c-remember:#5FD0B6; --c-remember-t:rgba(80,200,170,.15);
+    --c-olympiad:#F09BC4; --c-olympiad-t:rgba(230,120,175,.16); --good:#5FCB9E; --good-t:rgba(60,180,130,.16);
+    --bad:#F090A2; --bad-t:rgba(224,116,138,.16); --marker:rgba(255,220,150,.24);
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 34px rgba(0,0,0,.42);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; }
+  body {
+    background: radial-gradient(1100px 600px at 100% -10%, var(--c-olympiad-t), transparent 60%), var(--paper);
+    color: var(--ink); font-family: var(--font-body); line-height: 1.5;
+    -webkit-font-smoothing: antialiased; overflow: hidden;
+  }
+  .deck { position: relative; height: 100dvh; width: 100%; }
+
+  .topbar { position: fixed; top:0; left:0; right:0; z-index:30; display:flex; align-items:center; gap:.9rem;
+    padding:.7rem clamp(.9rem,3vw,2rem); background: color-mix(in srgb, var(--paper) 84%, transparent);
+    backdrop-filter: blur(8px); border-bottom:1px solid var(--line); }
+  .brand { display:flex; align-items:baseline; gap:.5rem; font-size:.82rem; white-space:nowrap; }
+  .brand b { font-family: var(--font-display); font-weight:700; font-size:.98rem; }
+  .brand .lvl { font-family: var(--font-mono); font-size:.66rem; letter-spacing:.08em; color: var(--c-olympiad);
+    background: var(--c-olympiad-t); border-radius:999px; padding:.14rem .5rem; }
+  @media (max-width:620px){ .brand .lvl { display:none; } }
+  .progress { flex:1; height:6px; background: var(--line); border-radius:999px; overflow:hidden; min-width:40px; }
+  .progress > i { display:block; height:100%; width:0; border-radius:999px;
+    background: linear-gradient(90deg, var(--c-connect), var(--c-remember), var(--c-olympiad)); transition: width .35s ease; }
+  .counter { font-family: var(--font-mono); font-size:.74rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; white-space:nowrap; }
+
+  .slide { position:absolute; inset:0; display:flex; flex-direction:column;
+    padding: clamp(3.2rem,6.5vh,4.4rem) clamp(1rem,4vw,3rem) clamp(3.6rem,7vh,4.4rem);
+    opacity:0; visibility:hidden; transform: translateY(10px);
+    transition: opacity .4s ease, transform .4s ease, visibility .4s; overflow:hidden; }
+  .slide.active { opacity:1; visibility:visible; transform:none; }
+  .inner { width:100%; max-width:62rem; margin:auto; max-height:100%; overflow-y:auto; overflow-x:hidden; padding:.2rem; scrollbar-width:thin; }
+
+  .eyebrow { display:inline-flex; align-items:center; gap:.5rem; font-family: var(--font-mono); font-size:.72rem; font-weight:600;
+    letter-spacing:.12em; text-transform:uppercase; color: var(--accent); margin:0 0 .9rem; }
+  .eyebrow .num { color: var(--ink-faint); }
+  .eyebrow .dot { width:7px; height:7px; border-radius:50%; background: var(--accent); }
+  .eyebrow .time { color: var(--ink-faint); font-weight:500; }
+
+  h1,h2,h3 { font-family: var(--font-display); font-weight:700; text-wrap:balance; margin:0; line-height:1.14; }
+  h1 { font-size: clamp(2rem,6vw,3.4rem); }
+  h2 { font-size: clamp(1.4rem,3.8vw,2.3rem); margin-bottom:.4rem; }
+  h3 { font-size:1.02rem; }
+  .lead { color: var(--ink-soft); font-size: clamp(1rem,2.2vw,1.15rem); max-width:48ch; margin:.8rem 0 0; }
+  .instr { color: var(--ink-soft); font-size:.92rem; margin:.5rem 0 0; }
+  p { margin:.55rem 0; }
+  .hl { background: linear-gradient(180deg, transparent 56%, var(--marker) 56% 92%, transparent 92%); padding:0 .08em; border-radius:3px; }
+  .en-note { color: var(--ink-faint); font-style: italic; font-size:.9em; }
+  .ru { color: var(--ink-faint); font-size:.88em; }
+
+  .title-kicker { font-family: var(--font-mono); font-size:.78rem; letter-spacing:.18em; text-transform:uppercase; color: var(--c-olympiad); }
+  .title-meta { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1.6rem; }
+  .chip { font-size:.82rem; padding:.4rem .8rem; border-radius:999px; border:1px solid var(--line); background: var(--surface); color: var(--ink-soft); box-shadow: var(--shadow); }
+
+  .slide--statement { align-items:center; text-align:center; }
+  .slide--statement .inner { text-align:center; display:flex; flex-direction:column; align-items:center; }
+  .slide--statement h2 { font-size: clamp(1.9rem,6vw,3.4rem); }
+  .big-badge { font-family: var(--font-mono); font-size:.74rem; letter-spacing:.14em; text-transform:uppercase; color: var(--accent);
+    background: var(--accent-tint); padding:.42rem .95rem; border-radius:999px; margin-bottom:1.3rem; }
+
+  .q-list { list-style:none; margin:1.2rem 0 0; padding:0; display:grid; gap:.6rem; }
+  .q-list li { display:flex; gap:.75rem; align-items:flex-start; background: var(--surface); border:1px solid var(--line);
+    border-radius:16px; padding:.75rem .95rem; box-shadow: var(--shadow); font-size:1.02rem; }
+  .q-list li::before { content: attr(data-n); flex:none; font-family: var(--font-mono); font-size:.72rem; font-weight:700;
+    color: var(--accent); background: var(--accent-tint); width:1.55rem; height:1.55rem; border-radius:9px; display:grid; place-items:center; margin-top:.08rem; }
+  .notes { width:100%; margin-top:1rem; min-height:4.4rem; resize:vertical; font:inherit; color: var(--ink);
+    background: var(--surface); border:1px dashed color-mix(in srgb, var(--accent) 45%, var(--line)); border-radius:14px; padding:.7rem .9rem; box-shadow: var(--shadow); }
+  .notes::placeholder { color: var(--ink-faint); }
+
+  .grid { display:grid; gap:.75rem; margin-top:1.1rem; }
+  .g2 { grid-template-columns: repeat(2,1fr); }
+  .g3 { grid-template-columns: repeat(3,1fr); }
+  @media (max-width:680px){ .g2,.g3 { grid-template-columns:1fr; } }
+  .card { background: var(--surface); border:1px solid var(--line); border-radius:18px; padding:1rem 1.1rem; box-shadow: var(--shadow); }
+  .card h3 { display:flex; align-items:center; gap:.5rem; margin-bottom:.5rem; font-family: var(--font-body); font-weight:700;
+    font-size:.76rem; text-transform:uppercase; letter-spacing:.07em; color: var(--accent); }
+  .card ul { margin:0; padding-left:1.1rem; }
+  .card li { margin:.28rem 0; }
+  .card .ex { font-family: var(--font-display); font-style: italic; }
+  .chips { display:flex; flex-wrap:wrap; gap:.4rem; margin-top:.6rem; }
+  .chips .sig { font-family: var(--font-mono); font-size:.72rem; padding:.2rem .55rem; border-radius:8px;
+    background: var(--accent-tint); color: var(--accent); }
+  .prompt-bank { margin-top:.9rem; padding:.75rem 1rem; border-left:3px solid var(--accent); background: var(--accent-tint); border-radius:0 12px 12px 0; font-size:.96rem; }
+  .prompt-bank b { color: var(--accent); }
+  .trap { margin-top:.9rem; padding:.75rem 1rem; border-left:3px solid var(--bad); background: var(--bad-t); border-radius:0 12px 12px 0; font-size:.96rem; }
+  .trap b { color: var(--bad); }
+  .trap .arw { font-family: var(--font-mono); }
+
+  /* Conversion rows */
+  .conv { display:grid; gap:.4rem; margin-top:.7rem; }
+  .conv .row { display:flex; flex-wrap:wrap; gap:.2rem .7rem; align-items:baseline; background: var(--surface);
+    border:1px solid var(--line); border-radius:12px; padding:.45rem .8rem; box-shadow: var(--shadow); font-size:.95rem; }
+  .conv .u { font-family: var(--font-display); font-weight:700; color: var(--accent); min-width:9.5rem; }
+  .conv .eq { font-family: var(--font-mono); font-size:.85rem; color: var(--ink-soft); }
+
+  /* Tables */
+  .tblwrap { overflow-x:auto; margin-top:1rem; border-radius:16px; border:1px solid var(--line); box-shadow: var(--shadow); background: var(--surface); }
+  table.tbl { border-collapse:collapse; width:100%; min-width:33rem; font-size:.9rem; }
+  .tbl th, .tbl td { padding:.5rem .7rem; text-align:left; border-bottom:1px solid var(--line); vertical-align:top; }
+  .tbl thead th { background: var(--accent-tint); color: var(--accent); font-size:.7rem; text-transform:uppercase; letter-spacing:.06em; white-space:nowrap; }
+  .tbl tbody tr:last-child td { border-bottom:none; }
+  .tbl .cn { font-weight:700; white-space:nowrap; }
+
+  /* Gap-fill exercises */
+  .exset { list-style:none; margin:1rem 0 0; padding:0; display:grid; gap:.55rem; }
+  .exq { background: var(--surface); border:1px solid var(--line); border-radius:14px; padding:.6rem .85rem;
+    box-shadow: var(--shadow); display:flex; align-items:center; justify-content:space-between; gap:.7rem; flex-wrap:wrap; }
+  .exq .q { font-size:1.02rem; line-height:1.9; }
+  .exq .q em { color: var(--ink-faint); font-style: italic; font-family: var(--font-mono); font-size:.82em; }
+  .gap { font:inherit; color: var(--ink); background: var(--accent-tint); border:none; border-bottom:2px solid var(--accent);
+    border-radius:8px 8px 3px 3px; padding:.12rem .5rem; width:8rem; max-width:60vw; text-align:center; }
+  .gap.w-lg { width:12rem; }
+  .gap.gap-s { width:6rem; }
+  .gap:focus { outline:none; box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent); }
+  .gap.ok { border-color: var(--good); background: var(--good-t); color: var(--ink); }
+  .gap.no { border-color: var(--bad); background: var(--bad-t); }
+  .v { font-family: var(--font-mono); font-size:.82rem; font-weight:700; min-width:1.5rem; white-space:nowrap; }
+  .v.good { color: var(--good); }
+  .v.bad { color: var(--bad); }
+
+  /* Open cloze paragraph */
+  .cloze { background: var(--surface); border:1px solid var(--line); border-radius:16px; padding:1rem 1.2rem;
+    box-shadow: var(--shadow); line-height: 2.5; font-size:1.05rem; margin-top:1rem; }
+  .cloze .cz { display:inline; }
+  .cloze .cz .num { font-family: var(--font-mono); font-size:.68rem; color: var(--accent); vertical-align:super; margin-right:.1rem; }
+
+  /* Multiple choice */
+  .mcset { list-style:none; margin:1rem 0 0; padding:0; display:grid; gap:.7rem; }
+  .mcq { background: var(--surface); border:1px solid var(--line); border-radius:14px; padding:.75rem .95rem; box-shadow: var(--shadow); }
+  .mcq .q { font-size:1.02rem; font-weight:600; margin-bottom:.55rem; }
+  .opts { display:grid; gap:.4rem; grid-template-columns: repeat(2,1fr); }
+  @media (max-width:600px){ .opts { grid-template-columns:1fr; } }
+  .opt { text-align:left; font:inherit; font-size:.96rem; cursor:pointer; background: var(--paper); color: var(--ink);
+    border:1px solid var(--line); border-radius:10px; padding:.45rem .7rem; transition: border-color .15s, background .15s; }
+  .opt:hover { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
+  .opt.sel { border-color: var(--accent); background: var(--accent-tint); }
+  .opt.correct { border-color: var(--good); background: var(--good-t); color: var(--ink); font-weight:700; }
+  .opt.wrong { border-color: var(--bad); background: var(--bad-t); }
+
+  /* Reading text */
+  .reading { background: var(--surface); border:1px solid var(--line); border-radius:16px; padding:1rem 1.2rem;
+    box-shadow: var(--shadow); font-size:1rem; line-height:1.7; margin-top:.6rem; max-height:32vh; overflow-y:auto; }
+  .reading p { margin:.4rem 0; }
+
+  .extools { display:flex; flex-wrap:wrap; align-items:center; gap:.5rem; margin-top:1rem; }
+  .extools button { font:inherit; font-size:.82rem; cursor:pointer; border-radius:999px; padding:.4rem .95rem; box-shadow: var(--shadow); }
+  .extools .check { background: var(--accent); color:#fff; border:1px solid var(--accent); }
+  .extools .show, .extools .clear { background: var(--surface); color: var(--ink-soft); border:1px solid var(--line); }
+  .extools button:hover { filter: brightness(1.03); }
+  .extools .score { font-family: var(--font-mono); font-size:.82rem; font-weight:700; color: var(--accent); margin-left:.2rem; }
+
+  .steps { list-style:none; margin:1.1rem 0 0; padding:0; display:grid; gap:.55rem; }
+  .steps li { display:flex; gap:.85rem; align-items:flex-start; }
+  .steps .st-n { flex:none; width:1.9rem; height:1.9rem; border-radius:50%; background: var(--accent); color:#fff; display:grid; place-items:center; font-family: var(--font-mono); font-weight:700; font-size:.85rem; }
+  .steps .st-b { background: var(--surface); border:1px solid var(--line); border-radius:12px; padding:.55rem .85rem; flex:1; box-shadow: var(--shadow); }
+  .steps .st-b b { color: var(--accent); }
+
+  /* Clickable country panel */
+  .citybar { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1rem; }
+  .citychip { font:inherit; font-size:.92rem; font-weight:600; cursor:pointer; border:1px solid var(--line); background: var(--surface);
+    color: var(--ink); border-radius:999px; padding:.45rem .95rem; box-shadow: var(--shadow); transition: border-color .12s, background .12s; }
+  .citychip:hover { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
+  .citychip.on { background: var(--accent); color:#fff; border-color: var(--accent); }
+
+  .factbox { margin-top:.9rem; background: var(--surface); border:1px solid var(--line); border-left:4px solid var(--accent);
+    border-radius:14px; padding:.9rem 1.1rem; box-shadow: var(--shadow); min-height:6rem; }
+  .factbox .fb-name { font-family: var(--font-display); font-weight:700; font-size:1.18rem; color: var(--accent); line-height:1.2; }
+  .factbox .fb-cap { font-size:.9rem; color: var(--ink-soft); margin:.25rem 0; }
+  .factbox .fb-fact { font-size:1rem; margin-top:.15rem; }
+  .factbox .fb-hint { color: var(--ink-faint); font-size:.96rem; }
+
+  .nav { position: fixed; bottom:0; left:0; right:0; z-index:30; display:flex; align-items:center; justify-content:space-between; gap:1rem;
+    padding:.65rem clamp(.9rem,3vw,2rem); background: color-mix(in srgb, var(--paper) 84%, transparent); backdrop-filter: blur(8px); border-top:1px solid var(--line); }
+  .phase-label { font-family: var(--font-mono); font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; color: var(--ink-soft); }
+  .phase-label .pd { display:inline-block; width:9px; height:9px; border-radius:50%; background: var(--accent); margin-right:.45rem; vertical-align:middle; }
+  .nav-btns { display:flex; gap:.5rem; }
+  .nav button { font:inherit; font-size:.85rem; cursor:pointer; background: var(--surface); color: var(--ink); border:1px solid var(--line);
+    border-radius:11px; padding:.45rem .95rem; box-shadow: var(--shadow); }
+  .nav button:hover:not(:disabled) { border-color: color-mix(in srgb, var(--accent) 50%, var(--line)); color: var(--accent); }
+  .nav button:disabled { opacity:.4; cursor:default; }
+  .nav .kbd-hint { font-family: var(--font-mono); font-size:.66rem; color: var(--ink-faint); }
+  @media (max-width:560px){ .nav .kbd-hint { display:none; } }
+
+  :focus-visible { outline:2px solid var(--accent); outline-offset:2px; border-radius:6px; }
+
+  .phase-connect  { --accent: var(--c-connect);  --accent-tint: var(--c-connect-t); }
+  .phase-remember { --accent: var(--c-remember); --accent-tint: var(--c-remember-t); }
+  .phase-olympiad { --accent: var(--c-olympiad); --accent-tint: var(--c-olympiad-t); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .slide { transition: opacity .01s; transform:none; }
+    .progress > i { transition:none; }
+  }
+</style>
+</head>
+<body>
+<div class="deck">
+  <div class="topbar">
+    <div class="brand"><b>Weights &amp; Measures ⚖️</b><span class="lvl">B1–B2 · Units &amp; quantities</span></div>
+    <div class="progress"><i id="bar"></i></div>
+    <div class="counter"><span id="cur">1</span> / <span id="total">0</span></div>
+  </div>
+
+  <!-- 1 TITLE -->
+  <section class="slide phase-remember active" data-phase="Measures">
+    <div class="inner">
+      <div class="title-kicker">Vocabulary + country studies · 90 min</div>
+      <h1 style="margin-top:.7rem">Miles, pounds and a <span class="hl">pinch</span> of salt 🥄</h1>
+      <p class="lead">How do people <b>measure the world</b> in English? Who uses kilograms and who uses pounds, why a British pint is bigger than an American one, and how to say <em>«полчайной ложки»</em>, <em>«горсть»</em> and <em>«щепотка»</em>.</p>
+      <div class="title-meta">
+        <span class="chip">🌍 Metric vs imperial</span>
+        <span class="chip">🇬🇧🇺🇸🇨🇦🇦🇺 Who uses what</span>
+        <span class="chip">⚖️ Weight · 📏 Length · 🥤 Volume</span>
+        <span class="chip">🌾 Acres &amp; hectares</span>
+        <span class="chip">🌡️ °F / °C</span>
+        <span class="chip">🍳 Kitchen language</span>
+        <span class="chip">🤏 A pinch, a handful, a dash</span>
+        <span class="chip">🏆 Olympiad practice</span>
+      </div>
+      <p class="instr" style="margin-top:1.4rem">▶ Use the <b>arrow keys</b> (or the buttons below) to move. In every task: type or click your answer, then press <b>Check ✓</b>.</p>
+    </div>
+  </section>
+
+  <!-- 2 SPEAKING WARM-UP -->
+  <section class="slide phase-connect" data-phase="Warm-up">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">02</span><span class="dot"></span> Speaking · Warm-up <span class="time">· ~7 min</span></div>
+      <h2>How do <span class="hl">you</span> measure things? 🗣️</h2>
+      <p class="instr">Answer out loud in full sentences. Don't worry about the exact numbers — the words are what matter.</p>
+      <ul class="q-list">
+        <li data-n="1"><span>How <b>tall</b> are you and how much do you <b>weigh</b>? Now try to say it the American way — in <b>feet, inches and pounds</b>!</span></li>
+        <li data-n="2"><span>How far is it from your home to your school? Say it in <b>kilometres</b>, then in <b>miles</b> <span class="ru">(1 mile ≈ 1.6 km)</span>.</span></li>
+        <li data-n="3"><span>What's the <b>temperature</b> outside today? Would an American say the same number?</span></li>
+        <li data-n="4"><span>Look at a recipe you know. Which <b>measuring words</b> does it use — spoons, cups, grams, "to taste"?</span></li>
+        <li data-n="5"><span>Have you ever seen a <b>British or American product</b> with strange units on the label (oz, lb, fl oz, °F)? </span></li>
+        <li data-n="6"><span>Why do you think the USA has <b>never changed</b> to the metric system?</span></li>
+      </ul>
+      <textarea class="notes" placeholder="✍️ Useful words from your answers…"></textarea>
+    </div>
+  </section>
+
+  <!-- 3 GUESS T/F -->
+  <section class="slide phase-connect" data-phase="Warm-up">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">03</span><span class="dot"></span> Guess before you know</div>
+      <h2>True or false? 🤔</h2>
+      <p class="instr">Say <b>True</b> or <b>False</b> out loud with a reason — <em>"I think it's… because…"</em>. Then press <b>Check</b>.</p>
+      <ul class="mcset">
+        <li class="mcq" data-c="1"><div class="q">1. Britain uses the metric system for absolutely everything.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">2. A British pint and an American pint are <b>different</b> sizes.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">3. Only three countries in the world are not officially metric.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">4. Australians measure distance in miles.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">5. British people usually give their body weight in <b>stones</b>.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">6. An <b>acre</b> is a measure of land, not of weight.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">7. In the USA petrol is sold in litres.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">8. The height of a horse is measured in <b>hands</b>.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button></div></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 4 TWO SYSTEMS -->
+  <section class="slide phase-remember" data-phase="Systems">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">04</span><span class="dot"></span> Theory · Two systems</div>
+      <h2>Metric vs imperial 🌍</h2>
+      <div class="grid g2">
+        <div class="card"><h3>The metric system (SI)</h3>
+          <ul>
+            <li>Length: <b>mm · cm · m · km</b></li>
+            <li>Weight: <b>mg · g · kg · tonne</b></li>
+            <li>Volume: <b>ml · litre (BrE) / liter (AmE)</b></li>
+            <li>Area: <b>m² · hectare · km²</b></li>
+            <li>Temperature: <b>degrees Celsius (°C)</b></li>
+            <li>Everything is divided by <b>ten</b> → easy maths</li>
+            <li>Born in <b>France</b> after the Revolution (1790s)</li>
+          </ul>
+          <div class="chips"><span class="sig">used by ~95% of the world</span></div>
+        </div>
+        <div class="card"><h3>Imperial &amp; US customary</h3>
+          <ul>
+            <li>Length: <b>inch · foot · yard · mile</b></li>
+            <li>Weight: <b>ounce · pound · stone · ton</b></li>
+            <li>Volume: <b>fl oz · pint · quart · gallon</b></li>
+            <li>Area: <b>square foot · acre · square mile</b></li>
+            <li>Temperature: <b>degrees Fahrenheit (°F)</b></li>
+            <li>Numbers are all different: 12, 14, 16, 1760…</li>
+            <li>Came from <b>body parts</b> and farming (a foot, a hand, a day's ploughing)</li>
+          </ul>
+          <div class="chips"><span class="sig">the USA · partly the UK</span></div>
+        </div>
+      </div>
+      <div class="trap"><b>⚠️ Key olympiad fact <span class="arw">→</span></b> only <b>three</b> countries have not officially adopted the metric system: <b>the USA, Liberia and Myanmar (Burma)</b>. The British system is called <b>imperial</b>; the American one is <b>US customary</b> — the names of the units are the same, but some <b>sizes are not</b>!</div>
+    </div>
+  </section>
+
+  <!-- 5 CLICKABLE COUNTRIES -->
+  <section class="slide phase-remember" data-phase="Systems">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">05</span><span class="dot"></span> Discover · Click a country 🖱️</div>
+      <h2>Who measures with what?</h2>
+      <p class="instr">Click each country and read what people really use there in everyday life.</p>
+      <div class="reveal">
+        <div class="citybar">
+          <button class="citychip" type="button" data-name="🇺🇸 The USA" data-cap="US customary — almost no metric" data-fact="Distance in <b>miles</b> (speed in <b>mph</b>), body weight in <b>pounds</b>, height in <b>feet and inches</b>, petrol (they say <b>gas</b>) in <b>gallons</b>, temperature in <b>°F</b>, land in <b>acres</b>, houses in <b>square feet</b>. Metric appears mainly in science, medicine, the army and in small print on food labels.">🇺🇸 The USA</button>
+          <button class="citychip" type="button" data-name="🇬🇧 The UK" data-cap="Officially metric — but proudly mixed" data-fact="<b>Miles</b> and <b>mph</b> on road signs · beer and doorstep milk in <b>pints</b> · body weight in <b>stones and pounds</b> · height in <b>feet and inches</b> — <b>BUT</b> petrol in <b>litres</b>, food in <b>grams and kilos</b>, weather in <b>°C</b>. Two systems in one country!">🇬🇧 The UK</button>
+          <button class="citychip" type="button" data-name="🇨🇦 Canada" data-cap="Metric on paper, imperial in the kitchen" data-fact="Officially metric since the 1970s: <b>km/h</b>, <b>kg</b>, <b>litres</b>, <b>°C</b>. But everyday habits come from the neighbour: people give their weight in <b>pounds</b>, their height in <b>feet and inches</b>, set the oven in <b>°F</b> and describe a house in <b>square feet</b>.">🇨🇦 Canada</button>
+          <button class="citychip" type="button" data-name="🇦🇺 Australia" data-cap="Fully metric" data-fact="Australia went metric in the <b>1970s</b>: <b>km</b>, <b>kg</b>, <b>litres</b>, <b>°C</b>, <b>hectares</b>. Survivors: you can still order a <b>pint</b> of beer in a pub (570 ml) — and careful, an Australian <b>tablespoon is 20 ml</b>, not 15!">🇦🇺 Australia</button>
+          <button class="citychip" type="button" data-name="🇳🇿 New Zealand" data-cap="Fully metric" data-fact="Same story as Australia: distance in <b>kilometres</b>, weight in <b>kilograms</b>, temperature in <b>°C</b>. Imperial units are only heard from older people.">🇳🇿 New Zealand</button>
+          <button class="citychip" type="button" data-name="🇮🇪 Ireland" data-cap="Metric (a recent change)" data-fact="Ireland changed its road signs from <b>miles per hour to km/h in 2005</b> — the last big European country to do it. The pub, of course, still serves <b>pints</b>.">🇮🇪 Ireland</button>
+          <button class="citychip" type="button" data-name="🇮🇳 India" data-cap="Metric since 1957" data-fact="Distances in <b>km</b>, weight in <b>kg</b>. Bonus fact for olympiads: Indian English counts big numbers in <b>lakh</b> (100,000) and <b>crore</b> (10 million).">🇮🇳 India</button>
+          <button class="citychip" type="button" data-name="🇿🇦 South Africa" data-cap="Metric since the 1970s" data-fact="<b>km</b>, <b>kg</b>, <b>litres</b>, <b>°C</b> — like most of Africa and the rest of the Commonwealth outside Britain.">🇿🇦 South Africa</button>
+          <button class="citychip" type="button" data-name="🇷🇺 Russia" data-cap="Fully metric" data-fact="<b>km</b>, <b>kg</b>, <b>litres</b>, <b>°C</b>. The old Russian units — <em>верста, пуд, аршин, сажень</em> — survive only in books and idioms, exactly like the English <em>league</em> and <em>fathom</em>.">🇷🇺 Russia</button>
+          <button class="citychip" type="button" data-name="🇱🇷 Liberia &amp; 🇲🇲 Myanmar" data-cap="The other two non-metric countries" data-fact="Together with the <b>USA</b>, these are the only countries that have never officially adopted the metric system — although both are slowly changing. A classic olympiad question!">🇱🇷 Liberia &amp; 🇲🇲 Myanmar</button>
+        </div>
+        <div class="factbox"><div class="fb-hint">👆 Click a country to see what it measures with.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 COUNTRY TABLE -->
+  <section class="slide phase-remember" data-phase="Systems">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">06</span><span class="dot"></span> Theory · The big picture</div>
+      <h2>One table to remember 📋</h2>
+      <div class="tblwrap">
+        <table class="tbl">
+          <thead><tr><th>Country</th><th>Road distance</th><th>Body weight</th><th>Petrol / milk</th><th>Weather</th></tr></thead>
+          <tbody>
+            <tr><td class="cn">🇺🇸 USA</td><td>miles, mph</td><td>pounds (lb)</td><td>gallons</td><td>°F</td></tr>
+            <tr><td class="cn">🇬🇧 UK</td><td>miles, mph</td><td>stones &amp; pounds</td><td>litres / pints</td><td>°C</td></tr>
+            <tr><td class="cn">🇨🇦 Canada</td><td>kilometres, km/h</td><td>pounds <span class="ru">(informally)</span></td><td>litres</td><td>°C <span class="ru">(oven °F)</span></td></tr>
+            <tr><td class="cn">🇦🇺 Australia</td><td>kilometres, km/h</td><td>kilograms</td><td>litres <span class="ru">(beer: pints)</span></td><td>°C</td></tr>
+            <tr><td class="cn">🇳🇿 New Zealand</td><td>kilometres, km/h</td><td>kilograms</td><td>litres</td><td>°C</td></tr>
+            <tr><td class="cn">🇮🇪 Ireland</td><td>kilometres <span class="ru">(since 2005)</span></td><td>stones / kg</td><td>litres / pints</td><td>°C</td></tr>
+            <tr><td class="cn">🌍 Most of the world</td><td>kilometres</td><td>kilograms</td><td>litres</td><td>°C</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="prompt-bank"><b>How to say it →</b> <span class="ex">"The speed limit is 30 miles an hour." · "I weigh nine stone four." · "Fill it up — twenty litres, please." · "It's going to be 75 degrees tomorrow."</span></div>
+    </div>
+  </section>
+
+  <!-- 7 WEIGHT -->
+  <section class="slide phase-remember" data-phase="Units">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">07</span><span class="dot"></span> Theory · Weight &amp; mass ⚖️</div>
+      <h2>Ounces, pounds and stones</h2>
+      <div class="conv">
+        <div class="row"><span class="u">1 ounce (oz)</span><span class="eq">= 28 g</span><span class="ru">унция — маленькие продукты, письма</span></div>
+        <div class="row"><span class="u">1 pound (lb)</span><span class="eq">= 16 oz = 454 g</span><span class="ru">фунт — почти полкило</span></div>
+        <div class="row"><span class="u">1 stone (st)</span><span class="eq">= 14 lb = 6.35 kg</span><span class="ru">стоун — <b>только</b> вес человека, только в Британии</span></div>
+        <div class="row"><span class="u">1 US (short) ton</span><span class="eq">= 2,000 lb = 907 kg</span><span class="ru">американская тонна</span></div>
+        <div class="row"><span class="u">1 UK (long) ton</span><span class="eq">= 2,240 lb = 1,016 kg</span><span class="ru">британская тонна</span></div>
+        <div class="row"><span class="u">1 tonne / metric ton</span><span class="eq">= 1,000 kg</span><span class="ru">обычная тонна</span></div>
+      </div>
+      <div class="grid g2">
+        <div class="card"><h3>Say it like a native</h3>
+          <ul>
+            <li><span class="ex">"Could I have <b>two pounds of</b> apples, please?"</span></li>
+            <li><span class="ex">"The baby <b>weighed</b> seven pounds four ounces."</span></li>
+            <li><span class="ex">"She <b>weighs</b> nine stone." <span class="ru">(≈ 57 kg)</span></span></li>
+            <li><span class="ex">"It's sold <b>by the kilo</b>."</span></li>
+            <li>Verb <b>to weigh</b> — noun <b>weight</b> — tool: <b>scales</b> (BrE) / <b>a scale</b> (AmE)</li>
+          </ul>
+        </div>
+        <div class="card"><h3>Where the words come from</h3>
+          <ul>
+            <li><b>lb</b> ← Latin <em>libra</em> (весы) — that's why "pound" is written <b>lb</b>!</li>
+            <li><b>oz</b> ← Italian <em>onza</em></li>
+            <li><b>stone</b> ← literally a stone used on old market scales</li>
+            <li>Money: <b>the pound sterling (£)</b> was once <b>a pound of silver</b> — same word, different meaning</li>
+          </ul>
+        </div>
+      </div>
+      <div class="trap"><b>⚠️ Traps <span class="arw">→</span></b> after a number the word <b>stone</b> usually stays singular: <em>"He weighs twelve <b>stone</b>."</em> · <b>ton ≠ tonne</b> · a <b>pound</b> can be money <b>or</b> weight — context decides.</div>
+    </div>
+  </section>
+
+  <!-- 8 LENGTH -->
+  <section class="slide phase-remember" data-phase="Units">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">08</span><span class="dot"></span> Theory · Length &amp; distance 📏</div>
+      <h2>Inches, feet, yards and miles</h2>
+      <div class="conv">
+        <div class="row"><span class="u">1 inch (in / ")</span><span class="eq">= 2.54 cm</span><span class="ru">дюйм — экраны, дождь, рост</span></div>
+        <div class="row"><span class="u">1 foot (ft / ')</span><span class="eq">= 12 inches = 30.5 cm</span><span class="ru">фут — рост, высота</span></div>
+        <div class="row"><span class="u">1 yard (yd)</span><span class="eq">= 3 feet = 0.91 m</span><span class="ru">ярд — ткань, американский футбол</span></div>
+        <div class="row"><span class="u">1 mile (mi)</span><span class="eq">= 1,760 yards = 1.609 km</span><span class="ru">миля — дороги</span></div>
+        <div class="row"><span class="u">1 nautical mile</span><span class="eq">= 1,852 m</span><span class="ru">морская миля; скорость — в knots (узлах)</span></div>
+      </div>
+      <div class="grid g2">
+        <div class="card"><h3>Talking about height</h3>
+          <ul>
+            <li><span class="ex">"I'm <b>five foot six</b>." = 5' 6" = 168 cm</span></li>
+            <li><span class="ex">"He's <b>six feet two</b>." / "He's <b>six two</b>."</span></li>
+            <li>Symbols: <b>'</b> = feet, <b>"</b> = inches</li>
+            <li><b>How tall are you?</b> — <em>I'm 1 m 68.</em> / <em>I'm five six.</em></li>
+          </ul>
+        </div>
+        <div class="card"><h3>Foot or feet?</h3>
+          <ul>
+            <li>After a number, alone: <b>feet</b> — <em>"The wall is six <b>feet</b> high."</em></li>
+            <li>Before a noun (compound adjective): <b>foot</b>, no -s — <em>"a six-<b>foot</b> wall"</em></li>
+            <li>Same rule everywhere: <em>a <b>five-mile</b> walk, a <b>two-litre</b> bottle, a <b>ten-year-old</b> boy</em></li>
+            <li>Distance question: <b>How far is it?</b> — <em>It's about three miles.</em></li>
+          </ul>
+        </div>
+      </div>
+      <div class="trap"><b>⚠️ Remember <span class="arw">→</span></b> <b>1 mile ≈ 1.6 km</b> and <b>1 km ≈ 0.6 mile</b>. A "60 mph" speed limit is about <b>100 km/h</b>. Rain and snow in the USA are measured in <b>inches</b>, TV and phone screens <b>everywhere</b> in inches.</div>
+    </div>
+  </section>
+
+  <!-- 9 VOLUME -->
+  <section class="slide phase-remember" data-phase="Units">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">09</span><span class="dot"></span> Theory · Volume &amp; capacity 🥤</div>
+      <h2>Spoons, cups, pints and gallons</h2>
+      <div class="conv">
+        <div class="row"><span class="u">1 teaspoon (tsp)</span><span class="eq">= 5 ml</span><span class="ru">чайная ложка</span></div>
+        <div class="row"><span class="u">1 tablespoon (tbsp)</span><span class="eq">= 3 tsp = 15 ml</span><span class="ru">столовая ложка (в Австралии — 20 ml!)</span></div>
+        <div class="row"><span class="u">1 fluid ounce (fl oz)</span><span class="eq">≈ 30 ml</span><span class="ru">жидкая унция</span></div>
+        <div class="row"><span class="u">1 cup (US)</span><span class="eq">= 8 fl oz ≈ 240 ml</span><span class="ru">«стакан» в американских рецептах</span></div>
+        <div class="row"><span class="u">1 pint (US)</span><span class="eq">= 16 fl oz = 473 ml</span><span class="ru">американская пинта</span></div>
+        <div class="row"><span class="u">1 pint (UK)</span><span class="eq">= 20 fl oz = 568 ml</span><span class="ru">британская пинта — <b>больше!</b></span></div>
+        <div class="row"><span class="u">1 quart</span><span class="eq">= 2 pints ≈ 0.95 l (US)</span><span class="ru">кварта</span></div>
+        <div class="row"><span class="u">1 gallon (US)</span><span class="eq">= 8 pints = 3.79 l</span><span class="ru">американский галлон</span></div>
+        <div class="row"><span class="u">1 gallon (UK)</span><span class="eq">= 8 pints = 4.55 l</span><span class="ru">имперский галлон</span></div>
+      </div>
+      <div class="trap"><b>⚠️ The classic trap <span class="arw">→</span></b> the <b>same word, different size</b>. A British pint (568 ml) is <b>bigger</b> than an American one (473 ml), and a British gallon (4.55 l) is bigger than an American one (3.79 l). So "a gallon of milk" in London ≠ "a gallon of milk" in New York.</div>
+      <div class="prompt-bank"><b>In real life →</b> <span class="ex">"A <b>pint of</b> beer, please." · "We need <b>two pints of</b> milk." · "Gas is four dollars <b>a gallon</b>." · "Add <b>half a cup of</b> sugar."</span></div>
+    </div>
+  </section>
+
+  <!-- 10 AREA -->
+  <section class="slide phase-remember" data-phase="Units">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">10</span><span class="dot"></span> Theory · Area &amp; land 🌾</div>
+      <h2>Acres, hectares and square feet</h2>
+      <div class="conv">
+        <div class="row"><span class="u">1 square foot (sq ft)</span><span class="eq">= 0.093 m²</span><span class="ru">квадратный фут — площадь квартир в США/Британии</span></div>
+        <div class="row"><span class="u">1 square yard</span><span class="eq">= 9 sq ft = 0.84 m²</span><span class="ru">ковры, ткань</span></div>
+        <div class="row"><span class="u">1 acre</span><span class="eq">= 4,840 sq yd = 4,047 m²</span><span class="ru">акр — <b>земля, поля, фермы</b></span></div>
+        <div class="row"><span class="u">1 hectare (ha)</span><span class="eq">= 10,000 m² = 2.47 acres</span><span class="ru">гектар</span></div>
+        <div class="row"><span class="u">1 square mile</span><span class="eq">= 640 acres = 2.59 km²</span><span class="ru">квадратная миля</span></div>
+      </div>
+      <div class="grid g2">
+        <div class="card"><h3>Where the word "acre" comes from</h3>
+          <ul>
+            <li>An <b>acre</b> was the piece of land one man with one ox could <b>plough in a single day</b>.</li>
+            <li>Size in your head: about <b>0.4 hectare</b> — a bit <b>smaller than an American football field</b>.</li>
+            <li>Farms in the USA, UK, Ireland, Canada and Australia are still often described in <b>acres</b>.</li>
+          </ul>
+        </div>
+        <div class="card"><h3>Say it right</h3>
+          <ul>
+            <li><span class="ex">"They own a <b>200-acre</b> farm."</span> <span class="ru">(без -s перед существительным!)</span></li>
+            <li><span class="ex">"The park covers <b>five acres</b>."</span></li>
+            <li><span class="ex">"A <b>1,200-square-foot</b> apartment."</span></li>
+            <li>Question: <b>How big is it?</b> / <b>What's the area?</b></li>
+          </ul>
+        </div>
+      </div>
+      <div class="trap"><b>⚠️ Don't mix them up <span class="arw">→</span></b> an <b>acre</b> is <b>area</b>, but a <b>furlong</b>, a <b>league</b> and a <b>fathom</b> are <b>length</b>. A very common "odd one out" question!</div>
+    </div>
+  </section>
+
+  <!-- 11 TEMPERATURE -->
+  <section class="slide phase-remember" data-phase="Units">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">11</span><span class="dot"></span> Theory · Temperature 🌡️</div>
+      <h2>Celsius vs Fahrenheit</h2>
+      <div class="tblwrap">
+        <table class="tbl">
+          <thead><tr><th>What</th><th>°C</th><th>°F</th></tr></thead>
+          <tbody>
+            <tr><td class="cn">Water freezes <span class="ru">(замерзает)</span></td><td>0 °C</td><td><b>32 °F</b></td></tr>
+            <tr><td class="cn">A cold winter day</td><td>−10 °C</td><td>14 °F</td></tr>
+            <tr><td class="cn">A cool day</td><td>10 °C</td><td>50 °F</td></tr>
+            <tr><td class="cn">Room temperature</td><td>20 °C</td><td>68 °F</td></tr>
+            <tr><td class="cn">A hot summer day</td><td>30 °C</td><td>86 °F</td></tr>
+            <tr><td class="cn">Body temperature</td><td>37 °C</td><td><b>98.6 °F</b></td></tr>
+            <tr><td class="cn">Water boils <span class="ru">(кипит)</span></td><td>100 °C</td><td><b>212 °F</b></td></tr>
+            <tr><td class="cn">A medium oven</td><td>180 °C</td><td>350 °F <span class="ru">(gas mark 4)</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="grid g2">
+        <div class="card"><h3>The maths</h3>
+          <ul>
+            <li>°F = °C × <b>1.8</b> + 32</li>
+            <li>°C = (°F − 32) ÷ <b>1.8</b></li>
+            <li><b>Quick trick:</b> double the °C and add 30 — close enough! <span class="ru">(20 °C → 70 °F)</span></li>
+          </ul>
+        </div>
+        <div class="card"><h3>Say it right</h3>
+          <ul>
+            <li><span class="ex">"It's <b>minus five</b>." / "It's <b>five below zero</b>."</span></li>
+            <li><span class="ex">"It'll be <b>in the eighties</b> tomorrow." <span class="ru">(80–89 °F)</span></span></li>
+            <li><span class="ex">"<b>Preheat</b> the oven <b>to</b> 200 degrees."</span></li>
+            <li>UK ovens also use <b>gas mark 1–9</b> <span class="ru">(gas mark 6 = 200 °C = 400 °F)</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 EXOTIC UNITS -->
+  <section class="slide phase-remember" data-phase="Units">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">12</span><span class="dot"></span> Theory · Bonus units for olympiads 🎩</div>
+      <h2>Strange old measures you may meet</h2>
+      <div class="grid g2">
+        <div class="card"><h3>Still in use today</h3>
+          <ul>
+            <li><b>a hand</b> = 4 inches — the height of <b>horses</b> <span class="ru">(«16 hands high»)</span></li>
+            <li><b>a furlong</b> = 220 yards = ⅛ mile — <b>horse racing</b></li>
+            <li><b>a fathom</b> = 6 feet — depth of <b>water</b></li>
+            <li><b>a knot</b> = 1 nautical mile per hour — <b>ships and planes</b></li>
+            <li><b>a carat</b> = 0.2 g — <b>diamonds</b></li>
+            <li><b>a dozen</b> = 12 · <b>a gross</b> = 144</li>
+          </ul>
+        </div>
+        <div class="card"><h3>Mostly in books &amp; idioms</h3>
+          <ul>
+            <li><b>a league</b> ≈ 3 miles — <em>"Twenty Thousand Leagues Under the Sea"</em></li>
+            <li><b>a chain</b> = 22 yards — the length of a <b>cricket pitch</b></li>
+            <li><b>a bushel</b>, <b>a peck</b> — old measures of <b>grain and apples</b></li>
+            <li><b>a gill</b> = ¼ pint — old measure for spirits</li>
+            <li><b>a score</b> = 20 <span class="ru">(«four score and seven years ago»)</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="prompt-bank"><b>💡 Why this is worth learning →</b> olympiad tasks love "odd one out" and "match the unit to what it measures". If you know that a <b>hand</b> is for horses and a <b>fathom</b> is for water, those are free points.</div>
+    </div>
+  </section>
+
+  <!-- 13 DIVIDER: PRACTICE A -->
+  <section class="slide slide--statement phase-olympiad" data-phase="Practice">
+    <div class="inner">
+      <div class="big-badge">Practice · Part 1</div>
+      <h2>Systems, countries and <span class="hl">numbers</span> 🏆</h2>
+      <p class="lead" style="text-align:center; max-width:44ch">Three real olympiad task types on everything we've just learnt. Choose or type, then press <b>Check</b>.</p>
+    </div>
+  </section>
+
+  <!-- 14 MCQ COUNTRIES & UNITS -->
+  <section class="slide phase-olympiad" data-phase="Practice">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">14</span><span class="dot"></span> Task · Multiple choice</div>
+      <h2>Choose the correct answer</h2>
+      <ul class="mcset">
+        <li class="mcq" data-c="1"><div class="q">1. Which country still uses non-metric units in everyday life?</div><div class="opts"><button class="opt" type="button">A) Australia</button><button class="opt" type="button">B) the USA</button><button class="opt" type="button">C) New Zealand</button><button class="opt" type="button">D) South Africa</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">2. In Britain road distances are measured in…</div><div class="opts"><button class="opt" type="button">A) kilometres</button><button class="opt" type="button">B) miles</button><button class="opt" type="button">C) leagues</button><button class="opt" type="button">D) fathoms</button></div></li>
+        <li class="mcq" data-c="2"><div class="q">3. British people usually give their body weight in…</div><div class="opts"><button class="opt" type="button">A) kilograms</button><button class="opt" type="button">B) ounces</button><button class="opt" type="button">C) stones and pounds</button><button class="opt" type="button">D) tons</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">4. Which unit is used to measure land?</div><div class="opts"><button class="opt" type="button">A) an acre</button><button class="opt" type="button">B) a fathom</button><button class="opt" type="button">C) a knot</button><button class="opt" type="button">D) a carat</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">5. An imperial (British) pint is ___ an American pint.</div><div class="opts"><button class="opt" type="button">A) smaller than</button><button class="opt" type="button">B) bigger than</button><button class="opt" type="button">C) the same as</button><button class="opt" type="button">D) half of</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">6. Petrol is sold in gallons in the USA, but in ___ in the UK.</div><div class="opts"><button class="opt" type="button">A) pints</button><button class="opt" type="button">B) litres</button><button class="opt" type="button">C) quarts</button><button class="opt" type="button">D) barrels</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">7. Which three countries are NOT officially metric?</div><div class="opts"><button class="opt" type="button">A) the USA, Canada, Australia</button><button class="opt" type="button">B) the USA, Liberia, Myanmar</button><button class="opt" type="button">C) the UK, the USA, Ireland</button><button class="opt" type="button">D) India, Kenya, Nigeria</button></div></li>
+        <li class="mcq" data-c="2"><div class="q">8. An American weather forecast gives the temperature in…</div><div class="opts"><button class="opt" type="button">A) Celsius</button><button class="opt" type="button">B) Kelvin</button><button class="opt" type="button">C) Fahrenheit</button><button class="opt" type="button">D) gas marks</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">9. One pound is about…</div><div class="opts"><button class="opt" type="button">A) 45 g</button><button class="opt" type="button">B) 454 g</button><button class="opt" type="button">C) 1 kg</button><button class="opt" type="button">D) 100 g</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">10. In Britain and America a person's height is given in…</div><div class="opts"><button class="opt" type="button">A) metres</button><button class="opt" type="button">B) feet and inches</button><button class="opt" type="button">C) yards</button><button class="opt" type="button">D) hands</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">11. Which unit measures the height of a horse?</div><div class="opts"><button class="opt" type="button">A) a hand</button><button class="opt" type="button">B) a foot</button><button class="opt" type="button">C) a stone</button><button class="opt" type="button">D) a chain</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">12. Australia and New Zealand are…</div><div class="opts"><button class="opt" type="button">A) fully metric</button><button class="opt" type="button">B) fully imperial</button><button class="opt" type="button">C) mixed, like the UK</button><button class="opt" type="button">D) using US customary units</button></div></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 15 CONVERSIONS GAP-FILL -->
+  <section class="slide phase-olympiad" data-phase="Practice">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">15</span><span class="dot"></span> Task · Numbers &amp; units</div>
+      <h2>Complete the fact</h2>
+      <p class="instr">Write a <b>number</b> or a <b>word</b> in each gap.</p>
+      <ul class="exset">
+        <li class="exq" data-a="12|twelve"><span class="q">1. There are <input class="gap gap-s" aria-label="answer" autocomplete="off"> inches in a foot.</span><span class="v"></span></li>
+        <li class="exq" data-a="3|three"><span class="q">2. There are <input class="gap gap-s" aria-label="answer" autocomplete="off"> feet in a yard.</span><span class="v"></span></li>
+        <li class="exq" data-a="kilometres|kilometers|km"><span class="q">3. One mile is about 1.6 <input class="gap w-lg" aria-label="answer" autocomplete="off">.</span><span class="v"></span></li>
+        <li class="exq" data-a="cm|centimetres|centimeters"><span class="q">4. One inch is exactly 2.54 <input class="gap w-lg" aria-label="answer" autocomplete="off">.</span><span class="v"></span></li>
+        <li class="exq" data-a="16|sixteen"><span class="q">5. One pound = <input class="gap gap-s" aria-label="answer" autocomplete="off"> ounces.</span><span class="v"></span></li>
+        <li class="exq" data-a="14|fourteen"><span class="q">6. One stone = <input class="gap gap-s" aria-label="answer" autocomplete="off"> pounds.</span><span class="v"></span></li>
+        <li class="exq" data-a="square"><span class="q">7. One acre ≈ 4,047 <input class="gap" aria-label="answer" autocomplete="off"> metres.</span><span class="v"></span></li>
+        <li class="exq" data-a="32|thirty-two|thirty two"><span class="q">8. Water freezes at 0 °C, which is <input class="gap gap-s" aria-label="answer" autocomplete="off"> °F.</span><span class="v"></span></li>
+        <li class="exq" data-a="568"><span class="q">9. A British pint is <input class="gap" aria-label="answer" autocomplete="off"> ml, but an American one is only 473 ml.</span><span class="v"></span></li>
+        <li class="exq" data-a="3|three"><span class="q">10. One tablespoon = <input class="gap gap-s" aria-label="answer" autocomplete="off"> teaspoons.</span><span class="v"></span></li>
+        <li class="exq" data-a="8|eight"><span class="q">11. There are <input class="gap gap-s" aria-label="answer" autocomplete="off"> pints in a gallon.</span><span class="v"></span></li>
+        <li class="exq" data-a="1760|1,760"><span class="q">12. One mile = <input class="gap" aria-label="answer" autocomplete="off"> yards.</span><span class="v"></span></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 16 ODD ONE OUT + WHICH COUNTRY -->
+  <section class="slide phase-olympiad" data-phase="Practice">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">16</span><span class="dot"></span> Task · Odd one out + Which country?</div>
+      <h2>Two tasks, one score</h2>
+      <p class="instr"><b>A.</b> Which word does <b>not</b> belong to the group?</p>
+      <ul class="mcset">
+        <li class="mcq" data-c="2"><div class="q">1. Weight: …</div><div class="opts"><button class="opt" type="button">A) ounce</button><button class="opt" type="button">B) stone</button><button class="opt" type="button">C) furlong</button><button class="opt" type="button">D) pound</button></div></li>
+        <li class="mcq" data-c="2"><div class="q">2. Length: …</div><div class="opts"><button class="opt" type="button">A) yard</button><button class="opt" type="button">B) fathom</button><button class="opt" type="button">C) gallon</button><button class="opt" type="button">D) chain</button></div></li>
+        <li class="mcq" data-c="3"><div class="q">3. Volume: …</div><div class="opts"><button class="opt" type="button">A) pint</button><button class="opt" type="button">B) quart</button><button class="opt" type="button">C) gill</button><button class="opt" type="button">D) acre</button></div></li>
+        <li class="mcq" data-c="3"><div class="q">4. Temperature: …</div><div class="opts"><button class="opt" type="button">A) Fahrenheit</button><button class="opt" type="button">B) Celsius</button><button class="opt" type="button">C) Kelvin</button><button class="opt" type="button">D) knot</button></div></li>
+        <li class="mcq" data-c="3"><div class="q">5. Area: …</div><div class="opts"><button class="opt" type="button">A) hectare</button><button class="opt" type="button">B) acre</button><button class="opt" type="button">C) square mile</button><button class="opt" type="button">D) league</button></div></li>
+        <li class="mcq" data-c="3"><div class="q">6. Kitchen measures: …</div><div class="opts"><button class="opt" type="button">A) a heaped teaspoon</button><button class="opt" type="button">B) a stick of butter</button><button class="opt" type="button">C) a pinch of salt</button><button class="opt" type="button">D) a nautical mile</button></div></li>
+      </ul>
+      <p class="instr" style="margin-top:1rem"><b>B.</b> Which country is it? Write the name.</p>
+      <ul class="exset">
+        <li class="exq" data-a="the uk|uk|britain|great britain|the united kingdom|united kingdom|england"><span class="q">7. Miles on the road, pints in the pub, stones on the scales — but litres of petrol: <input class="gap w-lg" aria-label="answer" autocomplete="off"></span><span class="v"></span></li>
+        <li class="exq" data-a="australia"><span class="q">8. Fully metric since the 1970s, but still serves beer in pints: <input class="gap w-lg" aria-label="answer" autocomplete="off"></span><span class="v"></span></li>
+        <li class="exq" data-a="the usa|usa|the us|us|america|the united states|united states"><span class="q">9. Miles, pounds, gallons and Fahrenheit — almost nothing is metric: <input class="gap w-lg" aria-label="answer" autocomplete="off"></span><span class="v"></span></li>
+        <li class="exq" data-a="canada"><span class="q">10. Officially metric, but people still say "I weigh 150 pounds": <input class="gap w-lg" aria-label="answer" autocomplete="off"></span><span class="v"></span></li>
+        <li class="exq" data-a="ireland"><span class="q">11. Changed its road signs from mph to km/h in 2005: <input class="gap w-lg" aria-label="answer" autocomplete="off"></span><span class="v"></span></li>
+        <li class="exq" data-a="metric"><span class="q">12. Russia, China and the EU all use the <input class="gap w-lg" aria-label="answer" autocomplete="off"> system.</span><span class="v"></span></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 17 KITCHEN -->
+  <section class="slide phase-remember" data-phase="Kitchen">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">17</span><span class="dot"></span> Theory · In the kitchen 🍳</div>
+      <h2>Spoons, cups and sticks of butter</h2>
+      <div class="grid g2">
+        <div class="card"><h3>Recipe units</h3>
+          <ul>
+            <li><b>a teaspoon (tsp)</b> <span class="ru">— чайная ложка (5 ml)</span></li>
+            <li><b>a tablespoon (tbsp)</b> <span class="ru">— столовая ложка (15 ml)</span></li>
+            <li><b>a dessertspoon</b> <span class="ru">— десертная ложка (10 ml, только в Британии)</span></li>
+            <li><b>a cup</b> <span class="ru">— мерный стакан (≈240 ml, США)</span></li>
+            <li><b>a stick of butter</b> <span class="ru">— брусок масла (113 g, США)</span></li>
+            <li><b>a can / a tin of</b> <span class="ru">— банка (AmE / BrE)</span></li>
+          </ul>
+        </div>
+        <div class="card"><h3>How full is the spoon?</h3>
+          <ul>
+            <li><b>a level teaspoon</b> <span class="ru">— ложка без горки</span></li>
+            <li><b>a rounded teaspoon</b> <span class="ru">— с небольшой горкой</span></li>
+            <li><b>a heaped (BrE) / heaping (AmE) teaspoon</b> <span class="ru">— с большой горкой</span></li>
+            <li><b>half a teaspoon</b> <span class="ru">— полчайной ложки</span></li>
+            <li><b>a quarter of a teaspoon</b> <span class="ru">— четверть ложки</span></li>
+            <li><b>salt to taste</b> <span class="ru">— соль по вкусу</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="card" style="margin-top:.75rem"><h3>Recipe verbs you'll meet in reading tasks</h3>
+        <p style="margin:.2rem 0"><b>weigh</b> взвесить · <b>measure out</b> отмерить · <b>pour</b> налить · <b>add</b> добавить · <b>stir</b> помешать · <b>whisk / beat</b> взбить · <b>fold in</b> вмешать · <b>sift</b> просеять · <b>chop</b> порезать · <b>grate</b> натереть · <b>melt</b> растопить · <b>sprinkle</b> посыпать · <b>preheat</b> разогреть (духовку) · <b>simmer</b> варить на медленном огне · <b>serve</b> подать</p>
+      </div>
+      <div class="trap"><b>⚠️ Careful <span class="arw">→</span></b> American recipes measure flour and sugar <b>by volume</b> (cups), British ones <b>by weight</b> (grams). And an Australian <b>tablespoon is 20 ml</b> — the only one in the world!</div>
+    </div>
+  </section>
+
+  <!-- 18 FRACTIONS -->
+  <section class="slide phase-remember" data-phase="Kitchen">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">18</span><span class="dot"></span> Theory · Halves &amp; quarters ½</div>
+      <h2>How to say the small amounts</h2>
+      <div class="grid g2">
+        <div class="card"><h3>Fractions <span class="ru">(дроби)</span></h3>
+          <ul>
+            <li>½ — <b>a half</b> → <span class="ex">half a cup, half a teaspoon, half an hour</span></li>
+            <li>⅓ — <b>a third</b> → <span class="ex">a third of a litre</span></li>
+            <li>¼ — <b>a quarter</b> → <span class="ex">a quarter of a kilo</span></li>
+            <li>¾ — <b>three quarters</b> → <span class="ex">three quarters of a cup</span></li>
+            <li>1½ — <b>one and a half</b> → <span class="ex">one and a half hour<b>s</b></span></li>
+            <li>2½ — <b>two and a half</b> → <span class="ex">two and a half kilos</span></li>
+          </ul>
+        </div>
+        <div class="card"><h3>Word order &amp; grammar</h3>
+          <ul>
+            <li><b>half a cup</b> ✓ &nbsp; <span class="ru">(не «a half cup» в британском английском)</span></li>
+            <li><b>a cup and a half</b> = 1½ cups — оба варианта верны</li>
+            <li>После <b>one and a half</b> — <b>множественное число</b>: <em>one and a half <b>litres</b></em></li>
+            <li>Decimals: 2.5 = <b>two point five</b> · 0.5 = <b>nought point five</b> (BrE) / <b>zero point five</b> (AmE)</li>
+            <li><b>twice as much</b>, <b>three times as much</b>, <b>double</b> the amount</li>
+          </ul>
+        </div>
+      </div>
+      <div class="prompt-bank"><b>Hedging words <span class="ru">(«примерно»)</span> →</b> <b>about</b> · <b>around</b> · <b>roughly</b> · <b>approximately</b> · <b>nearly</b> · <b>just over / just under</b> · <b>give or take</b> · <b>or so</b> · <b>-ish</b> <span class="ex">"It weighs about two kilos." · "Twenty minutes or so." · "Ten-ish."</span></div>
+    </div>
+  </section>
+
+  <!-- 19 VAGUE QUANTITIES -->
+  <section class="slide phase-remember" data-phase="Kitchen">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">19</span><span class="dot"></span> Theory · A pinch, a handful, a dash 🤏</div>
+      <h2>When people don't measure at all</h2>
+      <div class="grid g2">
+        <div class="card"><h3>Small amounts of dry food</h3>
+          <ul>
+            <li><b>a pinch of</b> salt/pepper <span class="ru">— щепотка</span></li>
+            <li><b>a handful of</b> berries/nuts <span class="ru">— горсть</span></li>
+            <li><b>a sprinkle / a sprinkling of</b> sugar <span class="ru">— посыпать чуть-чуть</span></li>
+            <li><b>a lump / a cube of</b> sugar <span class="ru">— кусочек сахара</span></li>
+            <li><b>a knob of</b> butter <span class="ru">— кусочек масла</span></li>
+            <li><b>a chunk of</b> cheese <span class="ru">— большой кусок</span></li>
+            <li><b>a sliver of</b> cake <span class="ru">— тоненький кусочек</span></li>
+            <li><b>a scoop of</b> ice cream <span class="ru">— шарик</span></li>
+          </ul>
+        </div>
+        <div class="card"><h3>Small amounts of liquid</h3>
+          <ul>
+            <li><b>a drop of</b> vanilla <span class="ru">— капля</span></li>
+            <li><b>a dash of</b> milk/pepper <span class="ru">— чуть-чуть, «плеснуть»</span></li>
+            <li><b>a splash of</b> milk in tea <span class="ru">— немного жидкости</span></li>
+            <li><b>a squeeze of</b> lemon <span class="ru">— выжать немного</span></li>
+            <li><b>a dollop of</b> cream <span class="ru">— ложка с горкой чего-то густого</span></li>
+            <li><b>a drizzle of</b> olive oil <span class="ru">— полить тонкой струйкой</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="grid g2">
+        <div class="card"><h3>"Just a little" <span class="ru">— разговорное</span></h3>
+          <ul>
+            <li><b>a bit / a little bit / a tiny bit</b> <span class="ru">— чуть-чуть</span></li>
+            <li><b>a tad</b>, <b>a touch</b>, <b>a smidge</b> <span class="ru">— самую капельку (разг.)</span></li>
+            <li><b>hardly any / barely any</b> <span class="ru">— почти нет</span></li>
+            <li><b>a couple of</b> = 2 · <b>a few</b> = 3–4</li>
+          </ul>
+        </div>
+        <div class="card"><h3>"Loads!" <span class="ru">— много</span></h3>
+          <ul>
+            <li><b>loads of / lots of / heaps of / tons of / masses of</b> <span class="ru">— куча, море (разг.)</span></li>
+            <li><b>plenty of</b> <span class="ru">— достаточно, полно</span></li>
+            <li><b>a generous helping</b> <span class="ru">— щедрая порция</span></li>
+            <li><b>a fair amount of</b> <span class="ru">— довольно много</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="prompt-bank"><b>💡 Word building: the suffix -FUL →</b> a <b>spoonful</b>, a <b>cupful</b>, a <b>handful</b>, a <b>mouthful</b>, a <b>plateful</b>, a <b>bowlful</b>, an <b>armful</b>, a <b>houseful</b>. Plural: <b>spoonfuls</b>, <b>handfuls</b>. <span class="ru">Это любимая тема заданий на word formation!</span></div>
+    </div>
+  </section>
+
+  <!-- 20 PARTITIVES -->
+  <section class="slide phase-remember" data-phase="Kitchen">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">20</span><span class="dot"></span> Theory · A … of … 📦</div>
+      <h2>Containers &amp; portions (partitives)</h2>
+      <p class="instr">Uncountable nouns can't be counted directly: <em>two breads</em> ✗ → <em>two <b>loaves of</b> bread</em> ✓. This is one of the most common olympiad tasks.</p>
+      <div class="grid g3">
+        <div class="card"><h3>Containers</h3>
+          <ul>
+            <li>a <b>bottle</b> of water</li>
+            <li>a <b>carton</b> of milk/juice</li>
+            <li>a <b>jar</b> of jam/honey</li>
+            <li>a <b>tin</b> (BrE) / <b>can</b> (AmE) of soup</li>
+            <li>a <b>packet</b> (BrE) / <b>pack</b> (AmE) of crisps</li>
+            <li>a <b>bag</b> of flour</li>
+            <li>a <b>box</b> of cereal</li>
+            <li>a <b>tube</b> of toothpaste</li>
+          </ul>
+        </div>
+        <div class="card"><h3>Pieces</h3>
+          <ul>
+            <li>a <b>loaf</b> of bread <span class="ru">(pl. loaves)</span></li>
+            <li>a <b>slice</b> of bread/pizza/cake</li>
+            <li>a <b>piece</b> of cheese/advice/news</li>
+            <li>a <b>bar</b> of chocolate/soap</li>
+            <li>a <b>sheet</b> of paper</li>
+            <li>a <b>clove</b> of garlic <span class="ru">(зубчик)</span></li>
+            <li>a <b>head</b> of lettuce/cabbage</li>
+            <li>a <b>bunch</b> of grapes/bananas/flowers</li>
+          </ul>
+        </div>
+        <div class="card"><h3>Servings</h3>
+          <ul>
+            <li>a <b>glass</b> of water</li>
+            <li>a <b>cup</b> / <b>mug</b> of tea</li>
+            <li>a <b>bowl</b> of soup</li>
+            <li>a <b>plate</b> of pasta</li>
+            <li>a <b>portion</b> / <b>serving</b> of chips</li>
+            <li>a <b>slice</b> / <b>helping</b> of pie</li>
+            <li>a <b>pair</b> of shoes/trousers/scissors/glasses</li>
+            <li>a <b>set</b> of keys</li>
+          </ul>
+        </div>
+      </div>
+      <div class="trap"><b>⚠️ Uncountable in English, countable in Russian <span class="arw">→</span></b> <b>bread, milk, water, rice, flour, sugar, cheese, meat, butter, advice, news, information, money, furniture, luggage, hair, weather</b> — all need <em>a piece / a bit / a bottle / a kilo <b>of</b></em>.</div>
+    </div>
+  </section>
+
+  <!-- 21 GRAMMAR TRAPS -->
+  <section class="slide phase-remember" data-phase="Kitchen">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">21</span><span class="dot"></span> Theory · Grammar of quantity ⚠️</div>
+      <h2>The traps olympiads love</h2>
+      <div class="grid g2">
+        <div class="card"><h3>No -s before a noun</h3>
+          <ul>
+            <li>a <b>five-mile</b> walk <span class="ru">(не five-miles)</span></li>
+            <li>a <b>two-litre</b> bottle</li>
+            <li>a <b>ten-year-old</b> boy</li>
+            <li>a <b>200-acre</b> farm</li>
+            <li>BUT alone, after the verb: <em>"The walk is five <b>miles</b> long."</em></li>
+          </ul>
+        </div>
+        <div class="card"><h3>Numbers that never take -s</h3>
+          <ul>
+            <li>two <b>dozen</b> eggs <span class="ru">(не dozens)</span></li>
+            <li>three <b>hundred</b> people · five <b>thousand</b> · two <b>million</b></li>
+            <li>BUT: <b>dozens of</b> eggs, <b>hundreds of</b> people <span class="ru">(без числа → -s + of)</span></li>
+            <li>twelve <b>stone</b> (BrE, body weight)</li>
+          </ul>
+        </div>
+        <div class="card"><h3>Much / many · little / few</h3>
+          <ul>
+            <li><b>much</b> + uncountable: <em>much sugar</em></li>
+            <li><b>many</b> + countable: <em>many apples</em></li>
+            <li><b>a little</b> sugar <span class="ru">(немного — положительно)</span></li>
+            <li><b>little</b> sugar <span class="ru">(мало — отрицательно)</span></li>
+            <li><b>a few</b> apples / <b>few</b> apples — same difference</li>
+            <li><b>plenty of</b>, <b>a lot of</b> — with both</li>
+          </ul>
+        </div>
+        <div class="card"><h3>Questions &amp; verbs</h3>
+          <ul>
+            <li><b>How much</b> flour? · <b>How many</b> eggs?</li>
+            <li><b>How far / How tall / How heavy / How deep / How wide?</b></li>
+            <li><em>Ten kilos <b>is</b> a lot.</em> <span class="ru">(мера = единое целое → is)</span></li>
+            <li><em>There <b>is</b> a lot of milk.</em> / <em>There <b>are</b> a lot of eggs.</em></li>
+            <li>Sold <b>by the kilo</b>, <b>by weight</b>, <b>by the dozen</b></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 22 IDIOMS -->
+  <section class="slide phase-remember" data-phase="Kitchen">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">22</span><span class="dot"></span> Theory · Idioms with measures 💬</div>
+      <h2>Miles, inches and ounces in idioms</h2>
+      <div class="grid g2">
+        <div class="card"><h3>Distance</h3>
+          <ul>
+            <li><b>go the extra mile</b> <span class="ru">— сделать больше, чем нужно</span></li>
+            <li><b>give someone an inch and they'll take a mile</b> <span class="ru">— дай палец — откусит руку</span></li>
+            <li><b>a stone's throw (away)</b> <span class="ru">— в двух шагах</span></li>
+            <li><b>miles away</b> <span class="ru">— витать в облаках</span></li>
+            <li><b>miles better</b> <span class="ru">— намного лучше</span></li>
+            <li><b>inch by inch</b> <span class="ru">— шаг за шагом</span></li>
+            <li><b>every inch a…</b> <span class="ru">— настоящий, до мозга костей</span></li>
+          </ul>
+        </div>
+        <div class="card"><h3>Weight &amp; volume</h3>
+          <ul>
+            <li><b>take it with a pinch of salt</b> (BrE) / <b>a grain of salt</b> (AmE) <span class="ru">— не принимать всерьёз</span></li>
+            <li><b>a drop in the ocean</b> (BrE) / <b>in the bucket</b> (AmE) <span class="ru">— капля в море</span></li>
+            <li><b>worth its weight in gold</b> <span class="ru">— на вес золота</span></li>
+            <li><b>not an ounce of</b> truth/sense <span class="ru">— ни капли</span></li>
+            <li><b>an ounce of prevention is worth a pound of cure</b> <span class="ru">— лучше предупредить, чем лечить</span></li>
+            <li><b>pint-sized</b> <span class="ru">— крошечный</span></li>
+            <li><b>weigh your words</b> <span class="ru">— взвешивать слова</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="prompt-bank"><b>Also useful →</b> <b>the whole nine yards</b> <span class="ru">(всё по полной)</span> · <b>for good measure</b> <span class="ru">(для верности, вдобавок)</span> · <b>measure up to</b> <span class="ru">(соответствовать)</span> · <b>made to measure</b> <span class="ru">(сшитый на заказ)</span> · <b>by a hair's breadth</b> <span class="ru">(на волосок)</span> · <b>feel ten feet tall</b> <span class="ru">(быть на седьмом небе)</span></div>
+    </div>
+  </section>
+
+  <!-- 23 DIVIDER PRACTICE B -->
+  <section class="slide slide--statement phase-olympiad" data-phase="Practice">
+    <div class="inner">
+      <div class="big-badge">Practice · Part 2</div>
+      <h2>Kitchen, quantity and <span class="hl">idioms</span> 🥄</h2>
+      <p class="lead" style="text-align:center; max-width:44ch">Recipe cloze, partitives, grammar traps, idioms, reading and open cloze — the real olympiad formats.</p>
+    </div>
+  </section>
+
+  <!-- 24 RECIPE CLOZE -->
+  <section class="slide phase-olympiad" data-phase="Practice">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">24</span><span class="dot"></span> Task · Recipe cloze</div>
+      <h2>Fill each gap with ONE measuring word</h2>
+      <p class="cloze">
+        <b>Grandma's pancakes.</b> Put two
+        <span class="cz" data-a="cups|cupfuls"><span class="num">1</span><input class="gap gap-s" aria-label="gap 1" autocomplete="off"></span>
+        of flour into a large bowl and add a
+        <span class="cz" data-a="pinch"><span class="num">2</span><input class="gap gap-s" aria-label="gap 2" autocomplete="off"></span>
+        of salt — no more, or the pancakes will be too salty. Break two eggs into the middle, then pour in half a
+        <span class="cz" data-a="litre|liter|cup|pint"><span class="num">3</span><input class="gap gap-s" aria-label="gap 3" autocomplete="off"></span>
+        of milk and stir. Melt a
+        <span class="cz" data-a="knob"><span class="num">4</span><input class="gap gap-s" aria-label="gap 4" autocomplete="off"></span>
+        of butter in the pan. Add a
+        <span class="cz" data-a="spoonful|tablespoon|teaspoon|spoon"><span class="num">5</span><input class="gap gap-s" aria-label="gap 5" autocomplete="off"></span>
+        of sugar if you like them sweet, and a
+        <span class="cz" data-a="drop"><span class="num">6</span><input class="gap gap-s" aria-label="gap 6" autocomplete="off"></span>
+        of vanilla. Cook each pancake for two minutes, then serve with a
+        <span class="cz" data-a="squeeze"><span class="num">7</span><input class="gap gap-s" aria-label="gap 7" autocomplete="off"></span>
+        of lemon and a
+        <span class="cz" data-a="dollop|spoonful"><span class="num">8</span><input class="gap gap-s" aria-label="gap 8" autocomplete="off"></span>
+        of cream on top. If the mixture is too thick, add a
+        <span class="cz" data-a="splash|dash|drop"><span class="num">9</span><input class="gap gap-s" aria-label="gap 9" autocomplete="off"></span>
+        of milk. A
+        <span class="cz" data-a="handful"><span class="num">10</span><input class="gap gap-s" aria-label="gap 10" autocomplete="off"></span>
+        of berries makes them look beautiful, and a
+        <span class="cz" data-a="sprinkle|sprinkling|dusting"><span class="num">11</span><input class="gap gap-s" aria-label="gap 11" autocomplete="off"></span>
+        of icing sugar finishes the plate. Serve them hot — they are worth their weight in
+        <span class="cz" data-a="gold"><span class="num">12</span><input class="gap gap-s" aria-label="gap 12" autocomplete="off"></span>!
+      </p>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 25 PARTITIVES GAP-FILL -->
+  <section class="slide phase-olympiad" data-phase="Practice">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">25</span><span class="dot"></span> Task · A … of …</div>
+      <h2>Write the missing word</h2>
+      <p class="instr">One word in each gap. Watch the spelling — a misspelt word gets no mark!</p>
+      <ul class="exset">
+        <li class="exq" data-a="loaf"><span class="q">1. a <input class="gap" aria-label="answer" autocomplete="off"> of bread</span><span class="v"></span></li>
+        <li class="exq" data-a="bar"><span class="q">2. a <input class="gap" aria-label="answer" autocomplete="off"> of chocolate</span><span class="v"></span></li>
+        <li class="exq" data-a="carton"><span class="q">3. a <input class="gap" aria-label="answer" autocomplete="off"> of milk <em>(paper container)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="jar"><span class="q">4. a <input class="gap" aria-label="answer" autocomplete="off"> of jam</span><span class="v"></span></li>
+        <li class="exq" data-a="tin|can"><span class="q">5. a <input class="gap" aria-label="answer" autocomplete="off"> of tomato soup</span><span class="v"></span></li>
+        <li class="exq" data-a="packet|pack|bag"><span class="q">6. a <input class="gap" aria-label="answer" autocomplete="off"> of crisps</span><span class="v"></span></li>
+        <li class="exq" data-a="tube"><span class="q">7. a <input class="gap" aria-label="answer" autocomplete="off"> of toothpaste</span><span class="v"></span></li>
+        <li class="exq" data-a="bunch"><span class="q">8. a <input class="gap" aria-label="answer" autocomplete="off"> of grapes</span><span class="v"></span></li>
+        <li class="exq" data-a="slice|piece"><span class="q">9. a <input class="gap" aria-label="answer" autocomplete="off"> of pizza</span><span class="v"></span></li>
+        <li class="exq" data-a="lump|cube|spoonful"><span class="q">10. a <input class="gap" aria-label="answer" autocomplete="off"> of sugar</span><span class="v"></span></li>
+        <li class="exq" data-a="scoop|ball"><span class="q">11. a <input class="gap" aria-label="answer" autocomplete="off"> of ice cream</span><span class="v"></span></li>
+        <li class="exq" data-a="sheet|piece"><span class="q">12. a <input class="gap" aria-label="answer" autocomplete="off"> of paper</span><span class="v"></span></li>
+        <li class="exq" data-a="clove"><span class="q">13. a <input class="gap" aria-label="answer" autocomplete="off"> of garlic</span><span class="v"></span></li>
+        <li class="exq" data-a="pair"><span class="q">14. a <input class="gap" aria-label="answer" autocomplete="off"> of scissors</span><span class="v"></span></li>
+        <li class="exq" data-a="piece|bit|word"><span class="q">15. a <input class="gap" aria-label="answer" autocomplete="off"> of advice</span><span class="v"></span></li>
+        <li class="exq" data-a="stick"><span class="q">16. a <input class="gap" aria-label="answer" autocomplete="off"> of butter <em>(American, 113 g)</em></span><span class="v"></span></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 26 IDIOMS -->
+  <section class="slide phase-olympiad" data-phase="Practice">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">26</span><span class="dot"></span> Task · Idioms</div>
+      <h2>Complete the idiom</h2>
+      <ul class="exset">
+        <li class="exq" data-a="salt"><span class="q">1. Don't believe him — take it with a pinch of <input class="gap" aria-label="answer" autocomplete="off">.</span><span class="v"></span></li>
+        <li class="exq" data-a="inch"><span class="q">2. Give him an <input class="gap" aria-label="answer" autocomplete="off"> and he'll take a mile.</span><span class="v"></span></li>
+        <li class="exq" data-a="throw"><span class="q">3. Our hotel was just a stone's <input class="gap" aria-label="answer" autocomplete="off"> from the beach.</span><span class="v"></span></li>
+        <li class="exq" data-a="mile"><span class="q">4. She always goes the extra <input class="gap" aria-label="answer" autocomplete="off"> to help her students.</span><span class="v"></span></li>
+        <li class="exq" data-a="ocean|bucket"><span class="q">5. Our donation is only a drop in the <input class="gap" aria-label="answer" autocomplete="off">.</span><span class="v"></span></li>
+        <li class="exq" data-a="gold"><span class="q">6. A good dictionary is worth its weight in <input class="gap" aria-label="answer" autocomplete="off">.</span><span class="v"></span></li>
+        <li class="exq" data-a="ounce"><span class="q">7. There isn't an <input class="gap" aria-label="answer" autocomplete="off"> of truth in that story.</span><span class="v"></span></li>
+        <li class="exq" data-a="yards"><span class="q">8. They gave us the whole nine <input class="gap" aria-label="answer" autocomplete="off"> — food, music and fireworks.</span><span class="v"></span></li>
+        <li class="exq" data-a="away"><span class="q">9. Sorry, I was miles <input class="gap" aria-label="answer" autocomplete="off">. What did you say?</span><span class="v"></span></li>
+        <li class="exq" data-a="measure"><span class="q">10. I added a little more pepper for good <input class="gap" aria-label="answer" autocomplete="off">.</span><span class="v"></span></li>
+        <li class="exq" data-a="words"><span class="q">11. Before you answer, weigh your <input class="gap" aria-label="answer" autocomplete="off"> carefully.</span><span class="v"></span></li>
+        <li class="exq" data-a="inch"><span class="q">12. The army moved forward <input class="gap" aria-label="answer" autocomplete="off"> by inch.</span><span class="v"></span></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 27 GRAMMAR TRAPS MCQ -->
+  <section class="slide phase-olympiad" data-phase="Practice">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">27</span><span class="dot"></span> Task · Grammar of quantity</div>
+      <h2>Choose the correct form</h2>
+      <ul class="mcset">
+        <li class="mcq" data-c="1"><div class="q">1. We went for a ___ walk along the river.</div><div class="opts"><button class="opt" type="button">A) five-miles</button><button class="opt" type="button">B) five-mile</button><button class="opt" type="button">C) five miles</button><button class="opt" type="button">D) fifth-mile</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">2. The wall is ___.</div><div class="opts"><button class="opt" type="button">A) twenty metres high</button><button class="opt" type="button">B) twenty metre high</button><button class="opt" type="button">C) high twenty metres</button><button class="opt" type="button">D) twenty-metres high</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">3. I need ___ flour for this cake.</div><div class="opts"><button class="opt" type="button">A) two kilos of</button><button class="opt" type="button">B) two kilo of</button><button class="opt" type="button">C) two kilos</button><button class="opt" type="button">D) two of kilos</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">4. We waited for ___.</div><div class="opts"><button class="opt" type="button">A) one and a half hours</button><button class="opt" type="button">B) one and a half hour</button><button class="opt" type="button">C) a hour and half</button><button class="opt" type="button">D) one half and hours</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">5. Could I have ___, please?</div><div class="opts"><button class="opt" type="button">A) two breads</button><button class="opt" type="button">B) two loaves of bread</button><button class="opt" type="button">C) two loafs of bread</button><button class="opt" type="button">D) two piece of bread</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">6. She bought ___ eggs at the market.</div><div class="opts"><button class="opt" type="button">A) two dozens</button><button class="opt" type="button">B) two dozen</button><button class="opt" type="button">C) two dozens of</button><button class="opt" type="button">D) two dozen of</button></div></li>
+        <li class="mcq" data-c="2"><div class="q">7. My sister is ___ tall.</div><div class="opts"><button class="opt" type="button">A) five feet six</button><button class="opt" type="button">B) five foot six</button><button class="opt" type="button">C) both A and B are correct</button><button class="opt" type="button">D) five feets six</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">8. There is ___ milk left — just enough for tea.</div><div class="opts"><button class="opt" type="button">A) a few</button><button class="opt" type="button">B) a little</button><button class="opt" type="button">C) few</button><button class="opt" type="button">D) many</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">9. ___ sugar do you take in your coffee?</div><div class="opts"><button class="opt" type="button">A) How much</button><button class="opt" type="button">B) How many</button><button class="opt" type="button">C) How long</button><button class="opt" type="button">D) How far</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">10. Ten kilometres ___ a long way to walk.</div><div class="opts"><button class="opt" type="button">A) is</button><button class="opt" type="button">B) are</button><button class="opt" type="button">C) were</button><button class="opt" type="button">D) have</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">11. ___ of people came to the festival.</div><div class="opts"><button class="opt" type="button">A) Hundred</button><button class="opt" type="button">B) Hundreds</button><button class="opt" type="button">C) A hundred</button><button class="opt" type="button">D) Hundreds of the</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">12. He bought a new ___ of trousers.</div><div class="opts"><button class="opt" type="button">A) pair</button><button class="opt" type="button">B) couple</button><button class="opt" type="button">C) piece</button><button class="opt" type="button">D) set</button></div></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 28 READING TFNS -->
+  <section class="slide phase-olympiad" data-phase="Practice">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">28</span><span class="dot"></span> Task · Reading (True / False / Not stated)</div>
+      <h2>Read, then decide</h2>
+      <div class="reading">
+        <p><b>A country of two systems</b></p>
+        <p>Walk into a British supermarket and you will see prices in kilograms and grams, exactly as in the rest of Europe. Yet as soon as you step outside, the road signs tell you that the next town is twelve miles away and that the speed limit is thirty miles an hour. Britain began changing to the metric system in 1965, but the change was never completed, and today the country lives quite happily with both.</p>
+        <p>Some imperial units are even protected by law. Beer in a pub must be served in pints, and milk delivered to the door may be sold in pints too. Most British people still give their weight in stones and pounds and their height in feet and inches, although they were taught the metric system at school.</p>
+        <p>Younger people are more comfortable with metric units. Ask a teenager how tall she is and she may answer "168 centimetres", while her grandmother would say "five foot six". Petrol has been sold in litres since the 1980s, so almost nobody talks about gallons any more — except when they complain about the price.</p>
+        <p>Visitors from the United States find British measurements confusing for a different reason. An American pint is smaller than a British one, and an American gallon is smaller too. So a "gallon of milk" in New York is not the same amount as a "gallon of milk" in London.</p>
+      </div>
+      <ul class="mcset" style="margin-top:.8rem">
+        <li class="mcq" data-c="0"><div class="q">1. British supermarkets sell food in metric units.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button><button class="opt" type="button">C) Not stated</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">2. Britain finished changing to the metric system in 1965.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button><button class="opt" type="button">C) Not stated</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">3. British pubs may serve beer in half-litre glasses.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button><button class="opt" type="button">C) Not stated</button></div></li>
+        <li class="mcq" data-c="2"><div class="q">4. Every British teenager uses only metric units.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button><button class="opt" type="button">C) Not stated</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">5. Petrol in Britain is sold in litres.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button><button class="opt" type="button">C) Not stated</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">6. An American gallon is bigger than a British one.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button><button class="opt" type="button">C) Not stated</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">7. The metric system is taught in British schools.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button><button class="opt" type="button">C) Not stated</button></div></li>
+        <li class="mcq" data-c="2"><div class="q">8. Most Americans would like to change to the metric system.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button><button class="opt" type="button">C) Not stated</button></div></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 29 OPEN CLOZE -->
+  <section class="slide phase-olympiad" data-phase="Practice">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">29</span><span class="dot"></span> Task · Open cloze</div>
+      <h2>Fill each gap with ONE word</h2>
+      <p class="cloze">
+        Every country needs a way
+        <span class="cz" data-a="of"><span class="num">1</span><input class="gap gap-s" aria-label="gap 1" autocomplete="off"></span>
+        measuring things. Most of the world uses the metric system,
+        <span class="cz" data-a="which"><span class="num">2</span><input class="gap gap-s" aria-label="gap 2" autocomplete="off"></span>
+        was created in France more than two hundred years ago. In this system everything is divided
+        <span class="cz" data-a="into|by"><span class="num">3</span><input class="gap gap-s" aria-label="gap 3" autocomplete="off"></span>
+        tens: ten millimetres make a centimetre, and a thousand grams make
+        <span class="cz" data-a="a|one"><span class="num">4</span><input class="gap gap-s" aria-label="gap 4" autocomplete="off"></span>
+        kilogram. The United States,
+        <span class="cz" data-a="on"><span class="num">5</span><input class="gap gap-s" aria-label="gap 5" autocomplete="off"></span>
+        the other hand, still uses older units such as feet, pounds and gallons. British people use
+        <span class="cz" data-a="both|two"><span class="num">6</span><input class="gap gap-s" aria-label="gap 6" autocomplete="off"></span>
+        systems at the same time: they buy food
+        <span class="cz" data-a="in|by"><span class="num">7</span><input class="gap gap-s" aria-label="gap 7" autocomplete="off"></span>
+        kilograms but measure distance in miles. If you
+        <span class="cz" data-a="have"><span class="num">8</span><input class="gap gap-s" aria-label="gap 8" autocomplete="off"></span>
+        ever travelled to London, you may have noticed this. Learning a few simple facts — that a mile is about 1.6 kilometres, or
+        <span class="cz" data-a="that"><span class="num">9</span><input class="gap gap-s" aria-label="gap 9" autocomplete="off"></span>
+        a pound is a little
+        <span class="cz" data-a="less"><span class="num">10</span><input class="gap gap-s" aria-label="gap 10" autocomplete="off"></span>
+        than half a kilo — makes travelling much easier.
+      </p>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 30 FINAL TEST -->
+  <section class="slide phase-olympiad" data-phase="Challenge">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">30</span><span class="dot"></span> Challenge · Final mini-test 🏁</div>
+      <h2>Everything together</h2>
+      <ul class="mcset">
+        <li class="mcq" data-c="2"><div class="q">1. Which is the biggest?</div><div class="opts"><button class="opt" type="button">A) a pint</button><button class="opt" type="button">B) a quart</button><button class="opt" type="button">C) a gallon</button><button class="opt" type="button">D) a fluid ounce</button></div></li>
+        <li class="mcq" data-c="2"><div class="q">2. Water boils at 100 °C. In Fahrenheit that is…</div><div class="opts"><button class="opt" type="button">A) 100 °F</button><button class="opt" type="button">B) 180 °F</button><button class="opt" type="button">C) 212 °F</button><button class="opt" type="button">D) 32 °F</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">3. Farmland in the USA and the UK is measured in…</div><div class="opts"><button class="opt" type="button">A) hectares</button><button class="opt" type="button">B) acres</button><button class="opt" type="button">C) furlongs</button><button class="opt" type="button">D) fathoms</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">4. "Take it with a pinch of salt" means…</div><div class="opts"><button class="opt" type="button">A) add more salt</button><button class="opt" type="button">B) don't believe it completely</button><button class="opt" type="button">C) it is dangerous</button><button class="opt" type="button">D) it tastes delicious</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">5. In a recipe, "tbsp" means…</div><div class="opts"><button class="opt" type="button">A) teaspoon</button><button class="opt" type="button">B) tablespoon</button><button class="opt" type="button">C) tub of butter</button><button class="opt" type="button">D) two big spoons</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">6. Which country measures body weight in stones?</div><div class="opts"><button class="opt" type="button">A) the USA</button><button class="opt" type="button">B) the UK</button><button class="opt" type="button">C) Australia</button><button class="opt" type="button">D) Canada</button></div></li>
+      </ul>
+      <ul class="exset" style="margin-top:.6rem">
+        <li class="exq" data-a="stick"><span class="q">7. In America butter is sold in a <input class="gap" aria-label="answer" autocomplete="off"> of about 113 g.</span><span class="v"></span></li>
+        <li class="exq" data-a="yards"><span class="q">8. One mile = 1,760 <input class="gap" aria-label="answer" autocomplete="off">.</span><span class="v"></span></li>
+        <li class="exq" data-a="clove"><span class="q">9. Add a <input class="gap" aria-label="answer" autocomplete="off"> of garlic to the sauce.</span><span class="v"></span></li>
+        <li class="exq" data-a="32|thirty-two|thirty two"><span class="q">10. Water freezes at <input class="gap gap-s" aria-label="answer" autocomplete="off"> °F.</span><span class="v"></span></li>
+        <li class="exq" data-a="myanmar|burma"><span class="q">11. Only three countries are not officially metric: the USA, Liberia and <input class="gap w-lg" aria-label="answer" autocomplete="off">.</span><span class="v"></span></li>
+        <li class="exq" data-a="splash|dash|drop"><span class="q">12. Just a <input class="gap" aria-label="answer" autocomplete="off"> of milk in my tea, please.</span><span class="v"></span></li>
+        <li class="exq" data-a="libra"><span class="q">13. The abbreviation "lb" for <em>pound</em> comes from the Latin word <input class="gap" aria-label="answer" autocomplete="off">.</span><span class="v"></span></li>
+        <li class="exq" data-a="pint"><span class="q">14. An American <input class="gap" aria-label="answer" autocomplete="off"> is 473 ml, but a British one is 568 ml.</span><span class="v"></span></li>
+        <li class="exq" data-a="handful"><span class="q">15. She threw a <input class="gap" aria-label="answer" autocomplete="off"> of nuts into the salad.</span><span class="v"></span></li>
+        <li class="exq" data-a="hands"><span class="q">16. That horse is sixteen <input class="gap" aria-label="answer" autocomplete="off"> high.</span><span class="v"></span></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 31 WRAP-UP -->
+  <section class="slide phase-connect" data-phase="Wrap-up">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">31</span><span class="dot"></span> Wrap-up · Homework</div>
+      <h2>Homework &amp; a big <span class="hl">well done</span> 🌟</h2>
+      <ul class="q-list">
+        <li data-n="1"><span>Learn the <b>country table</b> (slide 6) by heart — who uses miles, stones, gallons, °F.</span></li>
+        <li data-n="2"><span>Learn <b>eight key conversions</b>: 1 inch, 1 foot, 1 mile, 1 pound, 1 stone, 1 pint (UK/US), 1 acre, 0 °C → °F.</span></li>
+        <li data-n="3"><span>Make a card with <b>15 partitives</b> (a loaf of…, a bar of…) and test yourself in both directions.</span></li>
+        <li data-n="4"><span>Learn <b>ten "small amount" words</b>: pinch, handful, dash, splash, drop, knob, dollop, squeeze, sprinkle, lump.</span></li>
+        <li data-n="5"><span>Learn <b>six idioms</b> from slide 22 and write one sentence with each.</span></li>
+        <li data-n="6"><span>Find an <b>English recipe</b> online, copy out every measuring word you see and translate it.</span></li>
+        <li data-n="7"><span><span class="en-note">Writing:</span> <b>60–80 words</b> — "Should the USA change to the metric system? Why / why not?"</span></li>
+      </ul>
+      <p class="lead">Now you can read an English recipe, understand a road sign in Britain and win the "which country uses what" question. See you next lesson! 👋⚖️</p>
+    </div>
+  </section>
+
+  <nav class="nav">
+    <span class="phase-label"><span class="pd" id="pd"></span><span id="phase">Measures</span></span>
+    <span class="kbd-hint">← → arrows to navigate</span>
+    <span class="nav-btns">
+      <button id="prev" aria-label="Previous slide">‹ Back</button>
+      <button id="next" aria-label="Next slide">Next ›</button>
+    </span>
+  </nav>
+</div>
+
+<script>
+  (function () {
+    var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+    var bar = document.getElementById('bar');
+    var cur = document.getElementById('cur');
+    var totalEl = document.getElementById('total');
+    var prev = document.getElementById('prev');
+    var next = document.getElementById('next');
+    var phaseEl = document.getElementById('phase');
+    var pd = document.getElementById('pd');
+    var i = 0;
+    totalEl.textContent = slides.length;
+
+    function phaseName(el){
+      if(el.getAttribute('data-phase')) return el.getAttribute('data-phase');
+      if(el.classList.contains('phase-remember')) return 'Theory';
+      if(el.classList.contains('phase-olympiad')) return 'Practice';
+      return 'Intro';
+    }
+
+    function show(n){
+      i = Math.max(0, Math.min(slides.length-1, n));
+      slides.forEach(function(s,k){ s.classList.toggle('active', k===i); });
+      var active = slides[i];
+      bar.style.width = ((i+1)/slides.length*100) + '%';
+      cur.textContent = i+1;
+      prev.disabled = i===0; next.disabled = i===slides.length-1;
+      phaseEl.textContent = phaseName(active);
+      var cs = getComputedStyle(active);
+      pd.style.background = cs.getPropertyValue('--accent');
+      phaseEl.style.color = cs.getPropertyValue('--accent');
+      var inner = active.querySelector('.inner'); if(inner) inner.scrollTop = 0;
+    }
+    function go(d){ show(i+d); }
+
+    next.addEventListener('click', function(){ go(1); });
+    prev.addEventListener('click', function(){ go(-1); });
+
+    document.addEventListener('keydown', function(e){
+      var t = e.target;
+      if(t && (t.tagName==='INPUT' || t.tagName==='TEXTAREA')) return;
+      if(t && t.tagName==='BUTTON' && (e.key===' ' || e.key==='Enter')) return;
+      if(e.key==='ArrowRight'||e.key==='PageDown'){ go(1); e.preventDefault(); }
+      else if(e.key==='ArrowLeft'||e.key==='PageUp'){ go(-1); e.preventDefault(); }
+      else if(e.key===' '){ go(1); e.preventDefault(); }
+      else if(e.key==='Home'){ show(0); }
+      else if(e.key==='End'){ show(slides.length-1); }
+    });
+
+    // ---- Answer checking ----
+    function normalize(s){ return (s||'').toLowerCase().replace(/’/g,"'").replace(/\s+/g,' ').trim().replace(/[.,!?;:]+$/,''); }
+    function firstAlt(item){ return (item.getAttribute('data-a')||'').split('|')[0]; }
+    function alts(item){ return (item.getAttribute('data-a')||'').split('|').map(normalize); }
+
+    function checkGaps(items, reveal){
+      var ok = 0, total = 0;
+      items.forEach(function(it){
+        var input = it.querySelector('.gap'); if(!input) return;
+        total++;
+        var v = it.querySelector('.v');
+        if(reveal){
+          input.value = firstAlt(it);
+          input.classList.remove('no'); input.classList.add('ok');
+          if(v){ v.className='v good'; v.textContent='✓'; }
+          ok++; return;
+        }
+        var val = normalize(input.value);
+        input.classList.remove('ok','no'); if(v) v.className='v';
+        if(val === ''){ if(v) v.textContent=''; return; }
+        if(alts(it).indexOf(val) !== -1){ input.classList.add('ok'); if(v){ v.className='v good'; v.textContent='✓'; } ok++; }
+        else { input.classList.add('no'); if(v){ v.className='v bad'; v.textContent='✗ ' + firstAlt(it); } }
+      });
+      return { ok: ok, total: total };
+    }
+
+    function checkMC(set, reveal){
+      var qs = set.querySelectorAll('.mcq'); var ok = 0;
+      qs.forEach(function(q){
+        var opts = q.querySelectorAll('.opt');
+        var c = parseInt(q.getAttribute('data-c'), 10);
+        opts.forEach(function(o){ o.classList.remove('correct','wrong'); });
+        if(reveal){
+          opts.forEach(function(o){ o.classList.remove('sel'); });
+          if(opts[c]){ opts[c].classList.add('sel','correct'); }
+          ok++; return;
+        }
+        var selIdx = -1;
+        opts.forEach(function(o,idx){ if(o.classList.contains('sel')) selIdx = idx; });
+        if(selIdx === -1) return;
+        if(selIdx === c){ opts[selIdx].classList.add('correct'); ok++; }
+        else { opts[selIdx].classList.add('wrong'); if(opts[c]) opts[c].classList.add('correct'); }
+      });
+      return { ok: ok, total: qs.length };
+    }
+
+    document.querySelectorAll('.mcq').forEach(function(q){
+      q.querySelectorAll('.opt').forEach(function(o){
+        o.addEventListener('click', function(){
+          q.querySelectorAll('.opt').forEach(function(x){ x.classList.remove('sel','correct','wrong'); });
+          o.classList.add('sel');
+        });
+      });
+    });
+
+    document.querySelectorAll('.extools').forEach(function(tools){
+      var inner = tools.closest('.inner');
+      var score = tools.querySelector('.score');
+      var exset = inner.querySelector('.exset');
+      var mcset = inner.querySelector('.mcset');
+      var cloze = inner.querySelector('.cloze');
+
+      function run(reveal){
+        var ok = 0, total = 0, r;
+        if(exset){ r = checkGaps(exset.querySelectorAll('.exq'), reveal); ok += r.ok; total += r.total; }
+        if(cloze){ r = checkGaps(cloze.querySelectorAll('.cz'), reveal); ok += r.ok; total += r.total; }
+        if(mcset){ r = checkMC(mcset, reveal); ok += r.ok; total += r.total; }
+        if(score){ score.textContent = ok + ' / ' + total + (ok===total ? '  🎉' : ''); }
+      }
+
+      tools.querySelector('.check').addEventListener('click', function(){ run(false); });
+      tools.querySelector('.show').addEventListener('click', function(){ run(true); });
+      tools.querySelector('.clear').addEventListener('click', function(){
+        inner.querySelectorAll('.gap').forEach(function(g){ g.value=''; g.classList.remove('ok','no'); });
+        inner.querySelectorAll('.v').forEach(function(v){ v.textContent=''; v.className='v'; });
+        inner.querySelectorAll('.opt').forEach(function(o){ o.classList.remove('sel','correct','wrong'); });
+        if(score) score.textContent='';
+      });
+      inner.querySelectorAll('.gap').forEach(function(g){
+        g.addEventListener('keydown', function(e){ if(e.key==='Enter'){ run(false); } });
+      });
+    });
+
+    // ---- Reveal panels (clickable country chips) ----
+    document.querySelectorAll('.reveal').forEach(function(group){
+      var box = group.querySelector('.factbox');
+      var items = Array.prototype.slice.call(group.querySelectorAll('[data-name]'));
+      items.forEach(function(it){
+        if(!it.textContent.trim()){ it.textContent = it.getAttribute('data-name'); }
+        it.addEventListener('click', function(){
+          items.forEach(function(x){ x.classList.remove('on'); });
+          it.classList.add('on');
+          if(!box) return;
+          var name = it.getAttribute('data-name') || '';
+          var cap = it.getAttribute('data-cap') || '';
+          var fact = it.getAttribute('data-fact') || '';
+          var html = '<div class="fb-name">' + name + '</div>';
+          if(cap){ html += '<div class="fb-cap">📐 ' + cap + '</div>'; }
+          html += '<div class="fb-fact">' + fact + '</div>';
+          box.innerHTML = html;
+        });
+      });
+    });
+
+    // Touch swipe (ignore form fields & buttons)
+    var x0 = null;
+    document.addEventListener('touchstart', function(e){
+      var t = e.target; if(t && (t.tagName==='INPUT'||t.tagName==='TEXTAREA'||t.tagName==='BUTTON')) { x0=null; return; }
+      x0 = e.touches[0].clientX;
+    }, {passive:true});
+    document.addEventListener('touchend', function(e){
+      if(x0===null) return;
+      var dx = e.changedTouches[0].clientX - x0;
+      if(Math.abs(dx) > 55) go(dx<0 ? 1 : -1);
+      x0 = null;
+    }, {passive:true});
+
+    show(0);
+  })();
+</script>
+</body>
+</html>

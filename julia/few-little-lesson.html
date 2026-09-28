@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Few, a few, little, a little — interactive lesson</title>
+<style>
+:root{
+  --bg:#f7f3ed;--paper:#fffdf9;--ink:#292b36;--muted:#716f78;--line:#e9e0d5;
+  --violet:#7057c7;--violet-soft:#eee9ff;--green:#16856c;--green-soft:#e2f5ef;
+  --pink:#c14f76;--pink-soft:#fbe6ed;--amber:#a56815;--amber-soft:#fff0ce;
+  --good:#14825f;--bad:#c94861;--shadow:0 16px 50px rgba(76,58,42,.10);
+  --display:"Trebuchet MS","Segoe UI",sans-serif;--body:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+:root[data-theme="dark"]{
+  --bg:#1d1b25;--paper:#282531;--ink:#f3edf7;--muted:#b7adbd;--line:#3e3948;
+  --violet:#b9a5ff;--violet-soft:#3b3358;--green:#68d5ba;--green-soft:#233f3a;
+  --pink:#f09ab6;--pink-soft:#4b2c38;--amber:#f2c36d;--amber-soft:#493b24;
+  --good:#6bdbb3;--bad:#ff91a5;--shadow:0 18px 55px rgba(0,0,0,.28);
+}
+*{box-sizing:border-box}html,body{margin:0;height:100%;overflow:hidden}
+body{font-family:var(--body);color:var(--ink);background:
+radial-gradient(circle at 8% 5%,var(--violet-soft),transparent 28%),
+radial-gradient(circle at 95% 95%,var(--green-soft),transparent 30%),var(--bg)}
+button,input{font:inherit}.deck{height:100dvh;position:relative}
+.top{position:fixed;z-index:20;inset:0 0 auto;display:flex;align-items:center;gap:14px;
+padding:11px clamp(14px,3vw,34px);background:color-mix(in srgb,var(--bg) 86%,transparent);
+backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.brand{font-family:var(--display);font-weight:800;white-space:nowrap}.brand small{color:var(--violet)}
+.track{height:7px;background:var(--line);border-radius:20px;overflow:hidden;flex:1}
+.track i{display:block;height:100%;width:10%;background:linear-gradient(90deg,var(--violet),var(--green),var(--pink));transition:.3s}
+.count{font-variant-numeric:tabular-nums;color:var(--muted);font-size:.82rem}
+.theme{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:12px;padding:5px 9px;cursor:pointer}
+.slide{position:absolute;inset:0;padding:74px clamp(16px,5vw,64px) 76px;display:flex;
+opacity:0;visibility:hidden;transform:translateY(10px);transition:.3s;overflow:auto}
+.slide.active{opacity:1;visibility:visible;transform:none}.inner{width:min(100%,1000px);margin:auto}
+.kicker{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--accent,var(--violet));margin-bottom:10px}
+h1,h2,h3{font-family:var(--display);margin:0;line-height:1.12}h1{font-size:clamp(2.25rem,7vw,4.8rem)}
+h2{font-size:clamp(1.7rem,4vw,2.75rem)}h3{font-size:1rem}.lead{font-size:clamp(1rem,2vw,1.2rem);color:var(--muted);max-width:64ch}
+.hero{text-align:center}.hero .formula{display:inline-flex;gap:7px;flex-wrap:wrap;justify-content:center;margin:25px 0}
+.pill{padding:8px 13px;border-radius:99px;background:var(--paper);border:1px solid var(--line);box-shadow:var(--shadow);font-weight:750}
+.few{color:var(--violet)}.little{color:var(--green)}.negative{color:var(--bad)}.positive{color:var(--good)}
+.grid{display:grid;gap:14px;margin-top:22px}.two{grid-template-columns:repeat(2,minmax(0,1fr))}.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:18px 20px;box-shadow:var(--shadow)}
+.card h3{color:var(--accent,var(--violet));text-transform:uppercase;letter-spacing:.07em;font-size:.75rem;margin-bottom:9px}
+.example{font-family:var(--display);font-size:1.06rem;margin:8px 0}.ru{color:var(--muted);font-size:.9rem}.big{font-size:clamp(1.35rem,3vw,2rem);font-weight:800}
+.sign{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:9px;margin-right:7px}.plus{background:var(--green-soft);color:var(--good)}.minus{background:var(--pink-soft);color:var(--bad)}
+.rule{border-left:4px solid var(--accent,var(--violet));background:color-mix(in srgb,var(--accent,var(--violet)) 10%,var(--paper));padding:13px 16px;border-radius:0 14px 14px 0;margin-top:15px}
+.trap{border-left-color:var(--pink);background:var(--pink-soft)}.trap b{color:var(--pink)}
+table{border-collapse:separate;border-spacing:0;width:100%;margin-top:18px;background:var(--paper);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:var(--shadow)}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line)}th{background:var(--violet-soft);color:var(--violet);font-size:.76rem;text-transform:uppercase}tr:last-child td{border:0}
+.task{margin-top:17px;display:grid;gap:10px}.q{background:var(--paper);border:1px solid var(--line);border-radius:15px;padding:12px 15px;box-shadow:var(--shadow)}
+.qline{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.num{color:var(--muted);font-size:.74rem;font-weight:800}
+.options{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}.opt{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:10px;padding:7px 11px;cursor:pointer}
+.opt:hover,.opt.selected{border-color:var(--violet);background:var(--violet-soft)}.opt.correct{border-color:var(--good);background:var(--green-soft)}.opt.wrong{border-color:var(--bad);background:var(--pink-soft)}
+.feedback{display:none;color:var(--muted);font-size:.87rem;margin-top:8px}.q.revealed .feedback{display:block}.feedback b{color:var(--ink)}
+.textanswer{border:0;border-bottom:2px solid var(--violet);background:var(--violet-soft);color:var(--ink);padding:5px 8px;border-radius:8px;width:145px}
+.textanswer.correct{border-color:var(--good);background:var(--green-soft)}.textanswer.wrong{border-color:var(--bad);background:var(--pink-soft)}
+.tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:15px}.btn{border:1px solid var(--line);border-radius:99px;padding:8px 15px;background:var(--paper);color:var(--ink);cursor:pointer}
+.btn.primary{background:var(--violet);border-color:var(--violet);color:white}.score{font-weight:800;color:var(--violet)}
+.nav{position:fixed;z-index:20;inset:auto 0 0;display:flex;justify-content:space-between;align-items:center;padding:10px clamp(14px,3vw,34px);
+background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--line)}
+.phase{font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}.nav div{display:flex;gap:8px}.nav button{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:12px;padding:8px 14px;cursor:pointer}
+.nav button:disabled{opacity:.35}.accent-green{--accent:var(--green)}.accent-pink{--accent:var(--pink)}.accent-amber{--accent:var(--amber)}
+@media(max-width:700px){.two,.three{grid-template-columns:1fr}.slide{padding-top:70px}.brand small{display:none}.card{padding:14px}th,td{padding:8px;font-size:.88rem}}
+@media(max-height:650px){.slide{align-items:flex-start}.inner{margin-top:10px}.grid{margin-top:13px}.card{padding:12px 15px}}
+</style>
+</head>
+<body>
+<main class="deck">
+  <header class="top">
+    <div class="brand">Quantity &amp; attitude <small>· B1–B2</small></div>
+    <div class="track"><i id="progress"></i></div><div class="count" id="count">1 / 10</div>
+    <button class="theme" id="theme" title="Switch theme">◐</button>
+  </header>
+
+  <section class="slide active">
+    <div class="inner hero">
+      <div class="kicker">Theory · 1/10</div>
+      <h1><span class="few">few</span> or <span class="little">little</span>?</h1>
+      <p class="lead" style="margin-inline:auto">Two decisions: <b>Can we count the noun?</b> Then: <b>Is the speaker satisfied with the amount?</b></p>
+      <div class="formula">
+        <span class="pill">countable plural → <span class="few">few</span></span>
+        <span class="pill">uncountable → <span class="little">little</span></span>
+      </div>
+      <div class="rule"><b>The article <i>a</i> changes the attitude, not the quantity.</b><br><span class="ru">Артикль меняет оценку говорящего: «недостаточно» ↔ «немного, но достаточно».</span></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="inner">
+      <div class="kicker">Theory · 2/10</div><h2><span class="few">few / a few</span> + countable plural</h2>
+      <div class="grid two">
+        <article class="card"><h3><span class="sign minus">−</span>few = hardly any</h3>
+          <p class="big negative">not enough</p><p class="example">Few students understood the rule.</p>
+          <p class="ru">Почти никто не понял. Это проблема.</p>
+        </article>
+        <article class="card"><h3><span class="sign plus">+</span>a few = some</h3>
+          <p class="big positive">enough / useful</p><p class="example">A few students asked questions.</p>
+          <p class="ru">Несколько учеников задали вопросы — уже хорошо.</p>
+        </article>
+      </div>
+      <div class="rule"><b>Test it:</b> replace <i>few</i> with “almost no”, and <i>a few</i> with “some”. Does the meaning survive?</div>
+    </div>
+  </section>
+
+  <section class="slide accent-green">
+    <div class="inner">
+      <div class="kicker">Theory · 3/10</div><h2><span class="little">little / a little</span> + uncountable</h2>
+      <div class="grid two">
+        <article class="card"><h3><span class="sign minus">−</span>little = hardly any</h3>
+          <p class="big negative">not enough</p><p class="example">We have little time.</p>
+          <p class="ru">Времени почти нет — нужно торопиться.</p>
+        </article>
+        <article class="card"><h3><span class="sign plus">+</span>a little = some</h3>
+          <p class="big positive">enough for something</p><p class="example">We have a little time.</p>
+          <p class="ru">Немного времени есть — что-то успеем.</p>
+        </article>
+      </div>
+      <div class="rule"><b>Common uncountables:</b> time, money, information, advice, progress, work, luck, patience, traffic, furniture, research.</div>
+    </div>
+  </section>
+
+  <section class="slide accent-amber">
+    <div class="inner">
+      <div class="kicker">Theory · 4/10</div><h2>Small words, big change</h2>
+      <table>
+        <thead><tr><th>Expression</th><th>Meaning</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td><b>very few / very little</b></td><td>extremely small; negative</td><td>Very few people agreed.</td></tr>
+          <tr><td><b>only a few / only a little</b></td><td>smaller than wanted; often negative</td><td>Only a little time remains.</td></tr>
+          <tr><td><b>quite a few</b></td><td class="positive"><b>a surprisingly large number</b></td><td>Quite a few students came.</td></tr>
+          <tr><td><b>quite a little</b></td><td>fairly much; uncommon/formal</td><td>It took quite a little effort.</td></tr>
+          <tr><td><b>the few / the little</b></td><td>all of a small, specific amount</td><td>The few friends she had helped her.</td></tr>
+        </tbody>
+      </table>
+      <div class="rule trap"><b>Trap:</b> <i>quite a few</i> does <b>not</b> mean «почти никого». It means «довольно много».</div>
+    </div>
+  </section>
+
+  <section class="slide accent-pink">
+    <div class="inner">
+      <div class="kicker">Theory · 5/10</div><h2>Exceptions &amp; traps</h2>
+      <div class="grid two">
+        <article class="card"><h3>OF + determiner / pronoun</h3>
+          <p class="example">a few <b>of the</b> students</p><p class="example">little <b>of this</b> information</p>
+          <p class="ru">Но: a few students — без <i>of</i>.</p></article>
+        <article class="card"><h3>Not always quantity</h3>
+          <p class="example">I’m <b>a little tired</b>. <span class="ru">= slightly</span></p>
+          <p class="example">a <b>little girl</b> <span class="ru">= small/young</span></p></article>
+        <article class="card"><h3>Few can stand alone</h3>
+          <p class="example">Many applied, but <b>few</b> were accepted.</p>
+          <p class="ru">Few = few people/applicants.</p></article>
+        <article class="card"><h3>Comparatives</h3>
+          <p class="example"><b>fewer</b> mistakes · <b>less</b> time</p>
+          <p class="ru">Countable plural → fewer; uncountable → less.</p></article>
+      </div>
+      <div class="rule trap"><b>Fixed everyday exception:</b> signs and measurements often use <i>less</i> with plurals: <i>10 items or less; less than 5 kilometres</i>. In careful formal English, use <i>fewer</i> for countable items.</div>
+    </div>
+  </section>
+
+  <section class="slide accent-green">
+    <div class="inner">
+      <div class="kicker">Theory · 6/10</div><h2><span class="little">a lot of / lots of / plenty of</span></h2>
+      <p class="lead">All three work with countable plural and uncountable nouns.</p>
+      <div class="grid three">
+        <article class="card"><h3>Countable plural</h3>
+          <p class="example">a lot of <b>books</b></p><p class="example">lots of <b>opportunities</b></p></article>
+        <article class="card"><h3>Uncountable</h3>
+          <p class="example">a lot of <b>time</b></p><p class="example">lots of <b>information</b></p></article>
+        <article class="card"><h3>More than enough</h3>
+          <p class="example">We have <b>plenty of</b> time.</p><p class="ru">Времени много — его точно хватит.</p></article>
+      </div>
+      <div class="rule"><b>A lot of</b> is neutral. <b>Lots of</b> is more informal. <b>Plenty of</b> adds the idea “more than enough”.</div>
+      <div class="rule trap"><b>Agreement:</b> <i>A lot of students <b>are</b>…</i>, but <i>A lot of information <b>is</b>…</i> The noun controls the verb.</div>
+    </div>
+  </section>
+
+  <section class="slide accent-amber">
+    <div class="inner">
+      <div class="kicker">Theory · 7/10</div><h2><span class="few">fewer</span> or <span class="little">less</span>?</h2>
+      <div class="grid two">
+        <article class="card"><h3>Fewer + countable plural</h3>
+          <p class="big">fewer mistakes</p><p class="example">We made fewer mistakes today.</p>
+          <p class="ru">Можно посчитать: one mistake, two mistakes.</p></article>
+        <article class="card"><h3>Less + uncountable</h3>
+          <p class="big">less information</p><p class="example">This article gives less information.</p>
+          <p class="ru">Information не считаем поштучно.</p></article>
+      </div>
+      <div class="rule trap"><b>Measurements behave as one amount:</b> <i>less than ten minutes, less than five kilometres, less than £20</i>. With separate countable things, careful English prefers <i>fewer than ten books</i>.</div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="inner">
+      <div class="kicker">Theory · 8/10</div><h2><span class="few">each / every / all</span></h2>
+      <table>
+        <thead><tr><th>Word</th><th>Focus</th><th>Grammar</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td><b>each</b></td><td>one by one</td><td>singular noun + verb</td><td>Each student <b>has</b> a card.</td></tr>
+          <tr><td><b>every</b></td><td>all members, no exceptions</td><td>singular noun + verb</td><td>Every student <b>is</b> ready.</td></tr>
+          <tr><td><b>all</b></td><td>the whole group together</td><td>usually plural noun + verb</td><td>All students <b>are</b> ready.</td></tr>
+        </tbody>
+      </table>
+      <div class="grid two">
+        <div class="rule"><b>each of + plural determiner/pronoun:</b><br><i>each of the students · each of them</i></div>
+        <div class="rule"><b>all (of) + determiner/pronoun:</b><br><i>all (of) the students · all of them</i></div>
+      </div>
+      <div class="rule trap"><b>Never:</b> <i>every of the students</i>. Say <i>every student</i> or <i>every one of the students</i>.</div>
+    </div>
+  </section>
+
+  <section class="slide accent-pink">
+    <div class="inner">
+      <div class="kicker">Theory · 9/10</div><h2>Exactly two: <span class="few">both / either / neither</span></h2>
+      <div class="grid three">
+        <article class="card"><h3>Both = the two</h3><p class="big">both answers</p>
+          <p class="example">Both answers <b>are</b> correct.</p><p class="ru">Оба ответа.</p></article>
+        <article class="card"><h3>Either = one or the other</h3><p class="big">either answer</p>
+          <p class="example">Either answer <b>is</b> acceptable.</p><p class="ru">Любой из двух.</p></article>
+        <article class="card"><h3>Neither = not one and not the other</h3><p class="big">neither answer</p>
+          <p class="example">Neither answer <b>is</b> correct.</p><p class="ru">Ни один из двух.</p></article>
+      </div>
+      <div class="rule"><b>With pronouns/determiners:</b> <i>both of them, either of the routes, neither of my parents</i>.</div>
+      <div class="rule trap"><b>Meaning trap:</b> <i>I don’t like either answer</i> = <i>I like neither answer.</i> Do not add another negative after <i>neither</i>.</div>
+    </div>
+  </section>
+
+  <section class="slide accent-green">
+    <div class="inner">
+      <div class="kicker">Theory · 10/10</div><h2><span class="little">no / none / neither</span></h2>
+      <table>
+        <thead><tr><th>Form</th><th>What follows?</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td><b>no</b></td><td>a noun</td><td>There is <b>no information</b>.</td></tr>
+          <tr><td><b>none</b></td><td>no noun; replaces it</td><td>I asked for help, but <b>none</b> was available.</td></tr>
+          <tr><td><b>none of</b></td><td>the/these/my/us/them</td><td><b>None of the students</b> knew.</td></tr>
+          <tr><td><b>neither</b></td><td>exactly two</td><td><b>Neither option</b> works.</td></tr>
+        </tbody>
+      </table>
+      <div class="rule"><b>Number rule:</b> two → <i>neither</i>; three or more → <i>none</i>.</div>
+      <div class="rule trap"><b>One negative is enough:</b> <i>I have no money</i> = <i>I don’t have any money</i>. Standard English avoids <i>I don’t have no money</i>.</div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="inner">
+      <div class="kicker">Practice · 1/10</div><h2>Countable or uncountable?</h2>
+      <p class="lead">Choose the quantifier family. Don’t think about positive/negative yet.</p>
+      <div class="task" data-task>
+        <div class="q" data-answer="few"><div class="qline"><span class="num">01</span> mistakes</div><div class="options"><button class="opt">few</button><button class="opt">little</button></div><div class="feedback"><b>mistakes</b> is countable and plural.</div></div>
+        <div class="q" data-answer="little"><div class="qline"><span class="num">02</span> research</div><div class="options"><button class="opt">few</button><button class="opt">little</button></div><div class="feedback"><b>research</b> is uncountable.</div></div>
+        <div class="q" data-answer="little"><div class="qline"><span class="num">03</span> advice</div><div class="options"><button class="opt">few</button><button class="opt">little</button></div><div class="feedback"><b>advice</b> is uncountable; say <i>pieces of advice</i> to count it.</div></div>
+        <div class="q" data-answer="few"><div class="qline"><span class="num">04</span> opportunities</div><div class="options"><button class="opt">few</button><button class="opt">little</button></div><div class="feedback"><b>opportunities</b> is countable and plural.</div></div>
+        <div class="q" data-answer="little"><div class="qline"><span class="num">05</span> progress</div><div class="options"><button class="opt">few</button><button class="opt">little</button></div><div class="feedback"><b>progress</b> is uncountable.</div></div>
+      </div><div class="tools"><button class="btn primary check">Check</button><button class="btn reset">Reset</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <section class="slide accent-green">
+    <div class="inner">
+      <div class="kicker">Practice · 2/10</div><h2>Is it enough?</h2><p class="lead">Use context, not only the noun.</p>
+      <div class="task" data-task>
+        <div class="q" data-answer="a few"><div class="qline"><span class="num">01</span> I have ___ questions, if you have time. <span class="ru">(some questions)</span></div><div class="options"><button class="opt">few</button><button class="opt">a few</button></div><div class="feedback"><b>A few</b> = some; a neutral/positive amount.</div></div>
+        <div class="q" data-answer="little"><div class="qline"><span class="num">02</span> There is ___ hope of finding the documents now. <span class="ru">(almost none)</span></div><div class="options"><button class="opt">little</button><button class="opt">a little</button></div><div class="feedback"><b>Little</b> = almost no hope.</div></div>
+        <div class="q" data-answer="a little"><div class="qline"><span class="num">03</span> Add ___ salt to improve the flavour. <span class="ru">(some)</span></div><div class="options"><button class="opt">little</button><button class="opt">a little</button></div><div class="feedback"><b>A little</b> = a small but useful amount.</div></div>
+        <div class="q" data-answer="few"><div class="qline"><span class="num">04</span> ___ witnesses remembered the number plate, so the case was difficult. <span class="ru">(not enough)</span></div><div class="options"><button class="opt">Few</button><button class="opt">A few</button></div><div class="feedback"><b>Few</b> carries the negative idea “not enough”.</div></div>
+      </div><div class="tools"><button class="btn primary check">Check</button><button class="btn reset">Reset</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <section class="slide accent-amber">
+    <div class="inner">
+      <div class="kicker">Practice · 3/10</div><h2>Choose the speaker’s attitude</h2>
+      <div class="task" data-task>
+        <div class="q" data-answer="positive"><div class="qline"><span class="num">01</span> We still have <b>a little time</b>, so let’s check the answers.</div><div class="options"><button class="opt" data-value="positive">🙂 Enough time</button><button class="opt" data-value="negative">🙁 Almost no time</button></div><div class="feedback">The article in <b>a little</b> makes the message positive.</div></div>
+        <div class="q" data-answer="negative"><div class="qline"><span class="num">02</span> Unfortunately, <b>few candidates</b> reached the final.</div><div class="options"><button class="opt" data-value="positive">🙂 A useful number</button><button class="opt" data-value="negative">🙁 Almost none</button></div><div class="feedback"><b>Few</b>, reinforced by <i>unfortunately</i>, is negative.</div></div>
+        <div class="q" data-answer="positive"><div class="qline"><span class="num">03</span> <b>Quite a few</b> parents supported the proposal.</div><div class="options"><button class="opt" data-value="positive">Many / a good number</button><button class="opt" data-value="negative">Almost none</button></div><div class="feedback"><b>Quite a few</b> surprisingly means a fairly large number.</div></div>
+        <div class="q" data-answer="negative"><div class="qline"><span class="num">04</span> We have <b>only a little</b> evidence.</div><div class="options"><button class="opt" data-value="positive">Plenty</button><button class="opt" data-value="negative">Less than desired</button></div><div class="feedback"><b>Only</b> makes the small amount sound insufficient.</div></div>
+      </div><div class="tools"><button class="btn primary check">Check</button><button class="btn reset">Reset</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <section class="slide accent-pink">
+    <div class="inner">
+      <div class="kicker">Practice · 4/10</div><h2>Repair the exceptions</h2><p class="lead">Choose the grammatically correct version.</p>
+      <div class="task" data-task>
+        <div class="q" data-answer="A few of my friends"><div class="qline"><span class="num">01</span> ___ live abroad.</div><div class="options"><button class="opt">A few my friends</button><button class="opt">A few of my friends</button></div><div class="feedback">Before <b>my/the/these/us</b>, use <b>of</b>: <i>a few of my friends</i>.</div></div>
+        <div class="q" data-answer="fewer errors"><div class="qline"><span class="num">02</span> This version contains ___.</div><div class="options"><button class="opt">less errors</button><button class="opt">fewer errors</button></div><div class="feedback">Countable plural <i>errors</i> → <b>fewer</b> in careful English.</div></div>
+        <div class="q" data-answer="little information"><div class="qline"><span class="num">03</span> The website provides ___.</div><div class="options"><button class="opt">few informations</button><button class="opt">little information</button></div><div class="feedback"><i>Information</i> is uncountable and has no plural here.</div></div>
+        <div class="q" data-answer="a little nervous"><div class="qline"><span class="num">04</span> Before the interview, I felt ___.</div><div class="options"><button class="opt">a little nervous</button><button class="opt">a few nervous</button></div><div class="feedback"><b>A little + adjective</b> means “slightly”; it is an adverbial use.</div></div>
+      </div><div class="tools"><button class="btn primary check">Check</button><button class="btn reset">Reset</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="inner">
+      <div class="kicker">Practice · 5/10</div><h2>Final mixed challenge</h2>
+      <p class="lead">Type: <i>few, a few, little, a little, quite a few, fewer</i> or <i>less</i>.</p>
+      <div class="task text-task" data-task>
+        <div class="q" data-answer="quite a few"><div class="qline"><span class="num">01</span> Surprisingly, <input class="textanswer" aria-label="answer 1"> people knew the obscure rule.</div><div class="feedback"><b>quite a few</b> = a surprisingly large number.</div></div>
+        <div class="q" data-answer="few"><div class="qline"><span class="num">02</span> The village has <input class="textanswer" aria-label="answer 2"> job opportunities, so young people leave.</div><div class="feedback"><b>few</b>: countable plural + negative consequence.</div></div>
+        <div class="q" data-answer="a little"><div class="qline"><span class="num">03</span> With <input class="textanswer" aria-label="answer 3"> luck, we can finish today.</div><div class="feedback"><b>a little</b>: uncountable + enough to make success possible.</div></div>
+        <div class="q" data-answer="little"><div class="qline"><span class="num">04</span> He showed <input class="textanswer" aria-label="answer 4"> interest, and the conversation soon ended.</div><div class="feedback"><b>little</b>: almost no interest; negative result.</div></div>
+        <div class="q" data-answer="fewer"><div class="qline"><span class="num">05</span> We made <input class="textanswer" aria-label="answer 5"> mistakes this time.</div><div class="feedback"><b>fewer</b> + countable plural.</div></div>
+        <div class="q" data-answer="less"><div class="qline"><span class="num">06</span> I have <input class="textanswer" aria-label="answer 6"> patience than my teacher.</div><div class="feedback"><b>less</b> + uncountable noun.</div></div>
+      </div><div class="tools"><button class="btn primary check">Check</button><button class="btn reset">Reset</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <section class="slide accent-green">
+    <div class="inner">
+      <div class="kicker">Practice · 6/10</div><h2>A lot, lots or plenty?</h2>
+      <div class="task" data-task>
+        <div class="q" data-answer="plenty of"><div class="qline"><span class="num">01</span> Don’t hurry. We have ___ time.</div><div class="options"><button class="opt">plenty of</button><button class="opt">few</button></div><div class="feedback"><b>Plenty of</b> means more than enough.</div></div>
+        <div class="q" data-answer="is"><div class="qline"><span class="num">02</span> A lot of information ___ available online.</div><div class="options"><button class="opt">is</button><button class="opt">are</button></div><div class="feedback"><i>Information</i> is uncountable and takes <b>is</b>.</div></div>
+        <div class="q" data-answer="are"><div class="qline"><span class="num">03</span> Lots of useful exercises ___ included.</div><div class="options"><button class="opt">is</button><button class="opt">are</button></div><div class="feedback"><i>Exercises</i> is plural and takes <b>are</b>.</div></div>
+        <div class="q" data-answer="a lot of"><div class="qline"><span class="num">04</span> The neutral expression meaning “many/much” is ___.</div><div class="options"><button class="opt">a lot of</button><button class="opt">plenty of</button></div><div class="feedback"><b>A lot of</b> is neutral; <i>plenty of</i> adds “more than enough”.</div></div>
+      </div><div class="tools"><button class="btn primary check">Check</button><button class="btn reset">Reset</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <section class="slide accent-amber">
+    <div class="inner">
+      <div class="kicker">Practice · 7/10</div><h2>Fewer or less?</h2>
+      <div class="task text-task" data-task>
+        <div class="q" data-answer="fewer"><div class="qline"><span class="num">01</span> We need <input class="textanswer" aria-label="fewer or less 1"> chairs.</div><div class="feedback"><b>Fewer</b> + countable plural.</div></div>
+        <div class="q" data-answer="less"><div class="qline"><span class="num">02</span> Try to use <input class="textanswer" aria-label="fewer or less 2"> water.</div><div class="feedback"><b>Less</b> + uncountable noun.</div></div>
+        <div class="q" data-answer="less"><div class="qline"><span class="num">03</span> The journey takes <input class="textanswer" aria-label="fewer or less 3"> than twenty minutes.</div><div class="feedback">Time is treated as one measured amount: <b>less than twenty minutes</b>.</div></div>
+        <div class="q" data-answer="fewer"><div class="qline"><span class="num">04</span> This year, <input class="textanswer" aria-label="fewer or less 4"> students were absent.</div><div class="feedback">Separate countable people → <b>fewer</b>.</div></div>
+      </div><div class="tools"><button class="btn primary check">Check</button><button class="btn reset">Reset</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="inner">
+      <div class="kicker">Practice · 8/10</div><h2>Each, every or all?</h2>
+      <div class="task" data-task>
+        <div class="q" data-answer="each"><div class="qline"><span class="num">01</span> The teacher spoke to ___ student separately.</div><div class="options"><button class="opt">each</button><button class="opt">all</button></div><div class="feedback"><i>Separately</i> highlights students one by one: <b>each</b>.</div></div>
+        <div class="q" data-answer="every"><div class="qline"><span class="num">02</span> ___ participant must show an ID. No exceptions.</div><div class="options"><button class="opt">Every</button><button class="opt">All</button></div><div class="feedback"><b>Every + singular noun</b> emphasizes no exceptions.</div></div>
+        <div class="q" data-answer="all"><div class="qline"><span class="num">03</span> ___ the windows were open.</div><div class="options"><button class="opt">All</button><button class="opt">Every</button></div><div class="feedback"><b>All + plural noun</b>: <i>all the windows</i>.</div></div>
+        <div class="q" data-answer="each of the students"><div class="qline"><span class="num">04</span> ___ received a different question.</div><div class="options"><button class="opt">Each of the students</button><button class="opt">Every of the students</button></div><div class="feedback">Use <b>each of the students</b>; never <i>every of</i>.</div></div>
+      </div><div class="tools"><button class="btn primary check">Check</button><button class="btn reset">Reset</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <section class="slide accent-pink">
+    <div class="inner">
+      <div class="kicker">Practice · 9/10</div><h2>Two choices</h2>
+      <div class="task" data-task>
+        <div class="q" data-answer="both"><div class="qline"><span class="num">01</span> Anna and Max passed. ___ students succeeded.</div><div class="options"><button class="opt">Both</button><button class="opt">Either</button><button class="opt">Neither</button></div><div class="feedback"><b>Both</b> = the two of them.</div></div>
+        <div class="q" data-answer="either"><div class="qline"><span class="num">02</span> You can take the bus or the train. ___ route is fine.</div><div class="options"><button class="opt">Both</button><button class="opt">Either</button><button class="opt">Neither</button></div><div class="feedback"><b>Either</b> = one or the other; both alternatives are acceptable.</div></div>
+        <div class="q" data-answer="neither"><div class="qline"><span class="num">03</span> I tried two keys, but ___ key opened the door.</div><div class="options"><button class="opt">both</button><button class="opt">either</button><button class="opt">neither</button></div><div class="feedback"><b>Neither</b> = not the first and not the second.</div></div>
+        <div class="q" data-answer="are"><div class="qline"><span class="num">04</span> Both answers ___ possible.</div><div class="options"><button class="opt">is</button><button class="opt">are</button></div><div class="feedback"><b>Both</b> takes a plural verb.</div></div>
+      </div><div class="tools"><button class="btn primary check">Check</button><button class="btn reset">Reset</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <section class="slide accent-green">
+    <div class="inner">
+      <div class="kicker">Practice · 10/10</div><h2>No, none or neither?</h2>
+      <div class="task" data-task>
+        <div class="q" data-answer="no"><div class="qline"><span class="num">01</span> There is ___ milk in the fridge.</div><div class="options"><button class="opt">no</button><button class="opt">none</button></div><div class="feedback"><b>No</b> comes directly before a noun.</div></div>
+        <div class="q" data-answer="none"><div class="qline"><span class="num">02</span> “How much milk is left?” “___.”</div><div class="options"><button class="opt">No</button><button class="opt">None</button></div><div class="feedback"><b>None</b> replaces the noun.</div></div>
+        <div class="q" data-answer="none of"><div class="qline"><span class="num">03</span> ___ the five solutions worked.</div><div class="options"><button class="opt">Neither of</button><button class="opt">None of</button></div><div class="feedback">There are five solutions, so use <b>none of</b>.</div></div>
+        <div class="q" data-answer="neither of"><div class="qline"><span class="num">04</span> ___ the two solutions worked.</div><div class="options"><button class="opt">Neither of</button><button class="opt">None of</button></div><div class="feedback">There are exactly two solutions, so use <b>neither of</b>.</div></div>
+        <div class="q" data-answer="i don't have any money"><div class="qline"><span class="num">05</span> Choose standard English.</div><div class="options"><button class="opt">I don't have any money</button><button class="opt">I don't have no money</button></div><div class="feedback">Standard English normally uses one negative: <b>not … any</b> or <b>no</b>.</div></div>
+      </div><div class="tools"><button class="btn primary check">Check</button><button class="btn reset">Reset</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <footer class="nav"><span class="phase" id="phase">Theory</span><div><button id="prev">← Back</button><button id="next">Next →</button></div></footer>
+</main>
+<script>
+const slides=[...document.querySelectorAll('.slide')], progress=document.querySelector('#progress'), count=document.querySelector('#count');
+const phase=document.querySelector('#phase'), prev=document.querySelector('#prev'), next=document.querySelector('#next');
+let current=0;
+function show(n){
+  current=Math.max(0,Math.min(slides.length-1,n));
+  slides.forEach((s,i)=>s.classList.toggle('active',i===current));
+  progress.style.width=((current+1)/slides.length*100)+'%';count.textContent=`${current+1} / ${slides.length}`;
+  phase.textContent=current<10?'Theory':'Practice';prev.disabled=current===0;next.disabled=current===slides.length-1;
+}
+prev.onclick=()=>show(current-1);next.onclick=()=>show(current+1);
+document.addEventListener('keydown',e=>{if(e.target.matches('input'))return;if(['ArrowRight',' ','PageDown'].includes(e.key)){e.preventDefault();show(current+1)}if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();show(current-1)}});
+document.querySelector('#theme').onclick=()=>{const dark=document.documentElement.dataset.theme==='dark';document.documentElement.dataset.theme=dark?'light':'dark'};
+document.querySelectorAll('.opt').forEach(btn=>btn.onclick=()=>{const q=btn.closest('.q');q.querySelectorAll('.opt').forEach(x=>x.classList.remove('selected'));btn.classList.add('selected')});
+const norm=s=>s.trim().toLowerCase().replace(/[’']/g,"'");
+document.querySelectorAll('[data-task]').forEach(task=>{
+  const slide=task.closest('.slide'), check=slide.querySelector('.check'), reset=slide.querySelector('.reset'), score=slide.querySelector('.score');
+  check.onclick=()=>{
+    let got=0, total=0;
+    task.querySelectorAll('.q').forEach(q=>{
+      total++;q.classList.add('revealed');const answer=norm(q.dataset.answer);const input=q.querySelector('.textanswer');
+      if(input){const ok=norm(input.value)===answer;input.classList.toggle('correct',ok);input.classList.toggle('wrong',!ok);if(ok)got++}
+      else{const selected=q.querySelector('.opt.selected');q.querySelectorAll('.opt').forEach(b=>{const value=norm(b.dataset.value||b.textContent);b.classList.toggle('correct',value===answer);b.classList.toggle('wrong',b===selected&&value!==answer)});if(selected&&norm(selected.dataset.value||selected.textContent)===answer)got++}
+    });
+    score.textContent=`${got} / ${total}`;score.style.color=got===total?'var(--good)':'var(--violet)';
+  };
+  reset.onclick=()=>{task.querySelectorAll('.q').forEach(q=>{q.classList.remove('revealed');q.querySelectorAll('.opt').forEach(b=>b.classList.remove('selected','correct','wrong'));const i=q.querySelector('.textanswer');if(i){i.value='';i.classList.remove('correct','wrong')}});score.textContent=''};
+});
+show(0);
+</script>
+</body>
+</html>

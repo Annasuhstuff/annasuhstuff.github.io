@@ -1,0 +1,1126 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exceptions & Tricky Rules — Olympiad Grammar Booster</title>
+<style>
+  :root {
+    --paper:   #FAF6FB;
+    --surface: #FFFFFF;
+    --ink:     #443F58;
+    --ink-soft:#7A7391;
+    --ink-faint:#ABA4BE;
+    --line:    #ECE4F1;
+
+    --c-connect:  #8A6FD1;  --c-connect-t:  #EFEAFB;
+    --c-remember: #2FA48C;  --c-remember-t: #E2F4EF;
+    --c-olympiad: #D0669B;  --c-olympiad-t: #FBE6F1;
+
+    --good:#2FA47F; --good-t:#E3F5EE;
+    --bad: #DE7189; --bad-t: #FBE7EC;
+
+    --marker: rgba(255,221,140,.62);
+    --shadow: 0 1px 2px rgba(90,70,120,.05), 0 10px 30px rgba(120,90,160,.09);
+
+    --accent: var(--c-connect);
+    --accent-tint: var(--c-connect-t);
+
+    --font-display: "Trebuchet MS", ui-rounded, "SF Pro Rounded", "Segoe UI", system-ui, sans-serif;
+    --font-body: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:#201B2B; --surface:#2A2438; --ink:#EDE7F5; --ink-soft:#B7AECB; --ink-faint:#837a97; --line:#392F4C;
+      --c-connect:#B7A2F0; --c-connect-t:rgba(150,120,225,.17);
+      --c-remember:#5FD0B6; --c-remember-t:rgba(80,200,170,.15);
+      --c-olympiad:#F09BC4; --c-olympiad-t:rgba(230,120,175,.16);
+      --good:#5FCB9E; --good-t:rgba(60,180,130,.16); --bad:#F090A2; --bad-t:rgba(224,116,138,.16);
+      --marker:rgba(255,220,150,.24);
+      --shadow:0 1px 2px rgba(0,0,0,.3), 0 12px 34px rgba(0,0,0,.42);
+    }
+  }
+  :root[data-theme="light"]{
+    --paper:#FAF6FB; --surface:#FFFFFF; --ink:#443F58; --ink-soft:#7A7391; --ink-faint:#ABA4BE; --line:#ECE4F1;
+    --c-connect:#8A6FD1; --c-connect-t:#EFEAFB; --c-remember:#2FA48C; --c-remember-t:#E2F4EF; --c-olympiad:#D0669B; --c-olympiad-t:#FBE6F1;
+    --good:#2FA47F; --good-t:#E3F5EE; --bad:#DE7189; --bad-t:#FBE7EC; --marker:rgba(255,221,140,.62);
+    --shadow:0 1px 2px rgba(90,70,120,.05),0 10px 30px rgba(120,90,160,.09);
+  }
+  :root[data-theme="dark"]{
+    --paper:#201B2B; --surface:#2A2438; --ink:#EDE7F5; --ink-soft:#B7AECB; --ink-faint:#837a97; --line:#392F4C;
+    --c-connect:#B7A2F0; --c-connect-t:rgba(150,120,225,.17); --c-remember:#5FD0B6; --c-remember-t:rgba(80,200,170,.15);
+    --c-olympiad:#F09BC4; --c-olympiad-t:rgba(230,120,175,.16); --good:#5FCB9E; --good-t:rgba(60,180,130,.16);
+    --bad:#F090A2; --bad-t:rgba(224,116,138,.16); --marker:rgba(255,220,150,.24);
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 34px rgba(0,0,0,.42);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; }
+  body {
+    background: radial-gradient(1100px 600px at 100% -10%, var(--c-connect-t), transparent 60%), var(--paper);
+    color: var(--ink); font-family: var(--font-body); line-height: 1.5;
+    -webkit-font-smoothing: antialiased; overflow: hidden;
+    min-height: 100dvh; display:grid; place-items:center; padding:clamp(.45rem,1.4vw,1.1rem);
+  }
+  .deck {
+    position: relative; width: min(100%, 177.78dvh); height: min(100dvh - clamp(.9rem,2.8vw,2.2rem), 56.25vw);
+    min-height: min(100dvh - clamp(.9rem,2.8vw,2.2rem), 56.25vw); aspect-ratio: 16 / 9;
+    background: radial-gradient(1100px 600px at 100% -10%, var(--c-connect-t), transparent 60%), var(--paper);
+    border:1px solid var(--line); border-radius:18px; overflow:hidden; box-shadow:0 24px 70px rgba(73,55,110,.18);
+  }
+
+  /* Chrome */
+  .topbar { position: absolute; top:0; left:0; right:0; z-index:30; display:flex; align-items:center; gap:.9rem;
+    padding:.7rem clamp(.9rem,3vw,2rem); background: color-mix(in srgb, var(--paper) 84%, transparent);
+    backdrop-filter: blur(8px); border-bottom:1px solid var(--line); }
+  .brand { display:flex; align-items:baseline; gap:.5rem; font-size:.82rem; white-space:nowrap; }
+  .brand b { font-family: var(--font-display); font-weight:700; font-size:.98rem; }
+  .brand .lvl { font-family: var(--font-mono); font-size:.66rem; letter-spacing:.08em; color: var(--c-connect);
+    background: var(--c-connect-t); border-radius:999px; padding:.14rem .5rem; }
+  .progress { flex:1; height:6px; background: var(--line); border-radius:999px; overflow:hidden; min-width:40px; }
+  .progress > i { display:block; height:100%; width:0; border-radius:999px;
+    background: linear-gradient(90deg, var(--c-connect), var(--c-remember), var(--c-olympiad)); transition: width .35s ease; }
+  .counter { font-family: var(--font-mono); font-size:.74rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; white-space:nowrap; }
+
+  /* Slides */
+  .slide { position:absolute; inset:0; display:flex; flex-direction:column;
+    padding: clamp(3.2rem,6.5vh,4.4rem) clamp(1rem,4vw,3rem) clamp(3.6rem,7vh,4.4rem);
+    opacity:0; visibility:hidden; transform: translateY(10px);
+    transition: opacity .4s ease, transform .4s ease, visibility .4s; overflow:hidden; }
+  .slide.active { opacity:1; visibility:visible; transform:none; }
+  .inner { width:100%; max-width:60rem; margin:auto; max-height:100%; overflow-y:auto; overflow-x:hidden; padding:.2rem; scrollbar-width:thin; }
+
+  .eyebrow { display:inline-flex; align-items:center; gap:.5rem; font-family: var(--font-mono); font-size:.72rem; font-weight:600;
+    letter-spacing:.12em; text-transform:uppercase; color: var(--accent); margin:0 0 .9rem; }
+  .eyebrow .num { color: var(--ink-faint); }
+  .eyebrow .dot { width:7px; height:7px; border-radius:50%; background: var(--accent); }
+  .eyebrow .time { color: var(--ink-faint); font-weight:500; }
+
+  h1,h2,h3 { font-family: var(--font-display); font-weight:700; text-wrap:balance; margin:0; line-height:1.14; }
+  h1 { font-size: clamp(2rem,6vw,3.4rem); }
+  h2 { font-size: clamp(1.4rem,3.8vw,2.3rem); margin-bottom:.4rem; }
+  h3 { font-size:1.02rem; }
+  .lead { color: var(--ink-soft); font-size: clamp(1rem,2.2vw,1.15rem); max-width:46ch; margin:.8rem 0 0; }
+  .instr { color: var(--ink-soft); font-size:.92rem; margin:.5rem 0 0; }
+  p { margin:.55rem 0; }
+  .hl { background: linear-gradient(180deg, transparent 56%, var(--marker) 56% 92%, transparent 92%); padding:0 .08em; border-radius:3px; }
+  .en-note { color: var(--ink-faint); font-style: italic; font-size:.9em; }
+
+  /* Title */
+  .title-kicker { font-family: var(--font-mono); font-size:.78rem; letter-spacing:.18em; text-transform:uppercase; color: var(--c-connect); }
+  .title-meta { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1.6rem; }
+  .chip { font-size:.82rem; padding:.4rem .8rem; border-radius:999px; border:1px solid var(--line); background: var(--surface); color: var(--ink-soft); box-shadow: var(--shadow); }
+
+  /* Statement */
+  .slide--statement { align-items:center; text-align:center; }
+  .slide--statement .inner { text-align:center; display:flex; flex-direction:column; align-items:center; }
+  .slide--statement h2 { font-size: clamp(1.9rem,6vw,3.4rem); }
+  .big-badge { font-family: var(--font-mono); font-size:.74rem; letter-spacing:.14em; text-transform:uppercase; color: var(--accent);
+    background: var(--accent-tint); padding:.42rem .95rem; border-radius:999px; margin-bottom:1.3rem; }
+
+  /* Question / speaking lists */
+  .q-list { list-style:none; margin:1.2rem 0 0; padding:0; display:grid; gap:.6rem; }
+  .q-list li { display:flex; gap:.75rem; align-items:flex-start; background: var(--surface); border:1px solid var(--line);
+    border-radius:16px; padding:.75rem .95rem; box-shadow: var(--shadow); font-size:1.02rem; }
+  .q-list li::before { content: attr(data-n); flex:none; font-family: var(--font-mono); font-size:.72rem; font-weight:700;
+    color: var(--accent); background: var(--accent-tint); width:1.55rem; height:1.55rem; border-radius:9px; display:grid; place-items:center; margin-top:.08rem; }
+  .notes { width:100%; margin-top:1rem; min-height:4.4rem; resize:vertical; font:inherit; color: var(--ink);
+    background: var(--surface); border:1px dashed color-mix(in srgb, var(--accent) 45%, var(--line)); border-radius:14px; padding:.7rem .9rem; box-shadow: var(--shadow); }
+  .notes::placeholder { color: var(--ink-faint); }
+
+  /* Reference cards */
+  .grid { display:grid; gap:.75rem; margin-top:1.1rem; }
+  .g2 { grid-template-columns: repeat(2,1fr); }
+  .g3 { grid-template-columns: repeat(3,1fr); }
+  @media (max-width:680px){ .g2,.g3 { grid-template-columns:1fr; } }
+  .card { background: var(--surface); border:1px solid var(--line); border-radius:18px; padding:1rem 1.1rem; box-shadow: var(--shadow); }
+  .card h3 { display:flex; align-items:center; gap:.5rem; margin-bottom:.5rem; font-family: var(--font-body); font-weight:700;
+    font-size:.76rem; text-transform:uppercase; letter-spacing:.07em; color: var(--accent); }
+  .card ul { margin:0; padding-left:1.1rem; }
+  .card li { margin:.28rem 0; }
+  .card .ex { font-family: var(--font-display); font-style: italic; }
+  .chips { display:flex; flex-wrap:wrap; gap:.4rem; margin-top:.6rem; }
+  .chips .sig { font-family: var(--font-mono); font-size:.72rem; padding:.2rem .55rem; border-radius:8px;
+    background: var(--accent-tint); color: var(--accent); }
+  .prompt-bank { margin-top:.9rem; padding:.75rem 1rem; border-left:3px solid var(--accent); background: var(--accent-tint); border-radius:0 12px 12px 0; font-size:.96rem; }
+  .prompt-bank b { color: var(--accent); }
+
+  /* Trap callout — the "исключения" highlight box */
+  .trap { margin-top:.9rem; padding:.75rem 1rem; border-left:3px solid var(--bad); background: var(--bad-t); border-radius:0 12px 12px 0; font-size:.96rem; }
+  .trap b { color: var(--bad); }
+  .trap .arw { font-family: var(--font-mono); }
+
+  .tense-grid { display:grid; grid-template-columns: repeat(2,1fr); gap:.55rem; margin-top:1rem; }
+  @media (max-width:680px){ .tense-grid { grid-template-columns:1fr; } }
+  .tense { background: var(--surface); border:1px solid var(--line); border-radius:12px; padding:.55rem .8rem; }
+  .tense .name { font-size:.7rem; font-weight:700; letter-spacing:.03em; text-transform:uppercase; color: var(--accent); }
+  .tense .ex { font-family: var(--font-display); font-style: italic; font-size:.98rem; }
+
+  /* Exercises with inputs */
+  .exset { list-style:none; margin:1rem 0 0; padding:0; display:grid; gap:.55rem; }
+  .exq { background: var(--surface); border:1px solid var(--line); border-radius:14px; padding:.6rem .85rem;
+    box-shadow: var(--shadow); display:flex; align-items:center; justify-content:space-between; gap:.7rem; flex-wrap:wrap; }
+  .exq .q { font-size:1.02rem; line-height:1.9; }
+  .exq .q em { color: var(--ink-faint); font-style: italic; font-family: var(--font-mono); font-size:.82em; }
+  .gap { font:inherit; color: var(--ink); background: var(--accent-tint); border:none; border-bottom:2px solid var(--accent);
+    border-radius:8px 8px 3px 3px; padding:.12rem .5rem; width:8rem; max-width:60vw; text-align:center; }
+  .gap.w-lg { width:12rem; }
+  .gap:focus { outline:none; box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent); }
+  .gap.ok { border-color: var(--good); background: var(--good-t); color: var(--ink); }
+  .gap.no { border-color: var(--bad); background: var(--bad-t); }
+  .v { font-family: var(--font-mono); font-size:.82rem; font-weight:700; min-width:1.5rem; white-space:nowrap; }
+  .v.good { color: var(--good); }
+  .v.bad { color: var(--bad); }
+
+  /* Multiple choice */
+  .mcset { list-style:none; margin:1rem 0 0; padding:0; display:grid; gap:.7rem; }
+  .mcq { background: var(--surface); border:1px solid var(--line); border-radius:14px; padding:.75rem .95rem; box-shadow: var(--shadow); }
+  .mcq .q { font-size:1.02rem; font-weight:600; margin-bottom:.55rem; }
+  .opts { display:grid; gap:.4rem; grid-template-columns: repeat(2,1fr); }
+  @media (max-width:600px){ .opts { grid-template-columns:1fr; } }
+  .opt { text-align:left; font:inherit; font-size:.96rem; cursor:pointer; background: var(--paper); color: var(--ink);
+    border:1px solid var(--line); border-radius:10px; padding:.45rem .7rem; transition: border-color .15s, background .15s; }
+  .opt:hover { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
+  .opt.sel { border-color: var(--accent); background: var(--accent-tint); }
+  .opt.correct { border-color: var(--good); background: var(--good-t); color: var(--ink); font-weight:700; }
+  .opt.wrong { border-color: var(--bad); background: var(--bad-t); }
+
+  .extools { display:flex; flex-wrap:wrap; align-items:center; gap:.5rem; margin-top:1rem; }
+  .extools button { font:inherit; font-size:.82rem; cursor:pointer; border-radius:999px; padding:.4rem .95rem; box-shadow: var(--shadow); }
+  .extools .check { background: var(--accent); color:#fff; border:1px solid var(--accent); }
+  .extools .show, .extools .clear { background: var(--surface); color: var(--ink-soft); border:1px solid var(--line); }
+  .extools button:hover { filter: brightness(1.03); }
+  .extools .score { font-family: var(--font-mono); font-size:.82rem; font-weight:700; color: var(--accent); margin-left:.2rem; }
+
+  /* Roadmap */
+  .steps { list-style:none; margin:1.1rem 0 0; padding:0; display:grid; gap:.55rem; }
+  .steps li { display:flex; gap:.85rem; align-items:flex-start; }
+  .steps .st-n { flex:none; width:1.9rem; height:1.9rem; border-radius:50%; background: var(--accent); color:#fff; display:grid; place-items:center; font-family: var(--font-mono); font-weight:700; font-size:.85rem; }
+  .steps .st-b { background: var(--surface); border:1px solid var(--line); border-radius:12px; padding:.55rem .85rem; flex:1; box-shadow: var(--shadow); }
+  .steps .st-b b { color: var(--accent); }
+
+  /* Nav */
+  .nav { position: absolute; bottom:0; left:0; right:0; z-index:30; display:flex; align-items:center; justify-content:space-between; gap:1rem;
+    padding:.65rem clamp(.9rem,3vw,2rem); background: color-mix(in srgb, var(--paper) 84%, transparent); backdrop-filter: blur(8px); border-top:1px solid var(--line); }
+  .phase-label { font-family: var(--font-mono); font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; color: var(--ink-soft); }
+  .phase-label .pd { display:inline-block; width:9px; height:9px; border-radius:50%; background: var(--accent); margin-right:.45rem; vertical-align:middle; }
+  .nav-btns { display:flex; gap:.5rem; }
+  .nav button { font:inherit; font-size:.85rem; cursor:pointer; background: var(--surface); color: var(--ink); border:1px solid var(--line);
+    border-radius:11px; padding:.45rem .95rem; box-shadow: var(--shadow); }
+  .nav button:hover:not(:disabled) { border-color: color-mix(in srgb, var(--accent) 50%, var(--line)); color: var(--accent); }
+  .nav button:disabled { opacity:.4; cursor:default; }
+  .nav .kbd-hint { font-family: var(--font-mono); font-size:.66rem; color: var(--ink-faint); }
+  @media (max-width:560px){ .nav .kbd-hint { display:none; } }
+
+  :focus-visible { outline:2px solid var(--accent); outline-offset:2px; border-radius:6px; }
+
+  .phase-connect  { --accent: var(--c-connect);  --accent-tint: var(--c-connect-t); }
+  .phase-remember { --accent: var(--c-remember); --accent-tint: var(--c-remember-t); }
+  .phase-olympiad { --accent: var(--c-olympiad); --accent-tint: var(--c-olympiad-t); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .slide { transition: opacity .01s; transform:none; }
+    .progress > i { transition:none; }
+  }
+  @media (max-width: 760px) {
+    body { padding:0; }
+    .deck { width:100%; height:100dvh; min-height:100dvh; border-radius:0; border:0; aspect-ratio:auto; }
+  }
+  @media print {
+    @page { size: 16in 9in; margin: 0; }
+    html, body { background:#fff; display:block; overflow:visible; padding:0; }
+    .deck { width:auto; height:auto; min-height:0; aspect-ratio:auto; border:0; border-radius:0; box-shadow:none; overflow:visible; }
+    .topbar, .nav { display:none; }
+    .slide {
+      position:relative; inset:auto; opacity:1 !important; visibility:visible !important; transform:none !important;
+      min-height:100vh; page-break-after:always; overflow:hidden;
+    }
+    .slide:last-of-type { page-break-after:auto; }
+    .inner { overflow:visible; max-height:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="deck">
+  <div class="topbar">
+    <div class="brand"><b>Exceptions &amp; Tricky Rules 🎯</b><span class="lvl">B1 → B2</span></div>
+    <div class="progress"><i id="bar"></i></div>
+    <div class="counter"><span id="cur">1</span> / <span id="total">0</span></div>
+  </div>
+
+  <!-- 1 TITLE -->
+  <section class="slide phase-connect active" data-phase="Intro">
+    <div class="inner">
+      <div class="title-kicker">Olympiad booster · 8 класс</div>
+      <h1 style="margin-top:.7rem">The rules are easy.<br>The <span class="hl">exceptions</span> win 🏆</h1>
+      <p class="lead">Everyone knows <em>cat → cats</em>. Olympiads test <em>child → children</em>, <em>an hour</em>, <em>the news is</em>, <em>lie / lay / laid</em>. Today we hunt the <span class="hl">исключения</span> — the tricky cases that score real points.</p>
+      <div class="title-meta">
+        <span class="chip">🔤 Plurals &amp; countability</span>
+        <span class="chip">⚡ Irregular &amp; state verbs</span>
+        <span class="chip">🅰️ Articles: a / an / the</span>
+        <span class="chip">✍️ Spelling &amp; word-building</span>
+        <span class="chip">⚠️ False friends</span>
+        <span class="chip">⏱️ ~90 min</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 WHY -->
+  <section class="slide phase-connect" data-phase="Intro">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">02</span><span class="dot"></span> Introduction · Why this matters</div>
+      <h2>Why exceptions win olympiads</h2>
+      <p>In the <b>Use of English</b> and <b>Word Formation</b> parts of the ВсОШ, the test writers deliberately choose the <b>irregular case</b> — the one where the normal rule fails. If you only know the rule, you lose exactly those points.</p>
+      <div class="grid g3">
+        <div class="card"><h3>The rule</h3><p class="ex">one book → two book<b>s</b></p><p class="en-note">Everyone gets this.</p></div>
+        <div class="card"><h3>The exception</h3><p class="ex">one child → two <b>children</b></p><p class="en-note">This is the point they test.</p></div>
+        <div class="card"><h3>Our job</h3><p class="ex">learn <b>rule + exception</b> as a pair</p><p class="en-note">Then no trap surprises you.</p></div>
+      </div>
+      <p class="instr">💡 In every exercise: type your answer, press <b>Check</b>. Green = correct, pink = try again. <b>Show answers</b> reveals them. The <span style="color:var(--bad);font-weight:700">pink boxes</span> ⚠️ are the exceptions to memorise.</p>
+    </div>
+  </section>
+
+  <!-- 3 WARM-UP -->
+  <section class="slide phase-connect" data-phase="Warm-up">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">03</span><span class="dot"></span> Warm-up · Spot the trap <span class="time">· speaking</span></div>
+      <h2>Quick — which one is right?</h2>
+      <p class="instr">Say your answer out loud first, then we'll check together. Don't overthink — trust your ear.</p>
+      <ul class="q-list">
+        <li data-n="1"><span>I saw two <b>mouses</b> / <b>mice</b> in the kitchen.</span></li>
+        <li data-n="2"><span>The news <b>is</b> / <b>are</b> really good today.</span></li>
+        <li data-n="3"><span>We waited for <b>a</b> / <b>an</b> hour.</span></li>
+        <li data-n="4"><span>This is the <b>most bad</b> / <b>worst</b> film ever.</span></li>
+        <li data-n="5"><span>She's <b>university</b> student → <b>a</b> / <b>an</b> university?</span></li>
+      </ul>
+      <div class="prompt-bank"><b>All five are traps →</b> mice · is · an hour · worst · a university. Feel unsure about any? That's exactly today's list.</div>
+    </div>
+  </section>
+
+  <!-- 4 DIVIDER: NOUNS -->
+  <section class="slide slide--statement phase-remember" data-phase="Nouns">
+    <div class="inner">
+      <div class="big-badge">Part 1 · Nouns &amp; things</div>
+      <h2>Plurals &amp; <span class="hl">countability</span> 🔤</h2>
+      <p class="lead" style="text-align:center; max-width:42ch">Irregular plurals, foreign endings, and the nouns that <em>look</em> plural but aren't (and vice versa).</p>
+    </div>
+  </section>
+
+  <!-- 5 REF: IRREGULAR PLURALS -->
+  <section class="slide phase-remember" data-phase="Nouns">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">05</span><span class="dot"></span> Nouns · Irregular plurals</div>
+      <h2>Plurals that break the +s rule</h2>
+      <div class="grid g2">
+        <div class="card"><h3>Vowel change &amp; -en</h3>
+          <ul>
+            <li>man → <b>men</b> · woman → <b>women</b></li>
+            <li>child → <b>children</b> · person → <b>people</b></li>
+            <li>foot → <b>feet</b> · tooth → <b>teeth</b></li>
+            <li>mouse → <b>mice</b> · goose → <b>geese</b></li>
+            <li>ox → <b>oxen</b></li>
+          </ul>
+        </div>
+        <div class="card"><h3>No change (same form)</h3>
+          <ul>
+            <li>sheep · deer · fish · aircraft</li>
+            <li>series · species · means</li>
+            <li class="en-note">one sheep → ten sheep</li>
+          </ul>
+        </div>
+        <div class="card"><h3>-f / -fe → -ves</h3>
+          <ul>
+            <li>knife → <b>knives</b> · life → <b>lives</b></li>
+            <li>wolf → <b>wolves</b> · leaf → <b>leaves</b></li>
+            <li>wife, half, shelf, thief, loaf</li>
+          </ul>
+        </div>
+        <div class="card"><h3>Foreign endings</h3>
+          <ul>
+            <li>crisis → <b>crises</b> · analysis → analyses</li>
+            <li>phenomenon → <b>phenomena</b> · criterion → criteria</li>
+            <li>datum → <b>data</b> · medium → media</li>
+            <li>cactus → cacti · nucleus → nuclei</li>
+          </ul>
+        </div>
+      </div>
+      <div class="trap"><b>⚠️ Exceptions to the -ves rule <span class="arw">→</span></b> these just add <b>-s</b>: roo<b>fs</b>, chie<b>fs</b>, clif<b>fs</b>, belie<b>fs</b>, che<b>fs</b>, proo<b>fs</b>. &nbsp; And -o: potato<b>es</b>/tomato<b>es</b>/hero<b>es</b> <b>but</b> photo<b>s</b>, piano<b>s</b>, kilo<b>s</b>, zoo<b>s</b>.</div>
+    </div>
+  </section>
+
+  <!-- 6 EX: PLURALS -->
+  <section class="slide phase-remember" data-phase="Nouns">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">06</span><span class="dot"></span> Exercise · Irregular plurals</div>
+      <h2>Write the plural</h2>
+      <ul class="exset">
+        <li class="exq" data-a="children"><span class="q">1. one child → two <input class="gap" aria-label="answer" autocomplete="off"></span><span class="v"></span></li>
+        <li class="exq" data-a="mice"><span class="q">2. one mouse → three <input class="gap" aria-label="answer" autocomplete="off"></span><span class="v"></span></li>
+        <li class="exq" data-a="feet"><span class="q">3. one foot → two <input class="gap" aria-label="answer" autocomplete="off"></span><span class="v"></span></li>
+        <li class="exq" data-a="sheep"><span class="q">4. one sheep → ten <input class="gap" aria-label="answer" autocomplete="off"></span><span class="v"></span></li>
+        <li class="exq" data-a="crises"><span class="q">5. one crisis → many <input class="gap" aria-label="answer" autocomplete="off"></span><span class="v"></span></li>
+        <li class="exq" data-a="phenomena"><span class="q">6. one phenomenon → strange <input class="gap w-lg" aria-label="answer" autocomplete="off"></span><span class="v"></span></li>
+        <li class="exq" data-a="knives"><span class="q">7. one knife → six <input class="gap" aria-label="answer" autocomplete="off"></span><span class="v"></span></li>
+        <li class="exq" data-a="roofs"><span class="q">8. one roof → two <input class="gap" aria-label="answer" autocomplete="off"> <em>(trap!)</em></span><span class="v"></span></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 7 REF: COUNTABILITY -->
+  <section class="slide phase-olympiad" data-phase="Countability">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">07</span><span class="dot"></span> Nouns · Countable or not?</div>
+      <h2>Nouns that fool you</h2>
+      <div class="grid g2">
+        <div class="card"><h3>Uncountable — always singular</h3>
+          <p class="en-note" style="margin:.1rem 0 .4rem">no plural, no <em>a/an</em>, verb is <b>is/was</b></p>
+          <div class="chips">
+            <span class="sig">news</span><span class="sig">advice</span><span class="sig">information</span><span class="sig">furniture</span><span class="sig">money</span><span class="sig">hair</span><span class="sig">luggage</span><span class="sig">knowledge</span><span class="sig">progress</span><span class="sig">research</span><span class="sig">work</span><span class="sig">weather</span>
+          </div>
+          <p class="ex" style="margin-top:.5rem">The news <b>is</b> good. · a <b>piece of</b> advice</p>
+        </div>
+        <div class="card"><h3>Only plural — no singular</h3>
+          <p class="en-note" style="margin:.1rem 0 .4rem">verb is <b>are/were</b>; count with <em>a pair of</em></p>
+          <div class="chips">
+            <span class="sig">scissors</span><span class="sig">trousers</span><span class="sig">jeans</span><span class="sig">shorts</span><span class="sig">glasses</span><span class="sig">pyjamas</span><span class="sig">clothes</span><span class="sig">goods</span>
+          </div>
+          <p class="ex" style="margin-top:.5rem">My jeans <b>are</b> new. · a <b>pair of</b> scissors</p>
+        </div>
+      </div>
+      <div class="trap"><b>⚠️ Look plural, take a singular idea; look singular, take a plural verb <span class="arw">→</span></b> <em>mathematics / physics / news</em> = <b>is</b>. But <em>police / people / cattle</em> = <b>are</b> (The police <b>are</b> here).</div>
+    </div>
+  </section>
+
+  <!-- 8 EX: COUNTABILITY -->
+  <section class="slide phase-olympiad" data-phase="Countability">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">08</span><span class="dot"></span> Exercise · Countability</div>
+      <h2>Choose the right word</h2>
+      <ul class="exset">
+        <li class="exq" data-a="is"><span class="q">1. This information <input class="gap" aria-label="answer" autocomplete="off"> <em>(is / are)</em> useful.</span><span class="v"></span></li>
+        <li class="exq" data-a="much"><span class="q">2. How <input class="gap" aria-label="answer" autocomplete="off"> <em>(much / many)</em> money do you need?</span><span class="v"></span></li>
+        <li class="exq" data-a="are"><span class="q">3. The police <input class="gap" aria-label="answer" autocomplete="off"> <em>(is / are)</em> outside.</span><span class="v"></span></li>
+        <li class="exq" data-a="pair"><span class="q">4. I bought a new <input class="gap" aria-label="answer" autocomplete="off"> of trousers.</span><span class="v"></span></li>
+        <li class="exq" data-a="piece"><span class="q">5. Let me give you a <input class="gap" aria-label="answer" autocomplete="off"> of advice.</span><span class="v"></span></li>
+        <li class="exq" data-a="is"><span class="q">6. Her hair <input class="gap" aria-label="answer" autocomplete="off"> <em>(is / are)</em> very long.</span><span class="v"></span></li>
+        <li class="exq" data-a="are"><span class="q">7. My glasses <input class="gap" aria-label="answer" autocomplete="off"> <em>(is / are)</em> broken.</span><span class="v"></span></li>
+        <li class="exq" data-a="progress"><span class="q">8. You've made great <input class="gap" aria-label="answer" autocomplete="off"> <em>(progress / progresses)</em>.</span><span class="v"></span></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 9 DIVIDER: VERBS -->
+  <section class="slide slide--statement phase-connect" data-phase="Verbs">
+    <div class="inner">
+      <div class="big-badge">Part 2 · Verbs</div>
+      <h2>Irregular &amp; <span class="hl">state verbs</span> ⚡</h2>
+      <p class="lead" style="text-align:center; max-width:42ch">The confusing verb families — and the verbs that refuse the <em>-ing</em> form.</p>
+    </div>
+  </section>
+
+  <!-- 10 REF: IRREGULAR VERBS -->
+  <section class="slide phase-connect" data-phase="Verbs">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">10</span><span class="dot"></span> Verbs · Irregular forms</div>
+      <h2>The verbs that trip everyone up</h2>
+      <div class="grid g2">
+        <div class="card"><h3>No change — V1 = V2 = V3</h3>
+          <ul>
+            <li>cost · cut · put · hurt · let · set</li>
+            <li>hit · shut · spread · cost · read <span class="en-note">(read /red/ in past)</span></li>
+          </ul>
+        </div>
+        <div class="card"><h3>Confusing look-alikes</h3>
+          <ul>
+            <li><b>lie</b> (lay–lain) = лежать · <b>lie</b> (lied–lied) = лгать</li>
+            <li><b>lay</b> (laid–laid) = класть <span class="en-note">(needs an object)</span></li>
+            <li><b>rise</b> (rose–risen) вставать · <b>raise</b> (raised) поднимать</li>
+            <li><b>find</b> (found) находить · <b>found</b> (founded) основать</li>
+            <li><b>hang</b> (hung) вешать · <b>hang</b> (hanged) казнить</li>
+          </ul>
+        </div>
+      </div>
+      <div class="trap"><b>⚠️ Two of these do NOT change <span class="arw">→</span></b> Remember <em>read</em> keeps its spelling (only sound changes), and <em>cost/cut/put</em> look identical in all three forms — so <b>“Yesterday it cost £5”</b>, not <s>costed</s>.</div>
+    </div>
+  </section>
+
+  <!-- 11 EX: IRREGULAR VERBS -->
+  <section class="slide phase-connect" data-phase="Verbs">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">11</span><span class="dot"></span> Exercise · Irregular verbs</div>
+      <h2>Put the verb in the right form</h2>
+      <ul class="exset">
+        <li class="exq" data-a="cost"><span class="q">1. Yesterday the ticket <input class="gap" aria-label="answer" autocomplete="off"> <em>(cost)</em> a lot.</span><span class="v"></span></li>
+        <li class="exq" data-a="lay"><span class="q">2. She <input class="gap" aria-label="answer" autocomplete="off"> <em>(lie — recline, past)</em> on the sofa all evening.</span><span class="v"></span></li>
+        <li class="exq" data-a="rose"><span class="q">3. The sun <input class="gap" aria-label="answer" autocomplete="off"> <em>(rise)</em> at six yesterday.</span><span class="v"></span></li>
+        <li class="exq" data-a="hung"><span class="q">4. He has <input class="gap" aria-label="answer" autocomplete="off"> <em>(hang)</em> the picture up.</span><span class="v"></span></li>
+        <li class="exq" data-a="flew"><span class="q">5. They <input class="gap" aria-label="answer" autocomplete="off"> <em>(fly)</em> to Rome last week.</span><span class="v"></span></li>
+        <li class="exq" data-a="been"><span class="q">6. I've never <input class="gap" aria-label="answer" autocomplete="off"> <em>(be)</em> to Japan.</span><span class="v"></span></li>
+        <li class="exq" data-a="founded"><span class="q">7. The school was <input class="gap w-lg" aria-label="answer" autocomplete="off"> <em>(found)</em> in 1901.</span><span class="v"></span></li>
+        <li class="exq" data-a="laid"><span class="q">8. She <input class="gap" aria-label="answer" autocomplete="off"> <em>(lay — put down, past)</em> the baby in the cot.</span><span class="v"></span></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 12 REF: STATE VERBS -->
+  <section class="slide phase-remember" data-phase="State verbs">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">12</span><span class="dot"></span> Verbs · State verbs</div>
+      <h2>Verbs that hate the -ing form</h2>
+      <p class="instr">State verbs describe a <b>state</b>, not an action, so they stay <b>Simple</b> — <em>I know</em> ✅ / <s>I am knowing</s> ❌.</p>
+      <div class="grid g3">
+        <div class="card"><h3>Thinking</h3><div class="chips"><span class="sig">know</span><span class="sig">believe</span><span class="sig">understand</span><span class="sig">remember</span><span class="sig">mean</span></div></div>
+        <div class="card"><h3>Feelings</h3><div class="chips"><span class="sig">like</span><span class="sig">love</span><span class="sig">hate</span><span class="sig">want</span><span class="sig">need</span><span class="sig">prefer</span></div></div>
+        <div class="card"><h3>Having / being</h3><div class="chips"><span class="sig">own</span><span class="sig">belong</span><span class="sig">contain</span><span class="sig">seem</span><span class="sig">consist</span></div></div>
+      </div>
+      <div class="trap"><b>⚠️ Meaning-change exceptions <span class="arw">→</span></b> some go continuous when they mean an <b>action</b>:<br>
+        <em>I <b>think</b> it's good</em> (opinion) · <em>I<b>'m thinking</b> about it</em> (process) &nbsp;|&nbsp;
+        <em>She <b>has</b> a car</em> (own) · <em>She<b>'s having</b> lunch</em> (eating) &nbsp;|&nbsp;
+        <em>He <b>is</b> rude</em> (always) · <em>He<b>'s being</b> rude</em> (right now) &nbsp;|&nbsp;
+        <em>I <b>see</b></em> (understand) · <em>I<b>'m seeing</b> the doctor</em> (meeting)</div>
+    </div>
+  </section>
+
+  <!-- 13 EX: STATE VERBS -->
+  <section class="slide phase-remember" data-phase="State verbs">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">13</span><span class="dot"></span> Exercise · Simple or Continuous?</div>
+      <h2>Choose the correct form</h2>
+      <ul class="exset">
+        <li class="exq" data-a="don't understand|do not understand"><span class="q">1. I <input class="gap w-lg" aria-label="answer" autocomplete="off"> <em>(not / understand)</em> this rule.</span><span class="v"></span></li>
+        <li class="exq" data-a="is having|'s having"><span class="q">2. Be quiet — she <input class="gap w-lg" aria-label="answer" autocomplete="off"> <em>(have)</em> lunch now.</span><span class="v"></span></li>
+        <li class="exq" data-a="tastes"><span class="q">3. This soup <input class="gap" aria-label="answer" autocomplete="off"> <em>(taste)</em> delicious.</span><span class="v"></span></li>
+        <li class="exq" data-a="think"><span class="q">4. I <input class="gap" aria-label="answer" autocomplete="off"> <em>(think)</em> you're right. <em>(opinion)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="are you being"><span class="q">5. Why <input class="gap w-lg" aria-label="answer" autocomplete="off"> so silly today? <em>(you / be — acting)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="'m seeing|am seeing"><span class="q">6. I <input class="gap w-lg" aria-label="answer" autocomplete="off"> <em>(see)</em> the dentist tomorrow. <em>(plan)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="owns"><span class="q">7. He <input class="gap" aria-label="answer" autocomplete="off"> <em>(own)</em> three shops.</span><span class="v"></span></li>
+        <li class="exq" data-a="'m thinking|am thinking"><span class="q">8. I <input class="gap w-lg" aria-label="answer" autocomplete="off"> <em>(think)</em> about moving abroad. <em>(process)</em></span><span class="v"></span></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 14 DIVIDER: ARTICLES -->
+  <section class="slide slide--statement phase-olympiad" data-phase="Articles">
+    <div class="inner">
+      <div class="big-badge">Part 3 · Articles &amp; comparison</div>
+      <h2>a · an · the · <span class="hl">—</span> 🅰️</h2>
+      <p class="lead" style="text-align:center; max-width:42ch">The article rules that go by <em>sound</em>, plus the geography that always takes <em>the</em>.</p>
+    </div>
+  </section>
+
+  <!-- 15 REF: A/AN -->
+  <section class="slide phase-olympiad" data-phase="Articles">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">15</span><span class="dot"></span> Articles · a vs an</div>
+      <h2>It's about the SOUND, not the letter</h2>
+      <p class="instr">Use <b>an</b> before a <b>vowel sound</b>, <b>a</b> before a <b>consonant sound</b> — listen, don't just look at the spelling.</p>
+      <div class="grid g2">
+        <div class="card"><h3>Silent letter → an</h3>
+          <ul>
+            <li><b>an</b> hour · <b>an</b> honest man</li>
+            <li><b>an</b> honour · <b>an</b> heir</li>
+            <li class="en-note">h is silent → vowel sound</li>
+          </ul>
+        </div>
+        <div class="card"><h3>“You” sound → a</h3>
+          <ul>
+            <li><b>a</b> university · <b>a</b> uniform</li>
+            <li><b>a</b> European · <b>a</b> euro</li>
+            <li><b>a</b> one-way street <span class="en-note">/w/ sound</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="trap"><b>⚠️ Abbreviations follow the letter's sound <span class="arw">→</span></b> <b>an</b> MP, <b>an</b> FBI agent, <b>an</b> X-ray, <b>an</b> SOS <em>(“em, ef, ex, es…” start with vowel sounds)</em> — but <b>a</b> UFO, <b>a</b> NATO base <em>(“you-fo”)</em>.</div>
+    </div>
+  </section>
+
+  <!-- 16 EX: A/AN -->
+  <section class="slide phase-olympiad" data-phase="Articles">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">16</span><span class="dot"></span> Exercise · a / an</div>
+      <h2>a or an?</h2>
+      <ul class="exset">
+        <li class="exq" data-a="an"><span class="q">1. We waited for <input class="gap" aria-label="answer" autocomplete="off"> hour.</span><span class="v"></span></li>
+        <li class="exq" data-a="a"><span class="q">2. She's <input class="gap" aria-label="answer" autocomplete="off"> university student.</span><span class="v"></span></li>
+        <li class="exq" data-a="an"><span class="q">3. He's <input class="gap" aria-label="answer" autocomplete="off"> honest boy.</span><span class="v"></span></li>
+        <li class="exq" data-a="a"><span class="q">4. What <input class="gap" aria-label="answer" autocomplete="off"> useful tip!</span><span class="v"></span></li>
+        <li class="exq" data-a="an"><span class="q">5. My aunt is <input class="gap" aria-label="answer" autocomplete="off"> MP.</span><span class="v"></span></li>
+        <li class="exq" data-a="a"><span class="q">6. They spotted <input class="gap" aria-label="answer" autocomplete="off"> UFO.</span><span class="v"></span></li>
+        <li class="exq" data-a="a"><span class="q">7. It's <input class="gap" aria-label="answer" autocomplete="off"> European capital.</span><span class="v"></span></li>
+        <li class="exq" data-a="an"><span class="q">8. He had <input class="gap" aria-label="answer" autocomplete="off"> X-ray at the hospital.</span><span class="v"></span></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 17 REF: THE / ZERO -->
+  <section class="slide phase-connect" data-phase="Articles">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">17</span><span class="dot"></span> Articles · the vs no article</div>
+      <h2>Geography &amp; the zero article</h2>
+      <div class="grid g2">
+        <div class="card"><h3>Use “the”</h3>
+          <ul>
+            <li>Plural / union countries: <b>the</b> USA, <b>the</b> UK, <b>the</b> Netherlands</li>
+            <li>Rivers, seas, oceans: <b>the</b> Nile, <b>the</b> Atlantic</li>
+            <li>Mountain ranges: <b>the</b> Alps, <b>the</b> Urals</li>
+            <li>Deserts &amp; island groups: <b>the</b> Sahara, <b>the</b> Bahamas</li>
+          </ul>
+        </div>
+        <div class="card"><h3>Use NO article (—)</h3>
+          <ul>
+            <li>Countries, cities, continents: Russia, London, Africa</li>
+            <li>Single mountains &amp; lakes: (Mount) Everest, Lake Baikal</li>
+            <li>Streets: Oxford Street</li>
+            <li>Meals, languages, sports: have breakfast, speak English, play tennis</li>
+          </ul>
+        </div>
+      </div>
+      <div class="trap"><b>⚠️ “Institution” phrases drop the article <span class="arw">→</span></b> go to <b>—</b> bed / <b>—</b> school / <b>—</b> work / <b>—</b> hospital &nbsp;and&nbsp; travel <b>by —</b> car / bus / train. Compare: <em>go to <b>the</b> school</em> = the building (as a visitor).</div>
+    </div>
+  </section>
+
+  <!-- 18 EX: THE / ZERO -->
+  <section class="slide phase-connect" data-phase="Articles">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">18</span><span class="dot"></span> Exercise · the / —</div>
+      <h2>Type <b>the</b> or a dash <b>—</b> for no article</h2>
+      <ul class="exset">
+        <li class="exq" data-a="The"><span class="q">1. <input class="gap" aria-label="answer" autocomplete="off"> Netherlands are flat and green.</span><span class="v"></span></li>
+        <li class="exq" data-a="—|-|no article|none|nothing|zero"><span class="q">2. We climbed <input class="gap" aria-label="answer" autocomplete="off"> Mount Everest.</span><span class="v"></span></li>
+        <li class="exq" data-a="—|-|no article|none|nothing|zero"><span class="q">3. She speaks <input class="gap" aria-label="answer" autocomplete="off"> Chinese fluently.</span><span class="v"></span></li>
+        <li class="exq" data-a="the"><span class="q">4. They sailed down <input class="gap" aria-label="answer" autocomplete="off"> Nile.</span><span class="v"></span></li>
+        <li class="exq" data-a="—|-|no article|none|nothing|zero"><span class="q">5. I go to <input class="gap" aria-label="answer" autocomplete="off"> bed at eleven.</span><span class="v"></span></li>
+        <li class="exq" data-a="The"><span class="q">6. <input class="gap" aria-label="answer" autocomplete="off"> Alps are in central Europe.</span><span class="v"></span></li>
+        <li class="exq" data-a="—|-|no article|none|nothing|zero"><span class="q">7. We had <input class="gap" aria-label="answer" autocomplete="off"> breakfast at eight.</span><span class="v"></span></li>
+        <li class="exq" data-a="the"><span class="q">8. My cousin lives in <input class="gap" aria-label="answer" autocomplete="off"> USA.</span><span class="v"></span></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 19 REF: COMPARATIVES -->
+  <section class="slide phase-remember" data-phase="Comparison">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">19</span><span class="dot"></span> Comparison · Irregulars</div>
+      <h2>Comparatives that don't follow -er</h2>
+      <div class="grid g2">
+        <div class="card"><h3>Fully irregular</h3>
+          <ul>
+            <li>good → <b>better</b> → <b>best</b></li>
+            <li>bad → <b>worse</b> → <b>worst</b></li>
+            <li>little → <b>less</b> → <b>least</b></li>
+            <li>much/many → <b>more</b> → <b>most</b></li>
+            <li>far → <b>farther/further</b> → <b>farthest/furthest</b></li>
+          </ul>
+        </div>
+        <div class="card"><h3>Special patterns</h3>
+          <ul>
+            <li><b>The</b> more you read, <b>the</b> better you write.</li>
+            <li>It's getting <b>colder and colder</b>.</li>
+            <li>as tall <b>as</b> · not as/so tall as</li>
+            <li><b>elder / eldest</b> = family only <span class="en-note">(my elder brother)</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="trap"><b>⚠️ Never double up <span class="arw">→</span></b> <s>more easier</s>, <s>more better</s>, <s>most cleverest</s> are wrong. One comparison marker only: <b>easier</b>, <b>better</b>, <b>the cleverest</b>.</div>
+    </div>
+  </section>
+
+  <!-- 20 EX: COMPARATIVES -->
+  <section class="slide phase-remember" data-phase="Comparison">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">20</span><span class="dot"></span> Exercise · Comparatives &amp; superlatives</div>
+      <h2>Complete the comparison</h2>
+      <ul class="exset">
+        <li class="exq" data-a="best"><span class="q">1. It's the <input class="gap" aria-label="answer" autocomplete="off"> <em>(good)</em> film I've ever seen.</span><span class="v"></span></li>
+        <li class="exq" data-a="older"><span class="q">2. My brother is three years <input class="gap" aria-label="answer" autocomplete="off"> <em>(old)</em> than me.</span><span class="v"></span></li>
+        <li class="exq" data-a="worse"><span class="q">3. Today the weather is <input class="gap" aria-label="answer" autocomplete="off"> <em>(bad)</em> than yesterday.</span><span class="v"></span></li>
+        <li class="exq" data-a="more"><span class="q">4. The <input class="gap" aria-label="answer" autocomplete="off"> you practise, the better you get.</span><span class="v"></span></li>
+        <li class="exq" data-a="eldest"><span class="q">5. She's the <input class="gap" aria-label="answer" autocomplete="off"> <em>(old — family)</em> of the three sisters.</span><span class="v"></span></li>
+        <li class="exq" data-a="colder"><span class="q">6. It's getting colder and <input class="gap" aria-label="answer" autocomplete="off"> <em>(cold)</em>.</span><span class="v"></span></li>
+        <li class="exq" data-a="more difficult"><span class="q">7. This task is <input class="gap w-lg" aria-label="answer" autocomplete="off"> <em>(difficult)</em> than that one.</span><span class="v"></span></li>
+        <li class="exq" data-a="most important"><span class="q">8. Health is the <input class="gap w-lg" aria-label="answer" autocomplete="off"> <em>(important)</em> thing of all.</span><span class="v"></span></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 21 DIVIDER: SPELLING -->
+  <section class="slide slide--statement phase-olympiad" data-phase="Spelling">
+    <div class="inner">
+      <div class="big-badge">Part 4 · Spelling &amp; word building</div>
+      <h2>Spelling, prefixes &amp; <span class="hl">false friends</span> ✍️</h2>
+      <p class="lead" style="text-align:center; max-width:42ch">Where the Word Formation task hides its points — and the Russian look-alikes that fool you.</p>
+    </div>
+  </section>
+
+  <!-- 22 REF: SPELLING -->
+  <section class="slide phase-olympiad" data-phase="Spelling">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">22</span><span class="dot"></span> Spelling · Rules &amp; exceptions</div>
+      <h2>Spelling changes when you add endings</h2>
+      <div class="grid g2">
+        <div class="card"><h3>The rules</h3>
+          <ul>
+            <li><b>Double</b> the final consonant (short stressed CVC): stop → sto<b>pp</b>ing, begin → begi<b>nn</b>ing</li>
+            <li><b>Drop</b> silent -e before a vowel ending: make → mak<b>ing</b>, hope → hop<b>ing</b></li>
+            <li><b>y → ies</b> after a consonant: city → cit<b>ies</b>, study → stud<b>ies</b></li>
+            <li><b>ie → y</b> before -ing: die → d<b>ying</b>, lie → lying</li>
+          </ul>
+        </div>
+        <div class="card"><h3>i before e…</h3>
+          <p class="ex">“i before e, except after c”</p>
+          <ul>
+            <li>bel<b>ie</b>ve, ach<b>ie</b>ve, f<b>ie</b>ld</li>
+            <li>rec<b>ei</b>ve, dec<b>ei</b>ve, c<b>ei</b>ling <span class="en-note">(after c)</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="trap"><b>⚠️ Watch these <span class="arw">→</span></b> keep <b>y</b> after a vowel: play → play<b>ed</b>, boy → boy<b>s</b> (not <s>plaied</s>). &nbsp; <em>-ful</em> has <b>one L</b>: careful, helpful. &nbsp; And the i-before-e <b>exceptions</b>: s<b>ei</b>ze, w<b>ei</b>rd, prot<b>ei</b>n, for<b>ei</b>gn, h<b>ei</b>ght, <b>ei</b>ther, sc<b>ie</b>nce.</div>
+    </div>
+  </section>
+
+  <!-- 23 EX: SPELLING -->
+  <section class="slide phase-olympiad" data-phase="Spelling">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">23</span><span class="dot"></span> Exercise · Spelling</div>
+      <h2>Add the ending &amp; spell it correctly</h2>
+      <ul class="exset">
+        <li class="exq" data-a="beginning"><span class="q">1. begin + ing → <input class="gap" aria-label="answer" autocomplete="off"></span><span class="v"></span></li>
+        <li class="exq" data-a="making"><span class="q">2. make + ing → <input class="gap" aria-label="answer" autocomplete="off"></span><span class="v"></span></li>
+        <li class="exq" data-a="hopping"><span class="q">3. hop + ing → <input class="gap" aria-label="answer" autocomplete="off"> <em>(not hoping!)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="cities"><span class="q">4. city (plural) → <input class="gap" aria-label="answer" autocomplete="off"></span><span class="v"></span></li>
+        <li class="exq" data-a="played"><span class="q">5. play + ed → <input class="gap" aria-label="answer" autocomplete="off"></span><span class="v"></span></li>
+        <li class="exq" data-a="dying"><span class="q">6. die + ing → <input class="gap" aria-label="answer" autocomplete="off"></span><span class="v"></span></li>
+        <li class="exq" data-a="believe"><span class="q">7. bel__ve → <input class="gap" aria-label="answer" autocomplete="off"></span><span class="v"></span></li>
+        <li class="exq" data-a="receive"><span class="q">8. rec__ve → <input class="gap" aria-label="answer" autocomplete="off"></span><span class="v"></span></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 24 REF: WORD FORMATION -->
+  <section class="slide phase-connect" data-phase="Word building">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">24</span><span class="dot"></span> Word building · Negative prefixes</div>
+      <h2>Which negative prefix?</h2>
+      <p class="instr">The prefix usually depends on the first letter of the word.</p>
+      <div class="grid g3">
+        <div class="card"><h3>im- (before m, p)</h3><div class="chips"><span class="sig">impossible</span><span class="sig">impatient</span><span class="sig">immature</span></div></div>
+        <div class="card"><h3>il- (before l)</h3><div class="chips"><span class="sig">illegal</span><span class="sig">illogical</span><span class="sig">illiterate</span></div></div>
+        <div class="card"><h3>ir- (before r)</h3><div class="chips"><span class="sig">irregular</span><span class="sig">irresponsible</span><span class="sig">irrelevant</span></div></div>
+        <div class="card"><h3>in- (default)</h3><div class="chips"><span class="sig">incorrect</span><span class="sig">invisible</span><span class="sig">informal</span></div></div>
+        <div class="card"><h3>un- / dis- / mis-</h3><div class="chips"><span class="sig">unhappy</span><span class="sig">dishonest</span><span class="sig">misunderstand</span></div></div>
+        <div class="card"><h3>-able vs -ible</h3><div class="chips"><span class="sig">comfortable</span><span class="sig">reliable</span><span class="sig">possible</span><span class="sig">visible</span></div></div>
+      </div>
+      <div class="trap"><b>⚠️ Adverb traps <span class="arw">→</span></b> good → <b>well</b> (not <s>goodly</s>), fast → <b>fast</b>, hard → <b>hard</b>. And beware <em>hard</em> (усердно) vs <em>hardly</em> (едва — почти не!).</div>
+    </div>
+  </section>
+
+  <!-- 25 EX: WORD FORMATION -->
+  <section class="slide phase-connect" data-phase="Word building">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">25</span><span class="dot"></span> Exercise · Word formation</div>
+      <h2>Make the right form of the CAPITAL word</h2>
+      <ul class="exset">
+        <li class="exq" data-a="impossible"><span class="q">1. It's <input class="gap w-lg" aria-label="answer" autocomplete="off"> to finish in time. <em>(POSSIBLE — neg.)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="impatient"><span class="q">2. Don't be so <input class="gap w-lg" aria-label="answer" autocomplete="off">. <em>(PATIENT — neg.)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="irresponsible"><span class="q">3. That was very <input class="gap w-lg" aria-label="answer" autocomplete="off">. <em>(RESPONSIBLE — neg.)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="illegal"><span class="q">4. Parking here is <input class="gap w-lg" aria-label="answer" autocomplete="off">. <em>(LEGAL — neg.)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="comfortable"><span class="q">5. This chair is very <input class="gap w-lg" aria-label="answer" autocomplete="off">. <em>(COMFORT)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="carefully"><span class="q">6. He drives very <input class="gap w-lg" aria-label="answer" autocomplete="off">. <em>(CARE — adverb)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="well"><span class="q">7. She sings really <input class="gap" aria-label="answer" autocomplete="off">. <em>(GOOD — adverb)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="boring"><span class="q">8. The lesson was <input class="gap" aria-label="answer" autocomplete="off">. <em>(BORE)</em></span><span class="v"></span></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 26 REF: CONFUSABLES / FALSE FRIENDS -->
+  <section class="slide phase-remember" data-phase="False friends">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">26</span><span class="dot"></span> Vocabulary · Traps</div>
+      <h2>Confusables &amp; false friends</h2>
+      <div class="grid g2">
+        <div class="card"><h3>English homophones</h3>
+          <ul>
+            <li><b>its</b> (his) · <b>it's</b> (it is)</li>
+            <li><b>their</b> / <b>there</b> / <b>they're</b></li>
+            <li><b>than</b> (comparison) · <b>then</b> (time)</li>
+            <li><b>affect</b> (verb) · <b>effect</b> (noun)</li>
+            <li><b>lose</b> (терять) · <b>loose</b> (свободный)</li>
+            <li><b>advice</b> (noun) · <b>advise</b> (verb)</li>
+          </ul>
+        </div>
+        <div class="card"><h3>Russian «ложные друзья»</h3>
+          <ul>
+            <li><b>magazine</b> = журнал <span class="en-note">(shop = store)</span></li>
+            <li><b>sympathetic</b> = сочувствующий <span class="en-note">(nice = симпатичный)</span></li>
+            <li><b>actually</b> = на самом деле <span class="en-note">(≠ актуально)</span></li>
+            <li><b>accurate</b> = точный <span class="en-note">(neat = аккуратный)</span></li>
+            <li><b>fabric</b> = ткань <span class="en-note">(factory = фабрика)</span></li>
+            <li><b>intelligent</b> = умный <span class="en-note">(cultured = интеллигентный)</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="trap"><b>⚠️ A few more classics <span class="arw">→</span></b> <em>brilliant</em> = блестящий (not бриллиант = diamond) · <em>receipt</em> = чек (not рецепт = recipe) · <em>decade</em> = десятилетие · <em>sensible</em> (разумный) vs <em>sensitive</em> (чувствительный).</div>
+    </div>
+  </section>
+
+  <!-- 27 EX: CONFUSABLES -->
+  <section class="slide phase-remember" data-phase="False friends">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">27</span><span class="dot"></span> Exercise · Choose the right word</div>
+      <h2>Pick the correct one</h2>
+      <ul class="exset">
+        <li class="exq" data-a="its"><span class="q">1. The dog wagged <input class="gap" aria-label="answer" autocomplete="off"> tail. <em>(its / it's)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="than"><span class="q">2. She is taller <input class="gap" aria-label="answer" autocomplete="off"> me. <em>(than / then)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="lose"><span class="q">3. Be careful not to <input class="gap" aria-label="answer" autocomplete="off"> your keys. <em>(lose / loose)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="advice"><span class="q">4. Can you give me some <input class="gap" aria-label="answer" autocomplete="off">? <em>(advice / advise)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="They're|they're"><span class="q">5. <input class="gap w-lg" aria-label="answer" autocomplete="off"> going to the park. <em>(Their / There / They're)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="magazine"><span class="q">6. I read an interesting <input class="gap w-lg" aria-label="answer" autocomplete="off"> yesterday. <em>(= журнал)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="sympathetic"><span class="q">7. She was very <input class="gap w-lg" aria-label="answer" autocomplete="off"> when I felt sad. <em>(= сочувствующий)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="affect"><span class="q">8. Noise can <input class="gap" aria-label="answer" autocomplete="off"> your sleep. <em>(affect / effect)</em></span><span class="v"></span></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- DIVIDER: COLLECTIVE NOUNS -->
+  <section class="slide slide--statement phase-remember" data-phase="Collective nouns">
+    <div class="inner">
+      <div class="big-badge">Part 5 · Collective nouns</div>
+      <h2>Groups of animals 🐾</h2>
+      <p class="lead" style="text-align:center; max-width:44ch">a <span class="hl">flock</span> of birds, a herd of cows, a pride of lions — English has a special word for almost every group (собирательные существительные).</p>
+    </div>
+  </section>
+
+  <!-- RULES: COLLECTIVE NOUNS — ANIMALS -->
+  <section class="slide phase-remember" data-phase="Collective nouns">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">·</span><span class="dot"></span> Collective nouns · Animals</div>
+      <h2>Words for groups of animals</h2>
+      <div class="grid g2">
+        <div class="card"><h3>The main ones</h3>
+          <ul>
+            <li><b>a herd of</b> — cows, cattle (стадо), elephants, deer</li>
+            <li><b>a herd / drove of</b> horses — <b>табун</b></li>
+            <li><b>a flock of</b> — sheep (отара), goats, birds</li>
+            <li><b>a pack of</b> — wolves, dogs, hounds (свора, стая волков)</li>
+            <li><b>a pride of</b> lions — <b>прайд</b></li>
+            <li><b>a swarm of</b> — bees, insects (рой)</li>
+          </ul>
+        </div>
+        <div class="card"><h3>Water &amp; small animals</h3>
+          <ul>
+            <li><b>a school / shoal of</b> fish — <b>косяк</b></li>
+            <li><b>a pod of</b> — whales, dolphins</li>
+            <li><b>a colony of</b> — ants, bats, rabbits</li>
+            <li><b>a troop of</b> monkeys</li>
+            <li><b>a litter of</b> — puppies, kittens, cubs (помёт)</li>
+            <li><b>a nest of</b> — mice, snakes</li>
+          </ul>
+        </div>
+      </div>
+      <div class="trap"><b>⚠️ Russian → English map <span class="arw">→</span></b> стадо = <b>herd</b> · табун = <b>herd/drove</b> of horses · отара = <b>flock</b> of sheep · свора = <b>pack</b> · прайд = <b>pride</b> · рой = <b>swarm</b> · косяк = <b>school/shoal</b> · помёт = <b>litter</b> · стая (волков) = <b>pack</b>, стая (птиц) = <b>flock</b>.</div>
+    </div>
+  </section>
+
+  <!-- RULES: COLLECTIVE NOUNS — BIRDS -->
+  <section class="slide phase-olympiad" data-phase="Collective nouns">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">·</span><span class="dot"></span> Collective nouns · Birds</div>
+      <h2>Birds — a different word for each! 🐦</h2>
+      <p class="instr">The general word is <b>a flock of birds</b>, but many birds have their own special (and funny) collective noun:</p>
+      <div class="grid g2">
+        <div class="card"><h3>Wild birds</h3>
+          <ul>
+            <li><b>a murder of</b> crows 🐦‍⬛</li>
+            <li><b>a parliament of</b> owls 🦉</li>
+            <li><b>an unkindness of</b> ravens</li>
+            <li><b>a murmuration of</b> starlings</li>
+            <li><b>an exaltation of</b> larks</li>
+            <li><b>a charm of</b> goldfinches</li>
+          </ul>
+        </div>
+        <div class="card"><h3>On the ground / water</h3>
+          <ul>
+            <li><b>a gaggle of</b> geese (on land) 🪿</li>
+            <li><b>a skein of</b> geese (in flight)</li>
+            <li><b>a colony of</b> penguins / gulls 🐧</li>
+            <li><b>a brood of</b> chickens / hens 🐤 (выводок)</li>
+            <li><b>a covey of</b> partridges / quail</li>
+          </ul>
+        </div>
+      </div>
+      <div class="trap"><b>⚠️ These are "terms of venery" <span class="arw">→</span></b> English has 100+ of them and olympiads love the funny ones — especially <b>a murder of crows</b> and <b>a parliament of owls</b>. Learn the odd ones by heart.</div>
+    </div>
+  </section>
+
+  <!-- EX: COLLECTIVE NOUNS (gap-fill) -->
+  <section class="slide phase-remember" data-phase="Collective nouns">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">·</span><span class="dot"></span> Exercise · Collective nouns (write)</div>
+      <h2>Complete: a ___ of …</h2>
+      <ul class="exset">
+        <li class="exq" data-a="pride"><span class="q">1. a <input class="gap" aria-label="answer" autocomplete="off"> of lions</span><span class="v"></span></li>
+        <li class="exq" data-a="pack"><span class="q">2. a <input class="gap" aria-label="answer" autocomplete="off"> of wolves</span><span class="v"></span></li>
+        <li class="exq" data-a="school|shoal"><span class="q">3. a <input class="gap" aria-label="answer" autocomplete="off"> of fish</span><span class="v"></span></li>
+        <li class="exq" data-a="swarm"><span class="q">4. a <input class="gap" aria-label="answer" autocomplete="off"> of bees</span><span class="v"></span></li>
+        <li class="exq" data-a="flock"><span class="q">5. a <input class="gap" aria-label="answer" autocomplete="off"> of sheep</span><span class="v"></span></li>
+        <li class="exq" data-a="herd"><span class="q">6. a <input class="gap" aria-label="answer" autocomplete="off"> of cows</span><span class="v"></span></li>
+        <li class="exq" data-a="herd|drove"><span class="q">7. a <input class="gap" aria-label="answer" autocomplete="off"> of horses <em>(табун)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="litter"><span class="q">8. a <input class="gap" aria-label="answer" autocomplete="off"> of puppies</span><span class="v"></span></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- EX: COLLECTIVE NOUNS (MCQ) -->
+  <section class="slide phase-olympiad" data-phase="Collective nouns">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">·</span><span class="dot"></span> Exercise · Collective nouns (choose)</div>
+      <h2>Pick the right group word</h2>
+      <ul class="mcset">
+        <li class="mcq" data-c="0"><div class="q">1. A group of crows is a ___.</div><div class="opts"><button class="opt" type="button">A) murder</button><button class="opt" type="button">B) parliament</button><button class="opt" type="button">C) pack</button><button class="opt" type="button">D) herd</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">2. A group of owls is a ___.</div><div class="opts"><button class="opt" type="button">A) colony</button><button class="opt" type="button">B) parliament</button><button class="opt" type="button">C) pride</button><button class="opt" type="button">D) swarm</button></div></li>
+        <li class="mcq" data-c="2"><div class="q">3. A group of fish is a ___.</div><div class="opts"><button class="opt" type="button">A) swarm</button><button class="opt" type="button">B) herd</button><button class="opt" type="button">C) school</button><button class="opt" type="button">D) flock</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">4. A group of geese on the ground is a ___.</div><div class="opts"><button class="opt" type="button">A) gaggle</button><button class="opt" type="button">B) murder</button><button class="opt" type="button">C) litter</button><button class="opt" type="button">D) pod</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">5. A group of lions is a ___.</div><div class="opts"><button class="opt" type="button">A) pack</button><button class="opt" type="button">B) pride</button><button class="opt" type="button">C) troop</button><button class="opt" type="button">D) flock</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">6. A group of whales is a ___.</div><div class="opts"><button class="opt" type="button">A) herd</button><button class="opt" type="button">B) pod</button><button class="opt" type="button">C) nest</button><button class="opt" type="button">D) pack</button></div></li>
+        <li class="mcq" data-c="2"><div class="q">7. A group of kittens is a ___.</div><div class="opts"><button class="opt" type="button">A) brood</button><button class="opt" type="button">B) clutch</button><button class="opt" type="button">C) litter</button><button class="opt" type="button">D) swarm</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">8. A group of monkeys is a ___.</div><div class="opts"><button class="opt" type="button">A) troop</button><button class="opt" type="button">B) pride</button><button class="opt" type="button">C) school</button><button class="opt" type="button">D) skein</button></div></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 28 DIVIDER: CHALLENGE -->
+  <section class="slide slide--statement phase-olympiad" data-phase="Challenge">
+    <div class="inner">
+      <div class="big-badge">Part 6 · Olympiad challenge</div>
+      <h2>Everything <span class="hl">together</span> 🏆</h2>
+      <p class="lead" style="text-align:center; max-width:42ch">One mixed cloze with all of today's traps, then speaking &amp; writing.</p>
+    </div>
+  </section>
+
+  <!-- 29 EX: MIXED CHALLENGE -->
+  <section class="slide phase-olympiad" data-phase="Challenge">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">29</span><span class="dot"></span> Challenge · Mixed exceptions</div>
+      <h2>Put in the correct word or form</h2>
+      <ul class="exset">
+        <li class="exq" data-a="children"><span class="q">1. Two <input class="gap" aria-label="answer" autocomplete="off"> <em>(child)</em> were playing outside.</span><span class="v"></span></li>
+        <li class="exq" data-a="is"><span class="q">2. This <input class="gap" aria-label="answer" autocomplete="off"> <em>(be)</em> excellent news!</span><span class="v"></span></li>
+        <li class="exq" data-a="been"><span class="q">3. I've never <input class="gap" aria-label="answer" autocomplete="off"> <em>(be)</em> abroad.</span><span class="v"></span></li>
+        <li class="exq" data-a="an"><span class="q">4. It happened <input class="gap" aria-label="answer" autocomplete="off"> hour ago.</span><span class="v"></span></li>
+        <li class="exq" data-a="The"><span class="q">5. <input class="gap" aria-label="answer" autocomplete="off"> Alps are breathtaking.</span><span class="v"></span></li>
+        <li class="exq" data-a="worst"><span class="q">6. It was the <input class="gap" aria-label="answer" autocomplete="off"> <em>(bad)</em> day of my life.</span><span class="v"></span></li>
+        <li class="exq" data-a="having|'m having|am having"><span class="q">7. I can't talk — I'm <input class="gap w-lg" aria-label="answer" autocomplete="off"> <em>(have)</em> lunch.</span><span class="v"></span></li>
+        <li class="exq" data-a="impossible"><span class="q">8. Sorry, that's completely <input class="gap w-lg" aria-label="answer" autocomplete="off"> <em>(POSSIBLE — neg.)</em>.</span><span class="v"></span></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 30 SPEAKING + WRITING -->
+  <section class="slide phase-olympiad" data-phase="Challenge">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">30</span><span class="dot"></span> Challenge · Use it live <span class="time">· speaking &amp; writing</span></div>
+      <h2>Now use the tricky words 🎤✍️</h2>
+      <div class="prompt-bank"><b>Speak (2 min) →</b> Describe your family using at least 4 traps from today: <em>children, my elder brother, the eldest, feet, people, better than…</em></div>
+      <ul class="q-list">
+        <li data-n="1"><span>Use <b>two irregular plurals</b> (children, feet, people…).</span></li>
+        <li data-n="2"><span>Use <b>one comparison</b> (older than / the best / better).</span></li>
+        <li data-n="3"><span>Use <b>one uncountable</b> correctly (news is, advice, information).</span></li>
+      </ul>
+      <div class="prompt-bank"><b>Write (50–70 words) →</b> "The most surprising fact I've ever learnt." Use <em>the most</em>, one <em>a/an</em> exception, and one word-formation word.</div>
+      <textarea class="notes" style="min-height:8rem" placeholder="✍️ Write here…"></textarea>
+    </div>
+  </section>
+
+  <!-- 31 HOMEWORK -->
+  <section class="slide phase-connect" data-phase="Wrap-up">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">31</span><span class="dot"></span> Wrap-up · Homework</div>
+      <h2>Homework &amp; a big <span class="hl">well done</span> 🌟</h2>
+      <ul class="q-list">
+        <li data-n="1"><span>Learn <b>10 irregular plurals</b> + <b>8 uncountables</b> — write one sentence for each.</span></li>
+        <li data-n="2"><span>Make a mini-list of your own <b>5 false friends</b> that trip you up.</span></li>
+        <li data-n="3"><span>Redo the <b>Word Formation</b> and <b>Mixed Challenge</b> from memory.</span></li>
+        <li data-n="4"><span>Finish the <b>writing task</b> (50–70 words) and send it to me.</span></li>
+        <li data-n="5"><span><span class="en-note">Optional:</span> find 5 exceptions in last year's школьный этап ВсОШ paper.</span></li>
+      </ul>
+      <p class="lead">The exceptions are now <b>your</b> advantage — most students never learn them. See you next lesson! 👋</p>
+    </div>
+  </section>
+
+  <nav class="nav">
+    <span class="phase-label"><span class="pd" id="pd"></span><span id="phase">Intro</span></span>
+    <span class="kbd-hint">← → arrows to navigate</span>
+    <span class="nav-btns">
+      <button id="prev" aria-label="Previous slide">‹ Back</button>
+      <button id="next" aria-label="Next slide">Next ›</button>
+    </span>
+  </nav>
+</div>
+
+<script>
+  (function () {
+    var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+    var bar = document.getElementById('bar');
+    var cur = document.getElementById('cur');
+    var totalEl = document.getElementById('total');
+    var prev = document.getElementById('prev');
+    var next = document.getElementById('next');
+    var phaseEl = document.getElementById('phase');
+    var pd = document.getElementById('pd');
+    var i = 0;
+    totalEl.textContent = slides.length;
+
+    function phaseName(el){
+      if(el.getAttribute('data-phase')) return el.getAttribute('data-phase');
+      if(el.classList.contains('phase-remember')) return 'Remember';
+      if(el.classList.contains('phase-olympiad')) return 'Olympiad';
+      return 'Intro';
+    }
+
+    function show(n){
+      i = Math.max(0, Math.min(slides.length-1, n));
+      slides.forEach(function(s,k){ s.classList.toggle('active', k===i); });
+      var active = slides[i];
+      bar.style.width = ((i+1)/slides.length*100) + '%';
+      cur.textContent = i+1;
+      prev.disabled = i===0; next.disabled = i===slides.length-1;
+      phaseEl.textContent = phaseName(active);
+      var cs = getComputedStyle(active);
+      pd.style.background = cs.getPropertyValue('--accent');
+      phaseEl.style.color = cs.getPropertyValue('--accent');
+      var inner = active.querySelector('.inner'); if(inner) inner.scrollTop = 0;
+    }
+    function go(d){ show(i+d); }
+
+    next.addEventListener('click', function(){ go(1); });
+    prev.addEventListener('click', function(){ go(-1); });
+
+    document.addEventListener('keydown', function(e){
+      var t = e.target;
+      if(t && (t.tagName==='INPUT' || t.tagName==='TEXTAREA')) return;
+      if(e.key==='ArrowRight'||e.key==='PageDown'){ go(1); e.preventDefault(); }
+      else if(e.key==='ArrowLeft'||e.key==='PageUp'){ go(-1); e.preventDefault(); }
+      else if(e.key===' '){ go(1); e.preventDefault(); }
+      else if(e.key==='Home'){ show(0); }
+      else if(e.key==='End'){ show(slides.length-1); }
+    });
+
+    // ---- Answer checking ----
+    function normalize(s){ return (s||'').toLowerCase().replace(/’/g,"'").replace(/\s+/g,' ').trim().replace(/[.,!?;:]+$/,''); }
+    function firstAlt(item){ return (item.getAttribute('data-a')||'').split('|')[0]; }
+    function alts(item){ return (item.getAttribute('data-a')||'').split('|').map(normalize); }
+
+    // Gap-fill / cloze
+    function checkGaps(items, reveal){
+      var ok = 0, total = 0;
+      items.forEach(function(it){
+        var input = it.querySelector('.gap'); if(!input) return;
+        total++;
+        var v = it.querySelector('.v');
+        if(reveal){
+          input.value = firstAlt(it);
+          input.classList.remove('no'); input.classList.add('ok');
+          if(v){ v.className='v good'; v.textContent='✓'; }
+          ok++; return;
+        }
+        var val = normalize(input.value);
+        input.classList.remove('ok','no'); if(v) v.className='v';
+        if(val === ''){ if(v) v.textContent=''; return; }
+        if(alts(it).indexOf(val) !== -1){ input.classList.add('ok'); if(v){ v.className='v good'; v.textContent='✓'; } ok++; }
+        else { input.classList.add('no'); if(v){ v.className='v bad'; v.textContent='✗ ' + firstAlt(it); } }
+      });
+      return { ok: ok, total: total };
+    }
+
+    // Multiple choice
+    function checkMC(set, reveal){
+      var qs = set.querySelectorAll('.mcq'); var ok = 0;
+      qs.forEach(function(q){
+        var opts = q.querySelectorAll('.opt');
+        var c = parseInt(q.getAttribute('data-c'), 10);
+        opts.forEach(function(o){ o.classList.remove('correct','wrong'); });
+        if(reveal){
+          opts.forEach(function(o){ o.classList.remove('sel'); });
+          if(opts[c]){ opts[c].classList.add('sel','correct'); }
+          ok++; return;
+        }
+        var selIdx = -1;
+        opts.forEach(function(o,idx){ if(o.classList.contains('sel')) selIdx = idx; });
+        if(selIdx === -1) return;
+        if(selIdx === c){ opts[selIdx].classList.add('correct'); ok++; }
+        else { opts[selIdx].classList.add('wrong'); if(opts[c]) opts[c].classList.add('correct'); }
+      });
+      return { ok: ok, total: qs.length };
+    }
+
+    document.querySelectorAll('.mcq').forEach(function(q){
+      q.querySelectorAll('.opt').forEach(function(o){
+        o.addEventListener('click', function(){
+          q.querySelectorAll('.opt').forEach(function(x){ x.classList.remove('sel','correct','wrong'); });
+          o.classList.add('sel');
+        });
+      });
+    });
+
+    document.querySelectorAll('.extools').forEach(function(tools){
+      var inner = tools.closest('.inner');
+      var score = tools.querySelector('.score');
+      var exset = inner.querySelector('.exset');
+      var mcset = inner.querySelector('.mcset');
+      var cloze = inner.querySelector('.cloze');
+
+      function run(reveal){
+        var ok = 0, total = 0, r;
+        if(exset){ r = checkGaps(exset.querySelectorAll('.exq'), reveal); ok += r.ok; total += r.total; }
+        if(cloze){ r = checkGaps(cloze.querySelectorAll('.cz'), reveal); ok += r.ok; total += r.total; }
+        if(mcset){ r = checkMC(mcset, reveal); ok += r.ok; total += r.total; }
+        if(score){ score.textContent = ok + ' / ' + total + (ok===total ? '  🎉' : ''); }
+      }
+
+      tools.querySelector('.check').addEventListener('click', function(){ run(false); });
+      tools.querySelector('.show').addEventListener('click', function(){ run(true); });
+      tools.querySelector('.clear').addEventListener('click', function(){
+        inner.querySelectorAll('.gap').forEach(function(g){ g.value=''; g.classList.remove('ok','no'); });
+        inner.querySelectorAll('.v').forEach(function(v){ v.textContent=''; v.className='v'; });
+        inner.querySelectorAll('.opt').forEach(function(o){ o.classList.remove('sel','correct','wrong'); });
+        if(score) score.textContent='';
+      });
+      inner.querySelectorAll('.gap').forEach(function(g){
+        g.addEventListener('keydown', function(e){ if(e.key==='Enter'){ run(false); } });
+      });
+    });
+
+    // Touch swipe (ignore form fields)
+    var x0 = null;
+    document.addEventListener('touchstart', function(e){
+      var t = e.target; if(t && (t.tagName==='INPUT'||t.tagName==='TEXTAREA'||t.tagName==='BUTTON')) { x0=null; return; }
+      x0 = e.touches[0].clientX;
+    }, {passive:true});
+    document.addEventListener('touchend', function(e){
+      if(x0===null) return;
+      var dx = e.changedTouches[0].clientX - x0;
+      if(Math.abs(dx) > 55) go(dx<0 ? 1 : -1);
+      x0 = null;
+    }, {passive:true});
+
+    show(0);
+  })();
+</script>
+</body>
+</html>

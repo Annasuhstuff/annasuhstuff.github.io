@@ -1,0 +1,957 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Olympiad Trainer — Real ВсОШ Task Types (7–8)</title>
+<style>
+  :root {
+    --paper:   #FAF6FB;
+    --surface: #FFFFFF;
+    --ink:     #443F58;
+    --ink-soft:#7A7391;
+    --ink-faint:#ABA4BE;
+    --line:    #ECE4F1;
+
+    --c-connect:  #8A6FD1;  --c-connect-t:  #EFEAFB;
+    --c-remember: #2FA48C;  --c-remember-t: #E2F4EF;
+    --c-olympiad: #D0669B;  --c-olympiad-t: #FBE6F1;
+
+    --good:#2FA47F; --good-t:#E3F5EE;
+    --bad: #DE7189; --bad-t: #FBE7EC;
+
+    --marker: rgba(255,221,140,.62);
+    --shadow: 0 1px 2px rgba(90,70,120,.05), 0 10px 30px rgba(120,90,160,.09);
+
+    --accent: var(--c-connect);
+    --accent-tint: var(--c-connect-t);
+
+    --font-display: "Trebuchet MS", ui-rounded, "SF Pro Rounded", "Segoe UI", system-ui, sans-serif;
+    --font-body: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:#201B2B; --surface:#2A2438; --ink:#EDE7F5; --ink-soft:#B7AECB; --ink-faint:#837a97; --line:#392F4C;
+      --c-connect:#B7A2F0; --c-connect-t:rgba(150,120,225,.17);
+      --c-remember:#5FD0B6; --c-remember-t:rgba(80,200,170,.15);
+      --c-olympiad:#F09BC4; --c-olympiad-t:rgba(230,120,175,.16);
+      --good:#5FCB9E; --good-t:rgba(60,180,130,.16); --bad:#F090A2; --bad-t:rgba(224,116,138,.16);
+      --marker:rgba(255,220,150,.24);
+      --shadow:0 1px 2px rgba(0,0,0,.3), 0 12px 34px rgba(0,0,0,.42);
+    }
+  }
+  :root[data-theme="light"]{
+    --paper:#FAF6FB; --surface:#FFFFFF; --ink:#443F58; --ink-soft:#7A7391; --ink-faint:#ABA4BE; --line:#ECE4F1;
+    --c-connect:#8A6FD1; --c-connect-t:#EFEAFB; --c-remember:#2FA48C; --c-remember-t:#E2F4EF; --c-olympiad:#D0669B; --c-olympiad-t:#FBE6F1;
+    --good:#2FA47F; --good-t:#E3F5EE; --bad:#DE7189; --bad-t:#FBE7EC; --marker:rgba(255,221,140,.62);
+    --shadow:0 1px 2px rgba(90,70,120,.05),0 10px 30px rgba(120,90,160,.09);
+  }
+  :root[data-theme="dark"]{
+    --paper:#201B2B; --surface:#2A2438; --ink:#EDE7F5; --ink-soft:#B7AECB; --ink-faint:#837a97; --line:#392F4C;
+    --c-connect:#B7A2F0; --c-connect-t:rgba(150,120,225,.17); --c-remember:#5FD0B6; --c-remember-t:rgba(80,200,170,.15);
+    --c-olympiad:#F09BC4; --c-olympiad-t:rgba(230,120,175,.16); --good:#5FCB9E; --good-t:rgba(60,180,130,.16);
+    --bad:#F090A2; --bad-t:rgba(224,116,138,.16); --marker:rgba(255,220,150,.24);
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 34px rgba(0,0,0,.42);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; }
+  body {
+    background: radial-gradient(1100px 600px at 100% -10%, var(--c-olympiad-t), transparent 60%), var(--paper);
+    color: var(--ink); font-family: var(--font-body); line-height: 1.5;
+    -webkit-font-smoothing: antialiased; overflow: hidden;
+  }
+  .deck { position: relative; height: 100dvh; width: 100%; }
+
+  .topbar { position: fixed; top:0; left:0; right:0; z-index:30; display:flex; align-items:center; gap:.9rem;
+    padding:.7rem clamp(.9rem,3vw,2rem); background: color-mix(in srgb, var(--paper) 84%, transparent);
+    backdrop-filter: blur(8px); border-bottom:1px solid var(--line); }
+  .brand { display:flex; align-items:baseline; gap:.5rem; font-size:.82rem; white-space:nowrap; }
+  .brand b { font-family: var(--font-display); font-weight:700; font-size:.98rem; }
+  .brand .lvl { font-family: var(--font-mono); font-size:.66rem; letter-spacing:.08em; color: var(--c-olympiad);
+    background: var(--c-olympiad-t); border-radius:999px; padding:.14rem .5rem; }
+  .progress { flex:1; height:6px; background: var(--line); border-radius:999px; overflow:hidden; min-width:40px; }
+  .progress > i { display:block; height:100%; width:0; border-radius:999px;
+    background: linear-gradient(90deg, var(--c-connect), var(--c-remember), var(--c-olympiad)); transition: width .35s ease; }
+  .counter { font-family: var(--font-mono); font-size:.74rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; white-space:nowrap; }
+
+  .slide { position:absolute; inset:0; display:flex; flex-direction:column;
+    padding: clamp(3.2rem,6.5vh,4.4rem) clamp(1rem,4vw,3rem) clamp(3.6rem,7vh,4.4rem);
+    opacity:0; visibility:hidden; transform: translateY(10px);
+    transition: opacity .4s ease, transform .4s ease, visibility .4s; overflow:hidden; }
+  .slide.active { opacity:1; visibility:visible; transform:none; }
+  .inner { width:100%; max-width:62rem; margin:auto; max-height:100%; overflow-y:auto; overflow-x:hidden; padding:.2rem; scrollbar-width:thin; }
+
+  .eyebrow { display:inline-flex; align-items:center; gap:.5rem; font-family: var(--font-mono); font-size:.72rem; font-weight:600;
+    letter-spacing:.12em; text-transform:uppercase; color: var(--accent); margin:0 0 .9rem; }
+  .eyebrow .num { color: var(--ink-faint); }
+  .eyebrow .dot { width:7px; height:7px; border-radius:50%; background: var(--accent); }
+  .eyebrow .time { color: var(--ink-faint); font-weight:500; }
+
+  h1,h2,h3 { font-family: var(--font-display); font-weight:700; text-wrap:balance; margin:0; line-height:1.14; }
+  h1 { font-size: clamp(2rem,6vw,3.4rem); }
+  h2 { font-size: clamp(1.4rem,3.8vw,2.3rem); margin-bottom:.4rem; }
+  h3 { font-size:1.02rem; }
+  .lead { color: var(--ink-soft); font-size: clamp(1rem,2.2vw,1.15rem); max-width:48ch; margin:.8rem 0 0; }
+  .instr { color: var(--ink-soft); font-size:.92rem; margin:.5rem 0 0; }
+  p { margin:.55rem 0; }
+  .hl { background: linear-gradient(180deg, transparent 56%, var(--marker) 56% 92%, transparent 92%); padding:0 .08em; border-radius:3px; }
+  .en-note { color: var(--ink-faint); font-style: italic; font-size:.9em; }
+
+  .title-kicker { font-family: var(--font-mono); font-size:.78rem; letter-spacing:.18em; text-transform:uppercase; color: var(--c-olympiad); }
+  .title-meta { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1.6rem; }
+  .chip { font-size:.82rem; padding:.4rem .8rem; border-radius:999px; border:1px solid var(--line); background: var(--surface); color: var(--ink-soft); box-shadow: var(--shadow); }
+
+  .slide--statement { align-items:center; text-align:center; }
+  .slide--statement .inner { text-align:center; display:flex; flex-direction:column; align-items:center; }
+  .slide--statement h2 { font-size: clamp(1.9rem,6vw,3.4rem); }
+  .big-badge { font-family: var(--font-mono); font-size:.74rem; letter-spacing:.14em; text-transform:uppercase; color: var(--accent);
+    background: var(--accent-tint); padding:.42rem .95rem; border-radius:999px; margin-bottom:1.3rem; }
+
+  .q-list { list-style:none; margin:1.2rem 0 0; padding:0; display:grid; gap:.6rem; }
+  .q-list li { display:flex; gap:.75rem; align-items:flex-start; background: var(--surface); border:1px solid var(--line);
+    border-radius:16px; padding:.75rem .95rem; box-shadow: var(--shadow); font-size:1.02rem; }
+  .q-list li::before { content: attr(data-n); flex:none; font-family: var(--font-mono); font-size:.72rem; font-weight:700;
+    color: var(--accent); background: var(--accent-tint); width:1.55rem; height:1.55rem; border-radius:9px; display:grid; place-items:center; margin-top:.08rem; }
+  .notes { width:100%; margin-top:1rem; min-height:4.4rem; resize:vertical; font:inherit; color: var(--ink);
+    background: var(--surface); border:1px dashed color-mix(in srgb, var(--accent) 45%, var(--line)); border-radius:14px; padding:.7rem .9rem; box-shadow: var(--shadow); }
+  .notes::placeholder { color: var(--ink-faint); }
+
+  .grid { display:grid; gap:.75rem; margin-top:1.1rem; }
+  .g2 { grid-template-columns: repeat(2,1fr); }
+  .g3 { grid-template-columns: repeat(3,1fr); }
+  @media (max-width:680px){ .g2,.g3 { grid-template-columns:1fr; } }
+  .card { background: var(--surface); border:1px solid var(--line); border-radius:18px; padding:1rem 1.1rem; box-shadow: var(--shadow); }
+  .card h3 { display:flex; align-items:center; gap:.5rem; margin-bottom:.5rem; font-family: var(--font-body); font-weight:700;
+    font-size:.76rem; text-transform:uppercase; letter-spacing:.07em; color: var(--accent); }
+  .card ul { margin:0; padding-left:1.1rem; }
+  .card li { margin:.28rem 0; }
+  .card .ex { font-family: var(--font-display); font-style: italic; }
+  .chips { display:flex; flex-wrap:wrap; gap:.4rem; margin-top:.6rem; }
+  .chips .sig { font-family: var(--font-mono); font-size:.72rem; padding:.2rem .55rem; border-radius:8px;
+    background: var(--accent-tint); color: var(--accent); }
+  .prompt-bank { margin-top:.9rem; padding:.75rem 1rem; border-left:3px solid var(--accent); background: var(--accent-tint); border-radius:0 12px 12px 0; font-size:.96rem; }
+  .prompt-bank b { color: var(--accent); }
+  .trap { margin-top:.9rem; padding:.75rem 1rem; border-left:3px solid var(--bad); background: var(--bad-t); border-radius:0 12px 12px 0; font-size:.96rem; }
+  .trap b { color: var(--bad); }
+  .trap .arw { font-family: var(--font-mono); }
+
+  /* Gap-fill exercises */
+  .exset { list-style:none; margin:1rem 0 0; padding:0; display:grid; gap:.55rem; }
+  .exq { background: var(--surface); border:1px solid var(--line); border-radius:14px; padding:.6rem .85rem;
+    box-shadow: var(--shadow); display:flex; align-items:center; justify-content:space-between; gap:.7rem; flex-wrap:wrap; }
+  .exq .q { font-size:1.02rem; line-height:1.9; }
+  .exq .q em { color: var(--ink-faint); font-style: italic; font-family: var(--font-mono); font-size:.82em; }
+  .gap { font:inherit; color: var(--ink); background: var(--accent-tint); border:none; border-bottom:2px solid var(--accent);
+    border-radius:8px 8px 3px 3px; padding:.12rem .5rem; width:8rem; max-width:60vw; text-align:center; }
+  .gap.w-lg { width:12rem; }
+  .gap.gap-s { width:6rem; }
+  .gap:focus { outline:none; box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent); }
+  .gap.ok { border-color: var(--good); background: var(--good-t); color: var(--ink); }
+  .gap.no { border-color: var(--bad); background: var(--bad-t); }
+  .v { font-family: var(--font-mono); font-size:.82rem; font-weight:700; min-width:1.5rem; white-space:nowrap; }
+  .v.good { color: var(--good); }
+  .v.bad { color: var(--bad); }
+
+  /* Open cloze paragraph */
+  .cloze { background: var(--surface); border:1px solid var(--line); border-radius:16px; padding:1rem 1.2rem;
+    box-shadow: var(--shadow); line-height: 2.5; font-size:1.05rem; margin-top:1rem; }
+  .cloze .cz { display:inline; }
+  .cloze .cz .num { font-family: var(--font-mono); font-size:.68rem; color: var(--accent); vertical-align:super; margin-right:.1rem; }
+
+  /* Multiple choice */
+  .mcset { list-style:none; margin:1rem 0 0; padding:0; display:grid; gap:.7rem; }
+  .mcq { background: var(--surface); border:1px solid var(--line); border-radius:14px; padding:.75rem .95rem; box-shadow: var(--shadow); }
+  .mcq .q { font-size:1.02rem; font-weight:600; margin-bottom:.55rem; }
+  .opts { display:grid; gap:.4rem; grid-template-columns: repeat(2,1fr); }
+  @media (max-width:600px){ .opts { grid-template-columns:1fr; } }
+  .opt { text-align:left; font:inherit; font-size:.96rem; cursor:pointer; background: var(--paper); color: var(--ink);
+    border:1px solid var(--line); border-radius:10px; padding:.45rem .7rem; transition: border-color .15s, background .15s; }
+  .opt:hover { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
+  .opt.sel { border-color: var(--accent); background: var(--accent-tint); }
+  .opt.correct { border-color: var(--good); background: var(--good-t); color: var(--ink); font-weight:700; }
+  .opt.wrong { border-color: var(--bad); background: var(--bad-t); }
+
+  /* Reading text */
+  .reading { background: var(--surface); border:1px solid var(--line); border-radius:16px; padding:1rem 1.2rem;
+    box-shadow: var(--shadow); font-size:1rem; line-height:1.7; margin-top:.6rem; max-height:34vh; overflow-y:auto; }
+  .reading p { margin:.4rem 0; }
+
+  .extools { display:flex; flex-wrap:wrap; align-items:center; gap:.5rem; margin-top:1rem; }
+  .extools button { font:inherit; font-size:.82rem; cursor:pointer; border-radius:999px; padding:.4rem .95rem; box-shadow: var(--shadow); }
+  .extools .check { background: var(--accent); color:#fff; border:1px solid var(--accent); }
+  .extools .show, .extools .clear { background: var(--surface); color: var(--ink-soft); border:1px solid var(--line); }
+  .extools button:hover { filter: brightness(1.03); }
+  .extools .score { font-family: var(--font-mono); font-size:.82rem; font-weight:700; color: var(--accent); margin-left:.2rem; }
+
+  .steps { list-style:none; margin:1.1rem 0 0; padding:0; display:grid; gap:.55rem; }
+  .steps li { display:flex; gap:.85rem; align-items:flex-start; }
+  .steps .st-n { flex:none; width:1.9rem; height:1.9rem; border-radius:50%; background: var(--accent); color:#fff; display:grid; place-items:center; font-family: var(--font-mono); font-weight:700; font-size:.85rem; }
+  .steps .st-b { background: var(--surface); border:1px solid var(--line); border-radius:12px; padding:.55rem .85rem; flex:1; box-shadow: var(--shadow); }
+  .steps .st-b b { color: var(--accent); }
+
+  .nav { position: fixed; bottom:0; left:0; right:0; z-index:30; display:flex; align-items:center; justify-content:space-between; gap:1rem;
+    padding:.65rem clamp(.9rem,3vw,2rem); background: color-mix(in srgb, var(--paper) 84%, transparent); backdrop-filter: blur(8px); border-top:1px solid var(--line); }
+  .phase-label { font-family: var(--font-mono); font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; color: var(--ink-soft); }
+  .phase-label .pd { display:inline-block; width:9px; height:9px; border-radius:50%; background: var(--accent); margin-right:.45rem; vertical-align:middle; }
+  .nav-btns { display:flex; gap:.5rem; }
+  .nav button { font:inherit; font-size:.85rem; cursor:pointer; background: var(--surface); color: var(--ink); border:1px solid var(--line);
+    border-radius:11px; padding:.45rem .95rem; box-shadow: var(--shadow); }
+  .nav button:hover:not(:disabled) { border-color: color-mix(in srgb, var(--accent) 50%, var(--line)); color: var(--accent); }
+  .nav button:disabled { opacity:.4; cursor:default; }
+  .nav .kbd-hint { font-family: var(--font-mono); font-size:.66rem; color: var(--ink-faint); }
+  @media (max-width:560px){ .nav .kbd-hint { display:none; } }
+
+  :focus-visible { outline:2px solid var(--accent); outline-offset:2px; border-radius:6px; }
+
+  .phase-connect  { --accent: var(--c-connect);  --accent-tint: var(--c-connect-t); }
+  .phase-remember { --accent: var(--c-remember); --accent-tint: var(--c-remember-t); }
+  .phase-olympiad { --accent: var(--c-olympiad); --accent-tint: var(--c-olympiad-t); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .slide { transition: opacity .01s; transform:none; }
+    .progress > i { transition:none; }
+  }
+</style>
+
+<div class="deck">
+  <div class="topbar">
+    <div class="brand"><b>Olympiad Trainer 🏆</b><span class="lvl">ВсОШ 7–8</span></div>
+    <div class="progress"><i id="bar"></i></div>
+    <div class="counter"><span id="cur">1</span> / <span id="total">0</span></div>
+  </div>
+
+  <!-- 1 TITLE -->
+  <section class="slide phase-olympiad active" data-phase="Intro">
+    <div class="inner">
+      <div class="title-kicker">Real olympiad task types · 7–8 класс</div>
+      <h1 style="margin-top:.7rem">Olympiad <span class="hl">Trainer</span> 🏆</h1>
+      <p class="lead">Every task here copies a real <b>ВсОШ / вузовская олимпиада</b> format: multiple choice, open cloze, word formation, error correction, phrasal verbs, idioms, reading and <b>country studies</b>. Rules first, then lots of practice.</p>
+      <div class="title-meta">
+        <span class="chip">🔤 Use of English</span>
+        <span class="chip">🧩 Open cloze</span>
+        <span class="chip">🏗️ Word formation</span>
+        <span class="chip">🛠️ Error correction</span>
+        <span class="chip">📖 Reading</span>
+        <span class="chip">🇬🇧🇺🇸 Country studies</span>
+        <span class="chip">✍️ Writing</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 WHAT'S INSIDE -->
+  <section class="slide phase-olympiad" data-phase="Intro">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">02</span><span class="dot"></span> Introduction · The paper</div>
+      <h2>What the olympiad actually tests</h2>
+      <div class="grid g3">
+        <div class="card"><h3>Listening</h3><p class="en-note" style="margin:.2rem 0">talks &amp; dialogues · true/false, matching, note completion</p></div>
+        <div class="card"><h3>Reading</h3><p class="en-note" style="margin:.2rem 0">long texts · TFNS, matching, gapped text, MCQ</p></div>
+        <div class="card"><h3>Use of English</h3><p class="en-note" style="margin:.2rem 0">MCQ grammar/vocab · open cloze · word formation</p></div>
+        <div class="card"><h3>Country studies</h3><p class="en-note" style="margin:.2rem 0">лингвострановедение · UK &amp; USA facts, culture</p></div>
+        <div class="card"><h3>Writing</h3><p class="en-note" style="margin:.2rem 0">story · article · email · opinion</p></div>
+        <div class="card"><h3>Speaking</h3><p class="en-note" style="margin:.2rem 0">monologue + discussion (later rounds)</p></div>
+      </div>
+      <div class="prompt-bank"><b>Scoring →</b> Use of English usually gives <b>1 point per answer</b> (up to ~50). Small mistakes cost whole points, so accuracy on the <b>exceptions</b> is where olympiads are won or lost.</div>
+    </div>
+  </section>
+
+  <!-- 3 STRATEGY -->
+  <section class="slide phase-olympiad" data-phase="Intro">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">03</span><span class="dot"></span> Introduction · Exam tactics</div>
+      <h2>How to score more points</h2>
+      <ul class="q-list">
+        <li data-n="1"><span><b>Read the whole sentence first.</b> The answer often depends on a word at the <em>end</em>.</span></li>
+        <li data-n="2"><span><b>Open cloze = grammar words</b> (articles, prepositions, auxiliaries, pronouns) — almost never big content words.</span></li>
+        <li data-n="3"><span><b>Word formation:</b> decide the part of speech first (noun? adjective? adverb?), then add the ending — and check for a <b>negative prefix</b>.</span></li>
+        <li data-n="4"><span><b>Never leave a gap empty.</b> A guess can score; a blank never does.</span></li>
+        <li data-n="5"><span><b>Watch spelling.</b> <em>recieve</em>, <em>succesful</em>, <em>writting</em> = wrong = zero points.</span></li>
+      </ul>
+      <p class="instr">💡 In every task: choose / type your answer, press <b>Check</b>. Green = correct, pink = wrong (with the right answer). <b>Show answers</b> reveals them all.</p>
+    </div>
+  </section>
+
+  <!-- 4 DIVIDER: USE OF ENGLISH -->
+  <section class="slide slide--statement phase-remember" data-phase="Use of English">
+    <div class="inner">
+      <div class="big-badge">Part 1 · Use of English</div>
+      <h2>Grammar &amp; <span class="hl">vocabulary</span> 🔤</h2>
+      <p class="lead" style="text-align:center; max-width:44ch">Multiple choice, open cloze and word formation — the heart of every olympiad paper.</p>
+    </div>
+  </section>
+
+  <!-- 5 RULES: MCQ GRAMMAR -->
+  <section class="slide phase-remember" data-phase="Use of English">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">05</span><span class="dot"></span> Rules · Multiple-choice traps</div>
+      <h2>What the four options are testing</h2>
+      <div class="grid g2">
+        <div class="card"><h3>Grammar signals to spot</h3>
+          <ul>
+            <li><b>Tense words:</b> <em>since / for / already</em> → Perfect; <em>ago / yesterday</em> → Past Simple</li>
+            <li><b>Reported speech:</b> no <em>do/did</em>, normal word order (…where <b>I lived</b>)</li>
+            <li><b>Quantifiers:</b> <em>much</em> + uncountable, <em>many</em> + countable</li>
+            <li><b>Conditionals:</b> <em>If I <b>were</b> you…</em></li>
+          </ul>
+        </div>
+        <div class="card"><h3>Vocabulary signals</h3>
+          <ul>
+            <li><b>Collocations:</b> <em>make</em> a decision, <em>do</em> homework</li>
+            <li><b>Dependent prepositions:</b> good <b>at</b>, afraid <b>of</b>, depend <b>on</b></li>
+            <li><b>Phrasal verbs:</b> give <b>up</b>, look <b>after</b>, take <b>off</b></li>
+            <li><b>Similar words:</b> <em>lend / borrow</em>, <em>say / tell</em>, <em>lie / lay</em></li>
+          </ul>
+        </div>
+      </div>
+      <div class="trap"><b>⚠️ Distractor trick <span class="arw">→</span></b> two options often look almost right (<em>been / gone</em>, <em>much / many</em>). The wrong one usually breaks a small rule — number, tense, or preposition.</div>
+    </div>
+  </section>
+
+  <!-- 6 MCQ GRAMMAR PRACTICE -->
+  <section class="slide phase-remember" data-phase="Use of English">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">06</span><span class="dot"></span> Task · Multiple choice (grammar)</div>
+      <h2>Choose the correct option</h2>
+      <ul class="mcset">
+        <li class="mcq" data-c="1"><div class="q">1. I ___ to London twice this year.</div><div class="opts"><button class="opt" type="button">A) went</button><button class="opt" type="button">B) have been</button><button class="opt" type="button">C) have gone</button><button class="opt" type="button">D) go</button></div></li>
+        <li class="mcq" data-c="2"><div class="q">2. By the time we arrived, the concert ___.</div><div class="opts"><button class="opt" type="button">A) started</button><button class="opt" type="button">B) has started</button><button class="opt" type="button">C) had started</button><button class="opt" type="button">D) starts</button></div></li>
+        <li class="mcq" data-c="2"><div class="q">3. If I ___ you, I'd apologise.</div><div class="opts"><button class="opt" type="button">A) am</button><button class="opt" type="button">B) was</button><button class="opt" type="button">C) were</button><button class="opt" type="button">D) be</button></div></li>
+        <li class="mcq" data-c="2"><div class="q">4. There isn't ___ milk left in the fridge.</div><div class="opts"><button class="opt" type="button">A) many</button><button class="opt" type="button">B) some</button><button class="opt" type="button">C) much</button><button class="opt" type="button">D) a few</button></div></li>
+        <li class="mcq" data-c="2"><div class="q">5. He asked me where ___.</div><div class="opts"><button class="opt" type="button">A) do I live</button><button class="opt" type="button">B) I live</button><button class="opt" type="button">C) I lived</button><button class="opt" type="button">D) did I live</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">6. I look forward ___ from you soon.</div><div class="opts"><button class="opt" type="button">A) to hear</button><button class="opt" type="button">B) to hearing</button><button class="opt" type="button">C) hearing</button><button class="opt" type="button">D) hear</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">7. Neither of the answers ___ correct.</div><div class="opts"><button class="opt" type="button">A) are</button><button class="opt" type="button">B) is</button><button class="opt" type="button">C) were</button><button class="opt" type="button">D) have</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">8. She's the ___ student in the whole school.</div><div class="opts"><button class="opt" type="button">A) most clever</button><button class="opt" type="button">B) cleverest</button><button class="opt" type="button">C) more clever</button><button class="opt" type="button">D) clever</button></div></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 7 MCQ VOCAB PRACTICE -->
+  <section class="slide phase-remember" data-phase="Use of English">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">07</span><span class="dot"></span> Task · Multiple choice (vocabulary)</div>
+      <h2>Choose the correct word</h2>
+      <ul class="mcset">
+        <li class="mcq" data-c="1"><div class="q">1. Please ___ an effort to be on time.</div><div class="opts"><button class="opt" type="button">A) do</button><button class="opt" type="button">B) make</button><button class="opt" type="button">C) take</button><button class="opt" type="button">D) get</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">2. She's really good ___ maths.</div><div class="opts"><button class="opt" type="button">A) in</button><button class="opt" type="button">B) at</button><button class="opt" type="button">C) on</button><button class="opt" type="button">D) for</button></div></li>
+        <li class="mcq" data-c="2"><div class="q">3. We finally ___ at the airport at midnight.</div><div class="opts"><button class="opt" type="button">A) reached to</button><button class="opt" type="button">B) got</button><button class="opt" type="button">C) arrived</button><button class="opt" type="button">D) came to</button></div></li>
+        <li class="mcq" data-c="2"><div class="q">4. The film was based ___ a true story.</div><div class="opts"><button class="opt" type="button">A) in</button><button class="opt" type="button">B) of</button><button class="opt" type="button">C) on</button><button class="opt" type="button">D) at</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">5. Could you ___ me a favour, please?</div><div class="opts"><button class="opt" type="button">A) make</button><button class="opt" type="button">B) do</button><button class="opt" type="button">C) give</button><button class="opt" type="button">D) take</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">6. Can I ___ your pen for a minute?</div><div class="opts"><button class="opt" type="button">A) borrow</button><button class="opt" type="button">B) lend</button><button class="opt" type="button">C) rent</button><button class="opt" type="button">D) loan</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">7. He ___ up smoking two years ago.</div><div class="opts"><button class="opt" type="button">A) gave</button><button class="opt" type="button">B) took</button><button class="opt" type="button">C) put</button><button class="opt" type="button">D) went</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">8. My little brother is afraid ___ the dark.</div><div class="opts"><button class="opt" type="button">A) from</button><button class="opt" type="button">B) of</button><button class="opt" type="button">C) with</button><button class="opt" type="button">D) about</button></div></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 8 RULES: OPEN CLOZE -->
+  <section class="slide phase-olympiad" data-phase="Open cloze">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">08</span><span class="dot"></span> Rules · Open cloze</div>
+      <h2>One word per gap — but which word?</h2>
+      <p class="instr">In an open cloze you almost never need a "big" word. 90% of gaps are small <b>grammar words</b>:</p>
+      <div class="grid g3">
+        <div class="card"><h3>Articles &amp; quantifiers</h3><div class="chips"><span class="sig">a</span><span class="sig">an</span><span class="sig">the</span><span class="sig">some</span><span class="sig">any</span><span class="sig">much</span><span class="sig">many</span></div></div>
+        <div class="card"><h3>Prepositions</h3><div class="chips"><span class="sig">of</span><span class="sig">in</span><span class="sig">on</span><span class="sig">at</span><span class="sig">to</span><span class="sig">for</span><span class="sig">with</span></div></div>
+        <div class="card"><h3>Auxiliaries</h3><div class="chips"><span class="sig">is</span><span class="sig">are</span><span class="sig">have</span><span class="sig">has</span><span class="sig">did</span><span class="sig">will</span><span class="sig">would</span></div></div>
+        <div class="card"><h3>Pronouns</h3><div class="chips"><span class="sig">it</span><span class="sig">they</span><span class="sig">who</span><span class="sig">which</span><span class="sig">whose</span><span class="sig">this</span></div></div>
+        <div class="card"><h3>Conjunctions</h3><div class="chips"><span class="sig">but</span><span class="sig">so</span><span class="sig">because</span><span class="sig">although</span><span class="sig">if</span><span class="sig">while</span></div></div>
+        <div class="card"><h3>Comparison</h3><div class="chips"><span class="sig">than</span><span class="sig">as</span><span class="sig">more</span><span class="sig">most</span><span class="sig">the</span></div></div>
+      </div>
+      <div class="trap"><b>⚠️ Fixed phrases fill gaps too <span class="arw">→</span></b> <em>all <b>over</b> the world</em>, <em>a lot <b>of</b></em>, <em>such <b>as</b></em>, <em><b>in</b> order to</em>, <em>as well <b>as</b></em>, <em>the more… <b>the</b> better</em>.</div>
+    </div>
+  </section>
+
+  <!-- 9 OPEN CLOZE PRACTICE -->
+  <section class="slide phase-olympiad" data-phase="Open cloze">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">09</span><span class="dot"></span> Task · Open cloze</div>
+      <h2>Fill each gap with ONE word</h2>
+      <p class="cloze">
+        Learning a language is not always easy,
+        <span class="cz" data-a="but"><span class="num">1</span><input class="gap gap-s" aria-label="gap 1" autocomplete="off"></span>
+        it is always worth it. Many students give
+        <span class="cz" data-a="up"><span class="num">2</span><input class="gap gap-s" aria-label="gap 2" autocomplete="off"></span>
+        too early because they don't see quick results. However,
+        <span class="cz" data-a="if"><span class="num">3</span><input class="gap gap-s" aria-label="gap 3" autocomplete="off"></span>
+        you practise every day, you will improve. English is spoken all
+        <span class="cz" data-a="over|around"><span class="num">4</span><input class="gap gap-s" aria-label="gap 4" autocomplete="off"></span>
+        the world, and it can open many doors.
+        <span class="cz" data-a="Have|have"><span class="num">5</span><input class="gap gap-s" aria-label="gap 5" autocomplete="off"></span>
+        you ever tried to watch a film in English? At first it may
+        <span class="cz" data-a="seem|be|feel|look|appear"><span class="num">6</span><input class="gap gap-s" aria-label="gap 6" autocomplete="off"></span>
+        difficult, but after a
+        <span class="cz" data-a="few"><span class="num">7</span><input class="gap gap-s" aria-label="gap 7" autocomplete="off"></span>
+        weeks your ear gets used to it. The
+        <span class="cz" data-a="more"><span class="num">8</span><input class="gap gap-s" aria-label="gap 8" autocomplete="off"></span>
+        you listen, the better you understand. Don't be afraid
+        <span class="cz" data-a="of"><span class="num">9</span><input class="gap gap-s" aria-label="gap 9" autocomplete="off"></span>
+        mistakes — they are part
+        <span class="cz" data-a="of"><span class="num">10</span><input class="gap gap-s" aria-label="gap 10" autocomplete="off"></span>
+        the process.
+      </p>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 10 RULES: WORD FORMATION -->
+  <section class="slide phase-connect" data-phase="Word formation">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">10</span><span class="dot"></span> Rules · Word formation</div>
+      <h2>Suffix &amp; prefix toolbox</h2>
+      <div class="grid g2">
+        <div class="card"><h3>Make a noun</h3>
+          <ul>
+            <li><b>-tion / -sion:</b> decide → decision, act → action</li>
+            <li><b>-ment:</b> develop → development</li>
+            <li><b>-ness:</b> happy → happiness · <b>-ity:</b> able → ability</li>
+            <li><b>-er / -or / -ist:</b> teach → teacher, science → scientist</li>
+          </ul>
+        </div>
+        <div class="card"><h3>Make an adjective</h3>
+          <ul>
+            <li><b>-ful / -less:</b> care → careful / careless</li>
+            <li><b>-ous:</b> danger → dangerous · <b>-al:</b> nature → natural</li>
+            <li><b>-ive:</b> create → creative · <b>-y:</b> rain → rainy</li>
+            <li><b>-able / -ible:</b> comfort → comfortable, sense → sensible</li>
+          </ul>
+        </div>
+        <div class="card"><h3>Make an adverb / verb</h3>
+          <ul>
+            <li><b>-ly:</b> quick → quickly · (careful → carefully)</li>
+            <li><b>-en / -ise / -ify:</b> wide → widen, modern → modernise</li>
+          </ul>
+        </div>
+        <div class="card"><h3>Negative prefixes</h3>
+          <ul>
+            <li><b>im-</b> (m,p): impossible · <b>il-</b> (l): illegal</li>
+            <li><b>ir-</b> (r): irregular · <b>in-</b>: incorrect</li>
+            <li><b>un- / dis- / mis-:</b> unfair, dishonest, misuse</li>
+          </ul>
+        </div>
+      </div>
+      <div class="trap"><b>⚠️ Two things to check every time <span class="arw">→</span></b> ① Is the word <b>plural</b>? (invention<b>s</b>) ② Does the meaning need a <b>negative</b>? "It is ___ to fly without wings" (POSSIBLE) → <b>impossible</b>, not <s>possible</s>.</div>
+    </div>
+  </section>
+
+  <!-- 11 WORD FORMATION PRACTICE 1 -->
+  <section class="slide phase-connect" data-phase="Word formation">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">11</span><span class="dot"></span> Task · Word formation (1)</div>
+      <h2>Use the CAPITAL word in the right form</h2>
+      <ul class="exset">
+        <li class="exq" data-a="inventor"><span class="q">1. Thomas Edison was a famous <input class="gap w-lg" aria-label="answer" autocomplete="off">. <em>(INVENT)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="inventions"><span class="q">2. His <input class="gap w-lg" aria-label="answer" autocomplete="off"> changed the world. <em>(INVENT — plural)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="curiosity"><span class="q">3. He showed great <input class="gap w-lg" aria-label="answer" autocomplete="off"> as a child. <em>(CURIOUS)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="surprising"><span class="q">4. Many people found his ideas <input class="gap w-lg" aria-label="answer" autocomplete="off">. <em>(SURPRISE)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="failures"><span class="q">5. He never gave up after his <input class="gap w-lg" aria-label="answer" autocomplete="off">. <em>(FAIL — plural)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="remarkable"><span class="q">6. His success was truly <input class="gap w-lg" aria-label="answer" autocomplete="off">. <em>(REMARK)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="creative"><span class="q">7. He is remembered as a <input class="gap w-lg" aria-label="answer" autocomplete="off"> genius. <em>(CREATE)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="happiness"><span class="q">8. His work brought <input class="gap w-lg" aria-label="answer" autocomplete="off"> to millions. <em>(HAPPY)</em></span><span class="v"></span></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 12 WORD FORMATION PRACTICE 2 -->
+  <section class="slide phase-connect" data-phase="Word formation">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">12</span><span class="dot"></span> Task · Word formation (2)</div>
+      <h2>Now with negatives &amp; adverbs</h2>
+      <ul class="exset">
+        <li class="exq" data-a="impossible"><span class="q">1. It is <input class="gap w-lg" aria-label="answer" autocomplete="off"> to fly without wings. <em>(POSSIBLE)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="confidently"><span class="q">2. She answered every question <input class="gap w-lg" aria-label="answer" autocomplete="off">. <em>(CONFIDENT)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="useless"><span class="q">3. Without batteries the torch is <input class="gap w-lg" aria-label="answer" autocomplete="off">. <em>(USE)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="unacceptable"><span class="q">4. His rude behaviour was completely <input class="gap w-lg" aria-label="answer" autocomplete="off">. <em>(ACCEPT)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="peaceful"><span class="q">5. They live in a quiet, <input class="gap w-lg" aria-label="answer" autocomplete="off"> village. <em>(PEACE)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="tiring"><span class="q">6. The journey was long and <input class="gap w-lg" aria-label="answer" autocomplete="off">. <em>(TIRE)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="illegal"><span class="q">7. Parking here is completely <input class="gap w-lg" aria-label="answer" autocomplete="off">. <em>(LEGAL)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="scientists"><span class="q">8. The lab is full of young <input class="gap w-lg" aria-label="answer" autocomplete="off">. <em>(SCIENCE — plural)</em></span><span class="v"></span></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 13 RULES: ERROR CORRECTION -->
+  <section class="slide phase-remember" data-phase="Error correction">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">13</span><span class="dot"></span> Rules · Error correction</div>
+      <h2>The mistakes olympiads plant</h2>
+      <div class="grid g2">
+        <div class="card"><h3>Grammar errors</h3>
+          <ul>
+            <li>Double comparative: <s>more taller</s> → taller</li>
+            <li>Subject–verb: <s>There is many people</s> → are</li>
+            <li>Wrong verb pattern: <s>suggest to go</s> → suggest going</li>
+            <li>Tense clash: <s>have seen him yesterday</s> → saw</li>
+          </ul>
+        </div>
+        <div class="card"><h3>Word-choice errors</h3>
+          <ul>
+            <li><s>say me</s> → tell me · <s>said me</s> → told me</li>
+            <li><s>I am agree</s> → I agree</li>
+            <li><s>depends of</s> → depends on</li>
+            <li><s>interesting in</s> → interested in</li>
+          </ul>
+        </div>
+      </div>
+      <div class="trap"><b>⚠️ Russian-influence errors <span class="arw">→</span></b> <s>I have 14 years</s> → I <b>am</b> 14 · <s>make a photo</s> → <b>take</b> a photo · <s>in the last time</s> → recently.</div>
+    </div>
+  </section>
+
+  <!-- 14 ERROR CORRECTION PRACTICE -->
+  <section class="slide phase-remember" data-phase="Error correction">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">14</span><span class="dot"></span> Task · Error correction</div>
+      <h2>Correct the wrong word</h2>
+      <ul class="exset">
+        <li class="exq" data-a="taller"><span class="q">1. ❌ He is more taller than me → He is <input class="gap" aria-label="answer" autocomplete="off"> than me.</span><span class="v"></span></li>
+        <li class="exq" data-a="agree"><span class="q">2. ❌ I am agree with you → I <input class="gap" aria-label="answer" autocomplete="off"> with you.</span><span class="v"></span></li>
+        <li class="exq" data-a="told"><span class="q">3. ❌ She said me the news → She <input class="gap" aria-label="answer" autocomplete="off"> me the news.</span><span class="v"></span></li>
+        <li class="exq" data-a="are"><span class="q">4. ❌ There is many people here → There <input class="gap" aria-label="answer" autocomplete="off"> many people here.</span><span class="v"></span></li>
+        <li class="exq" data-a="seeing"><span class="q">5. ❌ I look forward to see you → I look forward to <input class="gap" aria-label="answer" autocomplete="off"> you.</span><span class="v"></span></li>
+        <li class="exq" data-a="going"><span class="q">6. ❌ He suggested to go home → He suggested <input class="gap" aria-label="answer" autocomplete="off"> home.</span><span class="v"></span></li>
+        <li class="exq" data-a="on"><span class="q">7. ❌ It depends of the weather → It depends <input class="gap" aria-label="answer" autocomplete="off"> the weather.</span><span class="v"></span></li>
+        <li class="exq" data-a="am"><span class="q">8. ❌ I have 14 years old → I <input class="gap" aria-label="answer" autocomplete="off"> 14 years old.</span><span class="v"></span></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 15 RULES: PHRASAL VERBS & PREPS -->
+  <section class="slide phase-olympiad" data-phase="Phrasal verbs">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">15</span><span class="dot"></span> Rules · Phrasal verbs &amp; prepositions</div>
+      <h2>Learn them as fixed pairs</h2>
+      <div class="grid g2">
+        <div class="card"><h3>Common phrasal verbs</h3>
+          <ul>
+            <li><b>give up</b> = quit · <b>look after</b> = take care of</li>
+            <li><b>take off</b> = plane leaves / remove · <b>put off</b> = postpone</li>
+            <li><b>look forward to</b> = anticipate · <b>find out</b> = discover</li>
+            <li><b>take after</b> = resemble · <b>put up with</b> = tolerate</li>
+          </ul>
+        </div>
+        <div class="card"><h3>Dependent prepositions</h3>
+          <ul>
+            <li>good <b>at</b> · afraid <b>of</b> · interested <b>in</b></li>
+            <li>depend <b>on</b> · listen <b>to</b> · wait <b>for</b></li>
+            <li>proud <b>of</b> · married <b>to</b> · famous <b>for</b></li>
+            <li>congratulate <b>on</b> · apologise <b>for</b></li>
+          </ul>
+        </div>
+      </div>
+      <div class="trap"><b>⚠️ Verbs with NO preposition <span class="arw">→</span></b> <em>enter</em> a room, <em>discuss</em> a plan, <em>answer</em> a question, <em>marry</em> someone, <em>reach</em> a place — no <s>enter into / discuss about / answer to</s>.</div>
+    </div>
+  </section>
+
+  <!-- 16 PHRASAL/PREP PRACTICE -->
+  <section class="slide phase-olympiad" data-phase="Phrasal verbs">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">16</span><span class="dot"></span> Task · Phrasal verbs &amp; prepositions</div>
+      <h2>Fill in the missing particle</h2>
+      <ul class="exset">
+        <li class="exq" data-a="up"><span class="q">1. I can't put <input class="gap" aria-label="answer" autocomplete="off"> with this noise!</span><span class="v"></span></li>
+        <li class="exq" data-a="after"><span class="q">2. Can you look <input class="gap" aria-label="answer" autocomplete="off"> my cat this weekend?</span><span class="v"></span></li>
+        <li class="exq" data-a="off"><span class="q">3. The plane took <input class="gap" aria-label="answer" autocomplete="off"> right on time.</span><span class="v"></span></li>
+        <li class="exq" data-a="at"><span class="q">4. My sister is very good <input class="gap" aria-label="answer" autocomplete="off"> chess.</span><span class="v"></span></li>
+        <li class="exq" data-a="to"><span class="q">5. We're all looking forward <input class="gap" aria-label="answer" autocomplete="off"> the holidays.</span><span class="v"></span></li>
+        <li class="exq" data-a="of"><span class="q">6. She is very proud <input class="gap" aria-label="answer" autocomplete="off"> her results.</span><span class="v"></span></li>
+        <li class="exq" data-a="for"><span class="q">7. Please apologise <input class="gap" aria-label="answer" autocomplete="off"> being late.</span><span class="v"></span></li>
+        <li class="exq" data-a="after"><span class="q">8. He really takes <input class="gap" aria-label="answer" autocomplete="off"> his father. <em>(looks like)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="on"><span class="q">9. Congratulations <input class="gap" aria-label="answer" autocomplete="off"> winning the prize!</span><span class="v"></span></li>
+        <li class="exq" data-a="out"><span class="q">10. Let's find <input class="gap" aria-label="answer" autocomplete="off"> when the museum opens.</span><span class="v"></span></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 17 RULES: IDIOMS -->
+  <section class="slide phase-connect" data-phase="Idioms">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">17</span><span class="dot"></span> Rules · Idioms &amp; collocations</div>
+      <h2>Idioms that love to appear</h2>
+      <div class="grid g2">
+        <div class="card"><h3>Everyday idioms</h3>
+          <ul>
+            <li><b>a piece of cake</b> = very easy</li>
+            <li><b>once in a blue moon</b> = very rarely</li>
+            <li><b>under the weather</b> = feeling unwell</li>
+            <li><b>hit the books</b> = study hard</li>
+            <li><b>break a leg!</b> = good luck!</li>
+            <li><b>let the cat out of the bag</b> = reveal a secret</li>
+          </ul>
+        </div>
+        <div class="card"><h3>make vs do</h3>
+          <ul>
+            <li><b>make:</b> a mistake, a decision, progress, friends, noise, money, an effort</li>
+            <li><b>do:</b> homework, the shopping, a favour, your best, the washing-up, exercise</li>
+          </ul>
+        </div>
+      </div>
+      <div class="trap"><b>⚠️ Idioms are fixed <span class="arw">→</span></b> it's always <em>rain<b>ing</b> cats and dogs</em>, never <s>cats and mice</s>; <em>break a <b>leg</b></em>, never <s>break an arm</s>. Learn the exact words.</div>
+    </div>
+  </section>
+
+  <!-- 18 IDIOMS PRACTICE -->
+  <section class="slide phase-connect" data-phase="Idioms">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">18</span><span class="dot"></span> Task · Idioms (multiple choice)</div>
+      <h2>What does the idiom mean?</h2>
+      <ul class="mcset">
+        <li class="mcq" data-c="2"><div class="q">1. "Once in a blue moon" means…</div><div class="opts"><button class="opt" type="button">A) very often</button><button class="opt" type="button">B) at night</button><button class="opt" type="button">C) very rarely</button><button class="opt" type="button">D) never</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">2. "It's a piece of cake" means it's…</div><div class="opts"><button class="opt" type="button">A) delicious</button><button class="opt" type="button">B) very easy</button><button class="opt" type="button">C) expensive</button><button class="opt" type="button">D) difficult</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">3. "I feel under the weather" means I feel…</div><div class="opts"><button class="opt" type="button">A) cold</button><button class="opt" type="button">B) unwell</button><button class="opt" type="button">C) happy</button><button class="opt" type="button">D) bored</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">4. Before a show we say "Break a leg!" to mean…</div><div class="opts"><button class="opt" type="button">A) be careful</button><button class="opt" type="button">B) good luck</button><button class="opt" type="button">C) hurry up</button><button class="opt" type="button">D) run away</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">5. "To let the cat out of the bag" means to…</div><div class="opts"><button class="opt" type="button">A) free an animal</button><button class="opt" type="button">B) reveal a secret</button><button class="opt" type="button">C) tell a lie</button><button class="opt" type="button">D) make a mess</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">6. "It's raining cats and ___."</div><div class="opts"><button class="opt" type="button">A) mice</button><button class="opt" type="button">B) dogs</button><button class="opt" type="button">C) frogs</button><button class="opt" type="button">D) birds</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">7. We ___ a decision. (collocation)</div><div class="opts"><button class="opt" type="button">A) make</button><button class="opt" type="button">B) do</button><button class="opt" type="button">C) take</button><button class="opt" type="button">D) get</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">8. Every evening I ___ my homework.</div><div class="opts"><button class="opt" type="button">A) make</button><button class="opt" type="button">B) do</button><button class="opt" type="button">C) take</button><button class="opt" type="button">D) have</button></div></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 19 DIVIDER: READING & CULTURE -->
+  <section class="slide slide--statement phase-remember" data-phase="Reading">
+    <div class="inner">
+      <div class="big-badge">Part 2 · Reading &amp; culture</div>
+      <h2>Reading &amp; <span class="hl">country studies</span> 📖</h2>
+      <p class="lead" style="text-align:center; max-width:44ch">Read for detail, then prove how much you know about the English-speaking world.</p>
+    </div>
+  </section>
+
+  <!-- 20 READING TASK -->
+  <section class="slide phase-remember" data-phase="Reading">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">20</span><span class="dot"></span> Task · Reading (True / False / Not stated)</div>
+      <h2>Read, then decide</h2>
+      <div class="reading">
+        <p><b>The Eden Project</b></p>
+        <p>The Eden Project in Cornwall, England, is one of the most unusual attractions in the country. It was built inside an old clay pit and opened to the public in 2001. Its most famous features are two huge domes, called "biomes", which look like giant bubbles.</p>
+        <p>Inside them, thousands of plants from all over the world grow in carefully controlled conditions. One biome recreates a hot, wet rainforest, while the other copies the warm, dry climate of the Mediterranean. The project was designed not only to entertain visitors but also to teach them about nature and the importance of protecting it.</p>
+        <p>Every year, more than a million people come to explore the biomes, walk through the gardens, and learn how humans and plants depend on each other.</p>
+      </div>
+      <ul class="mcset" style="margin-top:.8rem">
+        <li class="mcq" data-c="0"><div class="q">1. The Eden Project opened in the 21st century.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button><button class="opt" type="button">C) Not stated</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">2. It was built on the site of a former clay pit.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button><button class="opt" type="button">C) Not stated</button></div></li>
+        <li class="mcq" data-c="2"><div class="q">3. Tickets to the Eden Project are expensive.</div><div class="opts"><button class="opt" type="button">A) True</button><button class="opt" type="button">B) False</button><button class="opt" type="button">C) Not stated</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">4. What is one main aim of the project?</div><div class="opts"><button class="opt" type="button">A) to sell rare plants</button><button class="opt" type="button">B) to teach about nature</button><button class="opt" type="button">C) to grow food</button><button class="opt" type="button">D) to train gardeners</button></div></li>
+        <li class="mcq" data-c="2"><div class="q">5. How many visitors come each year?</div><div class="opts"><button class="opt" type="button">A) about 2,001</button><button class="opt" type="button">B) fewer than a thousand</button><button class="opt" type="button">C) more than a million</button><button class="opt" type="button">D) exactly one million</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">6. In the text, "biomes" are…</div><div class="opts"><button class="opt" type="button">A) gardens</button><button class="opt" type="button">B) huge domes</button><button class="opt" type="button">C) types of plant</button><button class="opt" type="button">D) museums</button></div></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 21 RULES: COUNTRY STUDIES UK -->
+  <section class="slide phase-olympiad" data-phase="Country studies">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">21</span><span class="dot"></span> Facts · The United Kingdom 🇬🇧</div>
+      <h2>Must-know UK facts</h2>
+      <div class="grid g2">
+        <div class="card"><h3>The basics</h3>
+          <ul>
+            <li>Full name: <b>United Kingdom of Great Britain and Northern Ireland</b></li>
+            <li>Capital: <b>London</b> · Currency: <b>pound sterling (£)</b></li>
+            <li>4 parts: <b>England, Scotland, Wales, Northern Ireland</b></li>
+            <li>Monarch (2026): <b>King Charles III</b></li>
+            <li>Flag: the <b>Union Jack</b> (Union Flag)</li>
+          </ul>
+        </div>
+        <div class="card"><h3>Symbols &amp; sights</h3>
+          <ul>
+            <li>England → <b>rose</b> · Scotland → <b>thistle</b></li>
+            <li>Wales → <b>daffodil / leek</b> · N. Ireland → <b>shamrock</b></li>
+            <li>PM's home: <b>10 Downing Street</b></li>
+            <li>Parliament: <b>House of Commons + House of Lords</b></li>
+            <li><b>Big Ben</b> = the bell; the tower is the <b>Elizabeth Tower</b></li>
+          </ul>
+        </div>
+      </div>
+      <div class="trap"><b>⚠️ Easy to mix up <span class="arw">→</span></b> <em>Great Britain</em> = the island (England + Scotland + Wales). <em>The UK</em> = Great Britain <b>+</b> Northern Ireland. They are <b>not</b> the same!</div>
+    </div>
+  </section>
+
+  <!-- 22 RULES: COUNTRY STUDIES USA -->
+  <section class="slide phase-olympiad" data-phase="Country studies">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">22</span><span class="dot"></span> Facts · The USA &amp; beyond 🇺🇸</div>
+      <h2>USA &amp; the English-speaking world</h2>
+      <div class="grid g2">
+        <div class="card"><h3>The USA</h3>
+          <ul>
+            <li>Capital: <b>Washington, D.C.</b> · Currency: <b>US dollar ($)</b></li>
+            <li><b>50 states</b> · flag = <b>Stars and Stripes</b> (50 stars, 13 stripes)</li>
+            <li>First president: <b>George Washington</b></li>
+            <li>Independence Day: <b>4 July (1776)</b></li>
+            <li><b>Statue of Liberty</b> — a gift from <b>France</b></li>
+          </ul>
+        </div>
+        <div class="card"><h3>Other capitals to know</h3>
+          <ul>
+            <li>Australia → <b>Canberra</b> <span class="en-note">(not Sydney!)</span></li>
+            <li>Canada → <b>Ottawa</b> · symbol = <b>maple leaf</b></li>
+            <li>New Zealand → <b>Wellington</b></li>
+            <li>Ireland → <b>Dublin</b></li>
+          </ul>
+        </div>
+      </div>
+      <div class="trap"><b>⚠️ Famous "traps" <span class="arw">→</span></b> the biggest US city is <b>New York</b>, but the capital is <b>Washington, D.C.</b> · Australia's biggest city is <b>Sydney</b>, but the capital is <b>Canberra</b>.</div>
+    </div>
+  </section>
+
+  <!-- 23 COUNTRY STUDIES PRACTICE -->
+  <section class="slide phase-olympiad" data-phase="Country studies">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">23</span><span class="dot"></span> Task · Country studies (MCQ)</div>
+      <h2>How well do you know the facts?</h2>
+      <ul class="mcset">
+        <li class="mcq" data-c="2"><div class="q">1. What is the capital of Australia?</div><div class="opts"><button class="opt" type="button">A) Sydney</button><button class="opt" type="button">B) Melbourne</button><button class="opt" type="button">C) Canberra</button><button class="opt" type="button">D) Perth</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">2. The Union Jack is the flag of…</div><div class="opts"><button class="opt" type="button">A) the USA</button><button class="opt" type="button">B) the UK</button><button class="opt" type="button">C) Canada</button><button class="opt" type="button">D) Ireland</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">3. How many states are there in the USA?</div><div class="opts"><button class="opt" type="button">A) 48</button><button class="opt" type="button">B) 50</button><button class="opt" type="button">C) 52</button><button class="opt" type="button">D) 13</button></div></li>
+        <li class="mcq" data-c="2"><div class="q">4. Who was the first US president?</div><div class="opts"><button class="opt" type="button">A) Abraham Lincoln</button><button class="opt" type="button">B) Thomas Jefferson</button><button class="opt" type="button">C) George Washington</button><button class="opt" type="button">D) Benjamin Franklin</button></div></li>
+        <li class="mcq" data-c="3"><div class="q">5. Which flower is the national emblem of England?</div><div class="opts"><button class="opt" type="button">A) thistle</button><button class="opt" type="button">B) daffodil</button><button class="opt" type="button">C) shamrock</button><button class="opt" type="button">D) rose</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">6. The Statue of Liberty was a gift from…</div><div class="opts"><button class="opt" type="button">A) Britain</button><button class="opt" type="button">B) France</button><button class="opt" type="button">C) Spain</button><button class="opt" type="button">D) Italy</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">7. "Big Ben" is really the name of…</div><div class="opts"><button class="opt" type="button">A) a clock tower</button><button class="opt" type="button">B) a bell</button><button class="opt" type="button">C) a palace</button><button class="opt" type="button">D) a bridge</button></div></li>
+        <li class="mcq" data-c="2"><div class="q">8. How many parts make up the United Kingdom?</div><div class="opts"><button class="opt" type="button">A) 2</button><button class="opt" type="button">B) 3</button><button class="opt" type="button">C) 4</button><button class="opt" type="button">D) 5</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">9. The maple leaf is a symbol of…</div><div class="opts"><button class="opt" type="button">A) the USA</button><button class="opt" type="button">B) Canada</button><button class="opt" type="button">C) Australia</button><button class="opt" type="button">D) Scotland</button></div></li>
+        <li class="mcq" data-c="0"><div class="q">10. US Independence Day is celebrated on…</div><div class="opts"><button class="opt" type="button">A) 4 July</button><button class="opt" type="button">B) 4 June</button><button class="opt" type="button">C) 14 July</button><button class="opt" type="button">D) 25 December</button></div></li>
+        <li class="mcq" data-c="2"><div class="q">11. The British PM officially lives at…</div><div class="opts"><button class="opt" type="button">A) Buckingham Palace</button><button class="opt" type="button">B) the White House</button><button class="opt" type="button">C) 10 Downing Street</button><button class="opt" type="button">D) Westminster Abbey</button></div></li>
+        <li class="mcq" data-c="1"><div class="q">12. The thistle is the symbol of…</div><div class="opts"><button class="opt" type="button">A) Wales</button><button class="opt" type="button">B) Scotland</button><button class="opt" type="button">C) England</button><button class="opt" type="button">D) Northern Ireland</button></div></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 24 WRITING -->
+  <section class="slide phase-connect" data-phase="Writing">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">24</span><span class="dot"></span> Rules + task · Writing</div>
+      <h2>Structure &amp; linkers that score</h2>
+      <div class="grid g2">
+        <div class="card"><h3>Opinion paragraph plan</h3>
+          <ul>
+            <li><b>1 Opinion:</b> In my opinion… / I strongly believe…</li>
+            <li><b>2 Reason + example:</b> Firstly… For instance…</li>
+            <li><b>3 Other side:</b> However, some people say…</li>
+            <li><b>4 Conclusion:</b> All in all… / To sum up…</li>
+          </ul>
+        </div>
+        <div class="card"><h3>Linkers toolbox</h3>
+          <div class="chips"><span class="sig">firstly</span><span class="sig">moreover</span><span class="sig">in addition</span><span class="sig">however</span><span class="sig">although</span><span class="sig">for example</span><span class="sig">such as</span><span class="sig">therefore</span><span class="sig">as a result</span><span class="sig">to sum up</span></div>
+        </div>
+      </div>
+      <div class="prompt-bank"><b>Write (60–80 words) →</b> "Some people think students should wear a school uniform. Do you agree?" Use a clear opinion, two reasons, the other side, and a conclusion.</div>
+      <textarea class="notes" style="min-height:8rem" placeholder="✍️ Write your answer here…"></textarea>
+    </div>
+  </section>
+
+  <!-- 25 DIVIDER: MINI-TEST -->
+  <section class="slide slide--statement phase-olympiad" data-phase="Challenge">
+    <div class="inner">
+      <div class="big-badge">Part 3 · Put it together</div>
+      <h2>Mixed <span class="hl">mini-test</span> 🏁</h2>
+      <p class="lead" style="text-align:center; max-width:44ch">One short test with every task type — just like the real thing.</p>
+    </div>
+  </section>
+
+  <!-- 26 MIXED MINI-TEST -->
+  <section class="slide phase-olympiad" data-phase="Challenge">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">26</span><span class="dot"></span> Challenge · Mixed mini-test</div>
+      <h2>Everything together</h2>
+      <ul class="mcset">
+        <li class="mcq" data-c="1"><div class="q">1. <em>(MCQ)</em> She has lived here ___ 2019.</div><div class="opts"><button class="opt" type="button">A) for</button><button class="opt" type="button">B) since</button><button class="opt" type="button">C) ago</button><button class="opt" type="button">D) from</button></div></li>
+        <li class="mcq" data-c="2"><div class="q">2. <em>(Country studies)</em> The capital of the USA is…</div><div class="opts"><button class="opt" type="button">A) New York</button><button class="opt" type="button">B) Los Angeles</button><button class="opt" type="button">C) Washington, D.C.</button><button class="opt" type="button">D) Boston</button></div></li>
+      </ul>
+      <ul class="exset" style="margin-top:.6rem">
+        <li class="exq" data-a="an"><span class="q">3. <em>(a/an)</em> We waited for <input class="gap" aria-label="answer" autocomplete="off"> hour.</span><span class="v"></span></li>
+        <li class="exq" data-a="children"><span class="q">4. <em>(plural)</em> Two <input class="gap" aria-label="answer" autocomplete="off"> were playing. <em>(child)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="impossible"><span class="q">5. <em>(word form.)</em> It's <input class="gap w-lg" aria-label="answer" autocomplete="off"> to finish today. <em>(POSSIBLE)</em></span><span class="v"></span></li>
+        <li class="exq" data-a="on"><span class="q">6. <em>(prep.)</em> It depends <input class="gap" aria-label="answer" autocomplete="off"> the weather.</span><span class="v"></span></li>
+        <li class="exq" data-a="told"><span class="q">7. <em>(error)</em> She said me a secret → She <input class="gap" aria-label="answer" autocomplete="off"> me a secret.</span><span class="v"></span></li>
+        <li class="exq" data-a="worst"><span class="q">8. <em>(comparison)</em> It was the <input class="gap" aria-label="answer" autocomplete="off"> day ever. <em>(bad)</em></span><span class="v"></span></li>
+      </ul>
+      <div class="extools"><button class="check">Check ✓</button><button class="show">Show answers</button><button class="clear">Clear</button><span class="score"></span></div>
+    </div>
+  </section>
+
+  <!-- 27 HOMEWORK -->
+  <section class="slide phase-connect" data-phase="Wrap-up">
+    <div class="inner">
+      <div class="eyebrow"><span class="num">27</span><span class="dot"></span> Wrap-up · Homework</div>
+      <h2>Homework &amp; a big <span class="hl">well done</span> 🌟</h2>
+      <ul class="q-list">
+        <li data-n="1"><span>Redo the <b>word formation</b> and <b>country studies</b> tasks from memory.</span></li>
+        <li data-n="2"><span>Learn <b>10 phrasal verbs</b> + <b>10 dependent prepositions</b> — one sentence each.</span></li>
+        <li data-n="3"><span>Make a <b>UK vs USA facts card</b> (capitals, symbols, flags, leaders).</span></li>
+        <li data-n="4"><span>Finish the <b>writing task</b> (60–80 words) and send it to me.</span></li>
+        <li data-n="5"><span><span class="en-note">Optional:</span> do one full <b>школьный этап ВсОШ</b> Use-of-English section under 40 minutes.</span></li>
+      </ul>
+      <p class="lead">You now know the real task types — practice turns them into easy points. See you next lesson! 👋</p>
+    </div>
+  </section>
+
+  <nav class="nav">
+    <span class="phase-label"><span class="pd" id="pd"></span><span id="phase">Intro</span></span>
+    <span class="kbd-hint">← → arrows to navigate</span>
+    <span class="nav-btns">
+      <button id="prev" aria-label="Previous slide">‹ Back</button>
+      <button id="next" aria-label="Next slide">Next ›</button>
+    </span>
+  </nav>
+</div>
+
+<script>
+  (function () {
+    var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+    var bar = document.getElementById('bar');
+    var cur = document.getElementById('cur');
+    var totalEl = document.getElementById('total');
+    var prev = document.getElementById('prev');
+    var next = document.getElementById('next');
+    var phaseEl = document.getElementById('phase');
+    var pd = document.getElementById('pd');
+    var i = 0;
+    totalEl.textContent = slides.length;
+
+    function phaseName(el){
+      if(el.getAttribute('data-phase')) return el.getAttribute('data-phase');
+      if(el.classList.contains('phase-remember')) return 'Remember';
+      if(el.classList.contains('phase-olympiad')) return 'Olympiad';
+      return 'Intro';
+    }
+
+    function show(n){
+      i = Math.max(0, Math.min(slides.length-1, n));
+      slides.forEach(function(s,k){ s.classList.toggle('active', k===i); });
+      var active = slides[i];
+      bar.style.width = ((i+1)/slides.length*100) + '%';
+      cur.textContent = i+1;
+      prev.disabled = i===0; next.disabled = i===slides.length-1;
+      phaseEl.textContent = phaseName(active);
+      var cs = getComputedStyle(active);
+      pd.style.background = cs.getPropertyValue('--accent');
+      phaseEl.style.color = cs.getPropertyValue('--accent');
+      var inner = active.querySelector('.inner'); if(inner) inner.scrollTop = 0;
+    }
+    function go(d){ show(i+d); }
+
+    next.addEventListener('click', function(){ go(1); });
+    prev.addEventListener('click', function(){ go(-1); });
+
+    document.addEventListener('keydown', function(e){
+      var t = e.target;
+      if(t && (t.tagName==='INPUT' || t.tagName==='TEXTAREA')) return;
+      if(e.key==='ArrowRight'||e.key==='PageDown'){ go(1); e.preventDefault(); }
+      else if(e.key==='ArrowLeft'||e.key==='PageUp'){ go(-1); e.preventDefault(); }
+      else if(e.key===' '){ go(1); e.preventDefault(); }
+      else if(e.key==='Home'){ show(0); }
+      else if(e.key==='End'){ show(slides.length-1); }
+    });
+
+    // ---- Answer checking ----
+    function normalize(s){ return (s||'').toLowerCase().replace(/’/g,"'").replace(/\s+/g,' ').trim().replace(/[.,!?;:]+$/,''); }
+    function firstAlt(item){ return (item.getAttribute('data-a')||'').split('|')[0]; }
+    function alts(item){ return (item.getAttribute('data-a')||'').split('|').map(normalize); }
+
+    // Gap-fill / cloze: items each carry data-a and contain a .gap (and optional .v)
+    function checkGaps(items, reveal){
+      var ok = 0, total = 0;
+      items.forEach(function(it){
+        var input = it.querySelector('.gap'); if(!input) return;
+        total++;
+        var v = it.querySelector('.v');
+        if(reveal){
+          input.value = firstAlt(it);
+          input.classList.remove('no'); input.classList.add('ok');
+          if(v){ v.className='v good'; v.textContent='✓'; }
+          ok++; return;
+        }
+        var val = normalize(input.value);
+        input.classList.remove('ok','no'); if(v) v.className='v';
+        if(val === ''){ if(v) v.textContent=''; return; }
+        if(alts(it).indexOf(val) !== -1){ input.classList.add('ok'); if(v){ v.className='v good'; v.textContent='✓'; } ok++; }
+        else { input.classList.add('no'); if(v){ v.className='v bad'; v.textContent='✗ ' + firstAlt(it); } }
+      });
+      return { ok: ok, total: total };
+    }
+
+    // Multiple choice
+    function checkMC(set, reveal){
+      var qs = set.querySelectorAll('.mcq'); var ok = 0;
+      qs.forEach(function(q){
+        var opts = q.querySelectorAll('.opt');
+        var c = parseInt(q.getAttribute('data-c'), 10);
+        opts.forEach(function(o){ o.classList.remove('correct','wrong'); });
+        if(reveal){
+          opts.forEach(function(o){ o.classList.remove('sel'); });
+          if(opts[c]){ opts[c].classList.add('sel','correct'); }
+          ok++; return;
+        }
+        var selIdx = -1;
+        opts.forEach(function(o,idx){ if(o.classList.contains('sel')) selIdx = idx; });
+        if(selIdx === -1) return;
+        if(selIdx === c){ opts[selIdx].classList.add('correct'); ok++; }
+        else { opts[selIdx].classList.add('wrong'); if(opts[c]) opts[c].classList.add('correct'); }
+      });
+      return { ok: ok, total: qs.length };
+    }
+
+    // MC option selection
+    document.querySelectorAll('.mcq').forEach(function(q){
+      q.querySelectorAll('.opt').forEach(function(o){
+        o.addEventListener('click', function(){
+          q.querySelectorAll('.opt').forEach(function(x){ x.classList.remove('sel','correct','wrong'); });
+          o.classList.add('sel');
+        });
+      });
+    });
+
+    document.querySelectorAll('.extools').forEach(function(tools){
+      var inner = tools.closest('.inner');
+      var score = tools.querySelector('.score');
+      var exset = inner.querySelector('.exset');
+      var mcset = inner.querySelector('.mcset');
+      var cloze = inner.querySelector('.cloze');
+
+      function run(reveal){
+        var ok = 0, total = 0, r;
+        if(exset){ r = checkGaps(exset.querySelectorAll('.exq'), reveal); ok += r.ok; total += r.total; }
+        if(cloze){ r = checkGaps(cloze.querySelectorAll('.cz'), reveal); ok += r.ok; total += r.total; }
+        if(mcset){ r = checkMC(mcset, reveal); ok += r.ok; total += r.total; }
+        if(score){ score.textContent = ok + ' / ' + total + (ok===total ? '  🎉' : ''); }
+      }
+
+      tools.querySelector('.check').addEventListener('click', function(){ run(false); });
+      tools.querySelector('.show').addEventListener('click', function(){ run(true); });
+      tools.querySelector('.clear').addEventListener('click', function(){
+        inner.querySelectorAll('.gap').forEach(function(g){ g.value=''; g.classList.remove('ok','no'); });
+        inner.querySelectorAll('.v').forEach(function(v){ v.textContent=''; v.className='v'; });
+        inner.querySelectorAll('.opt').forEach(function(o){ o.classList.remove('sel','correct','wrong'); });
+        if(score) score.textContent='';
+      });
+      inner.querySelectorAll('.gap').forEach(function(g){
+        g.addEventListener('keydown', function(e){ if(e.key==='Enter'){ run(false); } });
+      });
+    });
+
+    // Touch swipe (ignore form fields & buttons)
+    var x0 = null;
+    document.addEventListener('touchstart', function(e){
+      var t = e.target; if(t && (t.tagName==='INPUT'||t.tagName==='TEXTAREA'||t.tagName==='BUTTON')) { x0=null; return; }
+      x0 = e.touches[0].clientX;
+    }, {passive:true});
+    document.addEventListener('touchend', function(e){
+      if(x0===null) return;
+      var dx = e.changedTouches[0].clientX - x0;
+      if(Math.abs(dx) > 55) go(dx<0 ? 1 : -1);
+      x0 = null;
+    }, {passive:true});
+
+    show(0);
+  })();
+</script>
