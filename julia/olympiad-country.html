@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Olympiad Shelf · страноведение</title>
-<!-- Страноведение одной страницей: материалы открываются целиком и без изменений. -->
+<title>Olympiad Shelf · country studies</title>
+<!-- Country studies on one page: each material opens in full, unchanged. -->
 <style>
 :root{--accent:#1e4d3b;--paper:#f5f0e6}
 *{box-sizing:border-box}
@@ -23,20 +23,20 @@ iframe{display:block;width:100%;height:calc(100vh - 58px);border:0;background:#f
 <body>
 <header class="top">
   <a class="brand" href="olympiad-hub-general.html">Olympiad Shelf</a>
-  <a href="olympiad-hub-general.html">Общая</a>
-  <a class="on" href="olympiad-country.html">Страноведение</a>
+  <a href="olympiad-hub-general.html">General</a>
+  <a class="on" href="olympiad-country.html">Country studies</a>
   <span class="sep"></span>
   <nav class="tabs" style="display:flex;gap:4px"></nav>
-  <a class="ext" target="_blank" rel="noopener">открыть отдельно ↗</a>
+  <a class="ext" target="_blank" rel="noopener">open in a new tab ↗</a>
 </header>
-<iframe title="Материал"></iframe>
+<iframe title="Material"></iframe>
 <script>
 const TABS = [
   ['world', 'The UK & the English-Speaking World', 'olympiad-english-speaking-world.html'],
-  ['lists', 'Справочник', 'olympiad-country-studies-lists.html'],
+  ['lists', 'Reference lists & games', 'olympiad-country-studies-lists.html'],
   ['quest', 'Culture Quest', 'olympiad-culture-quest.html'],
-  ['usa', 'США · урок', 'usa-lesson.html'],
-  ['usahw', 'США · домашка', 'usa-homework.html'],
+  ['usa', 'USA · lesson', 'usa-lesson.html'],
+  ['usahw', 'USA · homework', 'usa-homework.html'],
 ];
 const nav = document.querySelector('.tabs'), frame = document.querySelector('iframe'), ext = document.querySelector('.ext');
 function open(id) {
