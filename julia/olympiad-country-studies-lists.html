@@ -57,6 +57,152 @@ body.noen li .tx .note{display:none}
 body.quiz li .tx .note{filter:blur(5px);cursor:pointer} body.quiz li.open .tx .note{filter:none}
 .lb #lbN{margin:0 0 8px;font-size:14px;color:#2b1830}
 @media print{li .th{width:30px;height:30px}li{grid-template-columns:30px 1fr}.lb{display:none!important}}
+/* Country Arcade — в палитре справочника: розовая бумага, коралл, жёлтый маркер */
+.games-sec{scroll-margin-top:56px}
+.gm-cov{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:0 0 12px}
+.gm-total{font-size:15px;margin-bottom:8px}.gm-total b{font-size:22px;color:var(--coral)}.gm-total span{color:var(--muted)}
+.gm-secs{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:6px 12px}
+.gm-secbar{display:grid;grid-template-columns:1fr auto;gap:2px 8px;align-items:center;border:1px solid transparent;background:none;border-radius:8px;padding:4px 6px;font:inherit;font-size:12.5px;text-align:left;cursor:pointer}
+.gm-secbar:hover{border-color:var(--line)}.gm-secbar.on{border-color:var(--coral);background:#fff0f3}
+.gm-secbar i{grid-column:1/-1;height:6px;border-radius:3px;background:#f3e3e6;overflow:hidden;display:block}
+.gm-secbar i b{display:block;height:100%;background:linear-gradient(90deg,#ff9f43,var(--coral))}
+.gm-secbar em{font-style:normal;color:var(--muted);font-variant-numeric:tabular-nums}
+.gm-filters{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 12px;font-size:13px}
+.gm-filters label{display:flex;gap:6px;align-items:center}
+.gm-filters select{font:inherit;border:1px solid #dfc1c5;border-radius:8px;padding:4px 8px;background:#fff}
+.gm-count{color:var(--muted)}.gm-count b{color:var(--ink)}
+.gm-link{border:0;background:none;color:var(--coral);text-decoration:underline;font:inherit;cursor:pointer;padding:0}
+.gm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.gm-game{display:flex;flex-direction:column;gap:3px;text-align:left;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;font:inherit;cursor:pointer;transition:transform .12s,box-shadow .12s}
+.gm-game:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 6px 18px rgba(227,69,110,.15);border-color:#f2b7c5}
+.gm-game:disabled{opacity:.45;cursor:default}
+.gm-game .ic{font-size:26px;line-height:1}.gm-game b{font-size:15px}.gm-game span{color:var(--muted);font-size:12.5px}
+.gm-game em{font-style:normal;font-size:11.5px;color:var(--coral);margin-top:auto;padding-top:4px}
+.gm-left{margin-top:12px;background:#fff;border:1px dashed var(--line);border-radius:12px;padding:10px 14px;font-size:13px}
+.gm-left h4{margin:10px 0 4px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--coral)}
+.gm-left div{display:flex;flex-wrap:wrap;gap:4px}
+.gm-flashli{background:var(--marker)!important;transition:background .3s}
+.gm-reset{margin-top:10px;border:0;background:none;color:var(--muted);font:inherit;font-size:12px;text-decoration:underline;cursor:pointer}
+
+.gm-play{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px 16px 18px;scroll-margin-top:56px;position:relative;overflow:hidden}
+.gm-top{display:flex;gap:12px;align-items:center;margin-bottom:12px;font-size:15px}
+.gm-back{border:1px solid var(--line);background:var(--paper);border-radius:8px;padding:5px 10px;font:inherit;font-size:13px;cursor:pointer}
+.gm-bar{flex:1;height:8px;background:#f3e3e6;border-radius:4px;overflow:hidden}
+.gm-bar i{display:block;height:100%;background:linear-gradient(90deg,#ff9f43,var(--coral));transition:width .3s}
+.gm-score{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.gm-stage{min-height:340px}
+.gm-card{max-width:820px;margin:0 auto;text-align:center}
+.gm-q{font-size:19px;line-height:1.45;margin:6px auto 4px;max-width:720px}
+.gm-q.gm-ru{font-size:17px}
+.gm-sub{color:var(--muted);font-size:13px;margin:0 0 12px;text-align:center}
+.gm-mask{display:inline-block;background:#f3e3e6;color:#c9a3ac;border-radius:4px;padding:0 3px;letter-spacing:-2px;font-size:.8em}
+.gm-pic{display:block;max-height:250px;max-width:100%;margin:0 auto 10px;border-radius:12px;border:1px solid var(--line);object-fit:contain;background:#fff}
+.gm-pic.small{max-height:130px}
+.gm-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0 0}
+.gm-opts.two{max-width:420px;margin:14px auto 0}
+.gm-opt{display:flex;gap:10px;align-items:center;text-align:left;border:2px solid var(--line);background:var(--paper);border-radius:12px;padding:10px 12px;font:inherit;font-size:15px;cursor:pointer;min-height:52px;transition:transform .08s}
+.gm-opt:hover:not(:disabled){border-color:var(--coral);transform:translateY(-1px)}
+.gm-opt:disabled{cursor:default}
+.gm-opt img{width:44px;height:44px;object-fit:cover;border-radius:8px;flex:none}
+.gm-opt kbd{font:700 11px/1 var(--mono,monospace);background:#fff;border:1px solid var(--line);border-radius:5px;padding:3px 6px;color:var(--muted);flex:none}
+.gm-opt.right{border-color:#2f9e6d;background:#e3f6ec;animation:gm-pop .3s}
+.gm-opt.wrong{border-color:var(--coral);background:#fde6ec;animation:gm-shake .35s}
+.gm-opt.gone{visibility:hidden}
+.gm-reveal{display:flex;gap:12px;align-items:flex-start;text-align:left;background:var(--butter);border-left:4px solid var(--marker);border-radius:0 12px 12px 0;padding:10px 12px;margin:14px 0 0}
+.gm-reveal img{width:72px;height:72px;object-fit:cover;border-radius:10px;flex:none}
+.gm-ru-note{color:var(--muted);font-size:13.5px;margin-top:2px}
+.gm-en-note{font-size:14px;margin-top:4px}
+.gm-btn{border:0;background:var(--coral);color:#fff;border-radius:10px;padding:9px 16px;font:inherit;font-size:14px;font-weight:600;cursor:pointer;margin-top:12px}
+.gm-btn:disabled{opacity:.45;cursor:default}
+.gm-btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.gm-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;align-items:center;margin-top:8px}
+.gm-verdict{margin-top:12px;padding:8px 12px;border-radius:10px;font-size:14.5px;text-align:left}
+.gm-verdict.ok{background:#e3f6ec}.gm-verdict.bad{background:#fde6ec}
+.gm-type{display:flex;gap:8px;justify-content:center;margin:12px 0 0;flex-wrap:wrap}
+.gm-type input{font:inherit;font-size:18px;padding:8px 12px;border:2px solid var(--line);border-radius:10px;min-width:280px;text-align:center}
+.gm-type input:focus{outline:none;border-color:var(--coral)}
+.gm-type input.right{border-color:#2f9e6d;background:#e3f6ec}.gm-type input.wrong{border-color:var(--coral);background:#fde6ec}
+.gm-type .gm-btn{margin-top:0}
+.gm-hint{margin-top:10px;font-size:13.5px;color:var(--muted)}
+.gm-hint summary{cursor:pointer}
+
+.gm-match{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.6fr);gap:10px 18px}
+.gm-col{display:flex;flex-direction:column;gap:6px}
+.gm-tile{border:2px solid var(--line);background:var(--paper);border-radius:10px;padding:8px 10px;font:inherit;font-size:14px;text-align:left;cursor:pointer;min-height:48px}
+.gm-tile.desc{font-size:13px;line-height:1.35}
+.gm-tile.sel{border-color:var(--coral);background:#fff0f3}
+.gm-tile.right{border-color:#2f9e6d;background:#e3f6ec;cursor:default}
+.shake{animation:gm-shake .35s}
+
+.gm-memory{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:760px;margin:0 auto}
+.gm-mcard{position:relative;height:120px;border:0;background:none;padding:0;cursor:pointer;perspective:600px;font:inherit}
+.gm-mcard span{position:absolute;inset:0;border-radius:12px;display:grid;place-items:center;backface-visibility:hidden;transition:transform .35s;padding:6px;font-size:13.5px;font-weight:600}
+.gm-mcard .back{background:linear-gradient(135deg,var(--coral),#ff9f43);color:#fff;font-size:34px}
+.gm-mcard .face{background:#fff;border:2px solid var(--line);transform:rotateY(180deg)}
+.gm-mcard .face{overflow:hidden}
+.gm-mcard .face:has(img){padding:0}
+.gm-mcard .face img{width:100%;height:100%;object-fit:cover;border-radius:10px;display:block}
+.gm-mcard.open .back{transform:rotateY(180deg)}.gm-mcard.open .face{transform:rotateY(360deg)}
+.gm-mcard.done .face{border-color:#2f9e6d;background:#e3f6ec}
+
+.gm-card .gm-clock{font:800 44px/1 var(--mono,monospace);color:var(--coral)}
+.gm-blitz{min-height:110px;margin:12px auto 0;max-width:640px;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px 18px;display:flex;flex-direction:column;gap:6px;justify-content:center}
+.gm-blitz b{font-size:20px}.gm-blitz span{font-size:15px}
+.gm-flash{height:24px;margin-top:8px;font-weight:700}.gm-flash.ok{color:#2f9e6d}.gm-flash.bad{color:var(--coral)}
+
+.gm-cards{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;min-height:40px;margin-bottom:12px}
+.gm-chip{display:inline-flex;gap:6px;align-items:center;border:2px solid var(--line);background:var(--paper);border-radius:999px;padding:5px 12px 5px 6px;font:inherit;font-size:13.5px;cursor:pointer}
+.gm-chip img{width:26px;height:26px;border-radius:50%;object-fit:cover}
+.gm-chip.small{padding:3px 10px;font-size:12.5px;border-width:1px}
+.gm-chip.sel{border-color:var(--coral);background:#fff0f3;transform:scale(1.04)}
+.gm-chip.right{border-color:#2f9e6d;background:#e3f6ec}.gm-chip.wrong{border-color:var(--coral);background:#fde6ec}
+.gm-baskets{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.gm-basket{border:2px dashed #f2b7c5;border-radius:14px;padding:8px;min-height:120px;cursor:pointer;background:#fffafb}
+.gm-basket:hover{border-color:var(--coral)}
+.gm-basket h4{margin:0 0 6px;font-size:12.5px;color:var(--coral);text-transform:uppercase;letter-spacing:.05em}
+.gm-basket .in{display:flex;flex-wrap:wrap;gap:5px}
+
+.gm-seq,.gm-pool{display:flex;flex-direction:column;gap:6px;max-width:760px;margin:0 auto 10px}
+.gm-seq{background:var(--paper);border:1px dashed var(--line);border-radius:12px;padding:8px;min-height:60px}
+.gm-empty{color:var(--muted);text-align:center;padding:12px}
+.gm-ev{display:flex;gap:8px;align-items:flex-start;text-align:left;border:2px solid var(--line);background:#fff;border-radius:10px;padding:7px 10px;font:inherit;font-size:13.5px;cursor:pointer}
+.gm-ev .n{font-weight:800;color:var(--coral);min-width:18px}
+.gm-ev.right{border-color:#2f9e6d;background:#e3f6ec}.gm-ev.wrong{border-color:var(--coral);background:#fde6ec}
+
+.gm-slots{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin:14px 0}
+.gm-slot{width:34px;height:42px;border-bottom:3px solid var(--ink);display:grid;place-items:center;font:800 22px var(--mono,monospace);cursor:pointer}
+.gm-slot.full{color:var(--coral)}
+.gm-gap{width:16px}
+.gm-tiles{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.gm-letter{width:42px;height:42px;border:2px solid var(--line);border-radius:10px;background:var(--butter);font:800 20px var(--mono,monospace);cursor:pointer;box-shadow:0 3px 0 #ecd5d7}
+.gm-letter:disabled{opacity:.25;cursor:default}
+
+.gm-million{display:grid;grid-template-columns:minmax(0,1fr) 170px;gap:16px;align-items:start}
+.gm-ladder{list-style:none;margin:0;padding:8px;background:#2b1830;color:#d9c7de;border-radius:14px;font:600 13px var(--mono,monospace);display:flex;flex-direction:column;gap:2px}
+.gm-ladder li{padding:3px 8px;border-radius:6px;text-align:right}
+.gm-ladder li.safe{color:#fff}
+.gm-ladder li.done{color:#8fd4b3}
+.gm-ladder li.on{background:#ffe36b;color:#2b1830}
+.gm-life button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:5px 12px;font:inherit;font-size:13px;cursor:pointer}
+.gm-life button:disabled{opacity:.35;cursor:default;text-decoration:line-through}
+
+.gm-symwrap{overflow-x:auto}
+.gm-sym{font-size:13px}
+.gm-sym select{font:inherit;font-size:12.5px;border:1px solid #dfc1c5;border-radius:6px;padding:3px;max-width:170px;background:var(--butter)}
+.gm-sym select.right{background:#e3f6ec;border-color:#2f9e6d}.gm-sym select.wrong{background:#fde6ec;border-color:var(--coral)}
+.gm-fix{font-size:12px;color:#2f9e6d;font-weight:700;margin-top:2px}
+
+.gm-end{text-align:center;padding:30px 0}
+.gm-big{font-size:56px}
+.gm-end h3{font-size:30px;margin:6px 0}
+.gm-end p{color:var(--muted);max-width:520px;margin:0 auto}
+.gm-confetti{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.gm-confetti i{position:absolute;top:-10px;width:8px;height:14px;border-radius:2px;animation:gm-fall 1.8s ease-in forwards}
+@keyframes gm-fall{to{transform:translateY(520px) rotate(540deg);opacity:0}}
+@keyframes gm-pop{50%{transform:scale(1.04)}}
+@keyframes gm-shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+@media (max-width:720px){.gm-opts{grid-template-columns:1fr}.gm-match{grid-template-columns:1fr}.gm-memory{grid-template-columns:repeat(3,1fr)}.gm-million{grid-template-columns:1fr}}
+@media print{.games-sec{display:none}}
 .tasks-sec{scroll-margin-top:56px;width:calc(100vw - 48px);max-width:1600px;position:relative;left:50%;transform:translateX(-50%)}
 .tasks-sec h2,.tasks-sec .intro{max-width:1100px;margin-left:auto;margin-right:auto}
 .quest{display:block;width:100%;height:min(88vh,calc((100vw - 48px) * .62));border:1px solid var(--line);border-radius:12px;background:#fff}
@@ -647,6 +793,9 @@ body.quiz li .tx .note{filter:blur(5px);cursor:pointer} body.quiz li.open .tx .n
 ★|Cinco de Mayo|мексиканский праздник, популярный в США
 </script></section>
 
+<section id="games" class="games-sec"><h2>Игры · весь справочник <small>каждый пункт выше участвует в играх</small></h2>
+<p class="intro">Выбери раздел (или все сразу) и любую игру. Сначала выпадает то, что ещё не решено, — счётчик покажет, сколько пунктов из справочника уже пройдено. Прогресс сохраняется в браузере.</p>
+<div class="gm-cov"></div><div class="gm-menu"></div><div class="gm-play" hidden></div><button type="button" class="gm-reset">сбросить прогресс игр</button></section>
 <section id="tasks" class="tasks-sec"><h2>Задания · Culture Quest <small>по этому справочнику</small></h2>
 <p class="intro">Практика к теории выше, в том же порядке: люди → персонажи → мифы → места → символы, география, история, еда, праздники. Уровни ★ → ★★ → ★★★ и реальные задания муниципального этапа с ключами. Листай стрелками внутри окна или слева по оглавлению.</p>
 <iframe class="quest" src="olympiad-culture-quest.html" title="Culture Quest · задания" loading="lazy" allowfullscreen></iframe>
@@ -707,4 +856,569 @@ pb.onclick=()=>{const off=document.body.classList.toggle('nopics');pb.textConten
 const eb=document.getElementById('enBtn');eb.onclick=()=>{const off=document.body.classList.toggle('noen');eb.textContent='🇬🇧 English: '+(off?'выкл':'вкл')};
 qb.onclick=()=>{const on=document.body.classList.toggle('quiz');document.querySelectorAll('li.open').forEach(l=>l.classList.remove('open'));
  if(on)document.body.classList.remove('nopics');qb.textContent=on?'👀 Открыть подписи':'🙈 Закрыть подписи'};
+</script><script>/* Country Arcade · игры по всему справочнику.
+   Данные берутся из самих списков страницы (script[type=text/plain] в section[data-list]),
+   английских подписей NOTE, картинок IMG и таблицы символов — поэтому в играх участвует
+   каждый пункт справочника. Решённое верно хоть раз засчитывается в «покрытие». */
+(() => {
+'use strict';
+const root = document.getElementById('games');
+if (!root) return;
+const LS = 'country-arcade-v1';
+let ST = {m: {}, xp: 0, best: {}};
+try { Object.assign(ST, JSON.parse(localStorage.getItem(LS) || '{}')); } catch (e) {}
+const save = () => { try { localStorage.setItem(LS, JSON.stringify(ST)); } catch (e) {} };
+const $ = (s, r = root) => r.querySelector(s);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
+const rnd = n => Math.floor(Math.random() * n);
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = rnd(i + 1); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const uniq = a => [...new Set(a)];
+
+/* ---------------- данные ---------------- */
+const E = [];              // все пункты
+const SECS = [];           // [{id, title}]
+document.querySelectorAll('section[data-list]').forEach(sec => {
+  const title = sec.querySelector('h2').childNodes[0].textContent.trim();
+  const short = {people: 'Люди', characters: 'Персонажи', myths: 'Мифы', places: 'Места', geo: 'География', food: 'Еда', history: 'Даты и праздники'}[sec.id] || title;
+  SECS.push({id: sec.id, title, short});
+  let sub = '';
+  sec.querySelector('script[type="text/plain"]').textContent.trim().split('\n').forEach(line => {
+    line = line.trim(); if (!line) return;
+    if (line.startsWith('## ')) { sub = line.slice(3); return; }
+    const [st, en, ru] = line.split('|');
+    E.push({id: sec.id + ':' + en, sec: sec.id, sub, star: st === '★', en, ru: ru || '', note: (typeof NOTE !== 'undefined' && NOTE[en]) || '', img: (typeof IMG !== 'undefined' && IMG[en]) ? IMG[en][0] : null});
+  });
+});
+/* таблица символов → факты «страна · поле» */
+const FIELDS = [['capital', 'capital city', 'столица'], ['saint', 'patron saint', 'святой'], ['day', 'patron saint’s day', 'день святого'], ['plant', 'national plant', 'растение'], ['animal', 'national animal', 'животное']];
+const clean = s => s.replace(/★/g, '').replace(/\([^)]*[а-яё][^)]*\)/gi, '').replace(/\s+и\s+/g, ' and ').replace(/\s*—\s*на гербе/, '').replace(/\s+/g, ' ').replace(/\s+,/g, ',').trim().replace(/[,;]$/, '');
+const SYM = [];
+const symTable = document.querySelector('#symbols table');
+if (symTable) {
+  SECS.unshift({id: 'symbols', title: 'Национальные символы', short: 'Символы'});
+  [...symTable.querySelectorAll('tr')].slice(1).forEach(tr => {
+    const td = [...tr.querySelectorAll('td')].map(t => t.textContent.trim());
+    if (td.length < 5) return;
+    const country = td[0];
+    const [saint, day] = td[2].includes('—') && !/^—$/.test(td[2]) ? td[2].split('—').map(clean) : ['', ''];
+    const row = {country, capital: clean(td[1]), saint, day, plant: clean(td[3]), animal: td[4] === '—' ? '' : clean(td[4])};
+    SYM.push(row);
+    FIELDS.forEach(([f, en, ru]) => {
+      if (!row[f]) return;
+      E.push({id: 'symbols:' + country + ':' + f, sec: 'symbols', sub: ru, star: true, sym: true, field: f, fieldEn: en, country, en: row[f], ru: `${country}: ${ru}`, note: `The ${en} of ${country}: ${row[f]}.`, img: null});
+    });
+  });
+}
+const BYID = Object.fromEntries(E.map(e => [e.id, e]));
+
+/* ---------------- помощники ---------------- */
+const STOP = new Set(['the', 'and', 'of', 'a', 'an', 'in', 'on', 'st', 'mr', 'dr', 'sir', 'mount', 'lake', 'river', 'king', 'queen']);
+function nameWords(e) { return uniq(e.en.replace(/\(.*?\)/g, m => ' ' + m.slice(1, -1) + ' ').split(/[^A-Za-zÀ-ÿĀ-žʻ’'0-9-]+/).filter(w => w.length >= 3 && !STOP.has(w.toLowerCase()))); }
+function mask(text, e) {
+  let t = esc(text);
+  nameWords(e).sort((a, b) => b.length - a.length).forEach(w => {
+    const re = new RegExp('(^|[^A-Za-zÀ-ÿ])(' + w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')(?=[^A-Za-zÀ-ÿ]|$)', 'gi');
+    t = t.replace(re, (m, a) => a + '<span class="gm-mask">▢▢▢</span>');
+  });
+  return t;
+}
+function answers(e) {
+  const parts = uniq([e.en, ...e.en.split(/\s*[\/,]\s*|\s*\(|\)\s*/)]).map(s => s.trim()).filter(Boolean);
+  const out = [];
+  parts.forEach(p => {
+    out.push(p);
+    const noThe = p.replace(/^the\s+/i, ''); out.push(noThe);
+    const w = noThe.split(/\s+/);
+    if (w.length >= 2 && !e.sym && e.sec === 'people') { const caps = w.filter(x => /^[A-Z]/.test(x)); if (caps.length) out.push(caps[caps.length - 1]); }
+  });
+  return uniq(out.map(norm).filter(x => x.length >= 2));
+}
+function norm(s) { return String(s).toLowerCase().replace(/[’‘`]/g, "'").normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9' ]+/g, ' ').replace(/\s+/g, ' ').trim(); }
+function lev(a, b) {
+  const d = Array.from({length: a.length + 1}, (_, i) => [i]);
+  for (let j = 1; j <= b.length; j++) d[0][j] = j;
+  for (let i = 1; i <= a.length; i++) for (let j = 1; j <= b.length; j++) d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+  return d[a.length][b.length];
+}
+function label(e) { return e.sym ? e.en : e.en; }
+
+/* ---------------- выбор пунктов ---------------- */
+const SCOPE = {sec: 'all', sub: 'all', star: false};
+try { Object.assign(SCOPE, JSON.parse(localStorage.getItem(LS + ':scope') || '{}')); } catch (e) {}
+const saveScope = () => { try { localStorage.setItem(LS + ':scope', JSON.stringify(SCOPE)); } catch (e) {} };
+function pool(filter) {
+  return E.filter(e => (SCOPE.sec === 'all' || e.sec === SCOPE.sec) && (SCOPE.sub === 'all' || e.sub === SCOPE.sub) && (!SCOPE.star || e.star) && (!filter || filter(e)));
+}
+/* новые (ещё не решённые) — первыми, внутри — случайно */
+function pick(n, filter, list) {
+  const p = list || pool(filter);
+  const fresh = shuffle(p.filter(e => !ST.m[e.id])), old = shuffle(p.filter(e => ST.m[e.id]));
+  return fresh.concat(old).slice(0, n);
+}
+function distractors(e, n, key = x => x.en, filter) {
+  const same = x => x.id !== e.id && key(x) !== key(e) && (!filter || filter(x));
+  let c = E.filter(x => same(x) && x.sec === e.sec && x.sub === e.sub && (!e.sym || x.field === e.field));
+  if (c.length < n) c = c.concat(E.filter(x => same(x) && x.sec === e.sec && (!e.sym || x.field === e.field) && !c.includes(x)));
+  if (c.length < n) c = c.concat(E.filter(x => same(x) && !c.includes(x)));
+  const out = [], seen = new Set([key(e)]);
+  for (const x of shuffle(c)) { if (!seen.has(key(x))) { seen.add(key(x)); out.push(x); } if (out.length === n) break; }
+  return out;
+}
+function mark(e, ok) {
+  if (ok) { if (!ST.m[e.id]) ST.xp += 5; ST.m[e.id] = (ST.m[e.id] || 0) + 1; ST.xp += 1; }
+  save(); coverage();
+}
+
+/* ---------------- вопрос «выбери из четырёх» ---------------- */
+function prompt(e, kind) {
+  if (e.sym) {
+    if (kind === 'rev') return {html: `<div class="gm-q">Whose <b>${e.fieldEn}</b> is <b>${esc(e.en)}</b>?</div>`, opts: shuffle([e.country, ...shuffle(SYM.map(r => r.country).filter(c => c !== e.country && SYM.find(r => r.country === c)[e.field] !== e.en)).slice(0, 3)]), ans: e.country};
+    return {html: `<div class="gm-q">What is the <b>${e.fieldEn}</b> of <b>${esc(e.country)}</b>?</div>`, opts: shuffle([e.en, ...distractors(e, 3).map(x => x.en)]), ans: e.en};
+  }
+  const opts = shuffle([e.en, ...distractors(e, 3).map(x => x.en)]);
+  if (kind === 'img') return {html: `<img class="gm-pic" src="${e.img}" alt=""><div class="gm-q">Who or what is this?</div>`, opts, ans: e.en};
+  if (kind === 'ru') return {html: `<div class="gm-q gm-ru">${mask(e.ru, e)}</div><div class="gm-sub">Кто или что это?</div>`, opts, ans: e.en};
+  if (kind === 'rev') {
+    const d = distractors(e, 3, x => x.note, x => x.note);
+    const o = shuffle([e, ...d]);
+    return {html: `<div class="gm-q">What is <b>${esc(e.en)}</b> famous for?</div>`, opts: o.map(x => x.note), optHtml: o.map(x => mask(x.note, x)), ans: e.note};
+  }
+  return {html: `<div class="gm-q">${mask(e.note, e)}</div><div class="gm-sub">Who or what is it?</div>`, opts, ans: e.en};
+}
+function reveal(e) {
+  return `<div class="gm-reveal">${e.img ? `<img src="${e.img}" alt="">` : ''}<div><b>${esc(e.sym ? e.country + ' · ' + e.fieldEn + ': ' + e.en : e.en)}</b>${e.sym ? '' : `<div class="gm-ru-note">${esc(e.ru)}</div><div class="gm-en-note">${esc(e.note)}</div>`}</div></div>`;
+}
+
+/* ---------------- каркас раунда ---------------- */
+let stage, bar;
+function frame(game, total) {
+  const g = GAMES.find(x => x.id === game);
+  root.querySelector('.gm-play').hidden = false;
+  root.querySelector('.gm-menu').hidden = true;
+  const p = root.querySelector('.gm-play');
+  p.innerHTML = `<div class="gm-top"><button class="gm-back">← Все игры</button><b>${g.icon} ${g.name}</b><span class="gm-bar"></span><span class="gm-score"></span></div><div class="gm-stage"></div>`;
+  p.querySelector('.gm-back').onclick = menu;
+  stage = p.querySelector('.gm-stage'); bar = p.querySelector('.gm-bar');
+  p.scrollIntoView({behavior: 'smooth', block: 'start'});
+  return {g, total};
+}
+function score(t) { root.querySelector('.gm-score').innerHTML = t; }
+function progress(i, n) { bar.innerHTML = `<i style="width:${Math.round(i / n * 100)}%"></i>`; }
+function finish(game, got, total, extra = '') {
+  const best = ST.best[game] || 0; if (got > best) { ST.best[game] = got; save(); }
+  const pct = total ? got / total : 0;
+  stage.innerHTML = `<div class="gm-end"><div class="gm-big">${pct >= .9 ? '🏆' : pct >= .6 ? '🎉' : '💪'}</div><h3>${got} / ${total}</h3><p>${extra || (pct >= .9 ? 'Блестяще!' : pct >= .6 ? 'Хорошо! Ещё раунд — и новые пункты.' : 'Ошибки ушли в «нерешённые» — они придут снова.')}</p>
+    <div class="gm-row"><button class="gm-btn" data-again>Ещё раунд</button><button class="gm-btn ghost" data-menu>Другие игры</button></div></div>`;
+  stage.querySelector('[data-again]').onclick = () => start(game);
+  stage.querySelector('[data-menu]').onclick = menu;
+  if (pct >= .9) confetti();
+}
+function confetti() {
+  const c = document.createElement('div'); c.className = 'gm-confetti';
+  for (let i = 0; i < 40; i++) { const s = document.createElement('i'); s.style.left = rnd(100) + '%'; s.style.animationDelay = (Math.random() * .6) + 's'; s.style.background = ['#e3456e', '#ffe36b', '#6fc3a6', '#8c6be0', '#ff9f43'][i % 5]; c.append(s); }
+  stage.append(c); setTimeout(() => c.remove(), 2200);
+}
+function tooFew(n) { stage.innerHTML = `<div class="gm-end"><p>В выбранном разделе слишком мало подходящих пунктов (нужно ${n}). Выбери «Все разделы» или другой подраздел.</p><button class="gm-btn" data-menu>К играм</button></div>`; stage.querySelector('[data-menu]').onclick = menu; }
+
+/* квиз из N вопросов одного типа */
+function quiz(game, kind, n, filter) {
+  frame(game);
+  const items = pick(n, filter);
+  if (items.length < 4) return tooFew(4);
+  let i = 0, got = 0, streak = 0;
+  const step = () => {
+    if (i >= items.length) return finish(game, got, items.length);
+    progress(i, items.length); score(`✓ ${got} · 🔥 ${streak}`);
+    const e = items[i], k = typeof kind === 'function' ? kind(e) : kind, q = prompt(e, k);
+    stage.innerHTML = `<div class="gm-card">${q.html}<div class="gm-opts">${q.opts.map((o, j) => `<button class="gm-opt" data-j="${j}"><kbd>${j + 1}</kbd>${q.optHtml ? q.optHtml[j] : esc(o)}</button>`).join('')}</div><div class="gm-after"></div></div>`;
+    const btns = [...stage.querySelectorAll('.gm-opt')];
+    const choose = j => {
+      if (stage.dataset.done === '1') return; stage.dataset.done = '1';
+      const ok = q.opts[j] === q.ans; if (ok) { got++; streak++; } else streak = 0;
+      mark(e, ok);
+      btns.forEach((b, x) => { b.disabled = true; if (q.opts[x] === q.ans) b.classList.add('right'); else if (x === j) b.classList.add('wrong'); });
+      stage.querySelector('.gm-after').innerHTML = reveal(e) + `<button class="gm-btn gm-next">Дальше →</button>`;
+      const nx = stage.querySelector('.gm-next'); nx.onclick = () => { i++; step(); }; setTimeout(() => nx.focus(), 60);
+      score(`✓ ${got} · 🔥 ${streak}`);
+    };
+    stage.dataset.done = '';
+    btns.forEach((b, j) => b.onclick = () => choose(j));
+    KEY = ev => { if (/^[1-4]$/.test(ev.key) && btns[+ev.key - 1]) choose(+ev.key - 1); };
+  };
+  step();
+}
+let KEY = null;
+document.addEventListener('keydown', ev => { if (KEY && root.querySelector('.gm-play') && !root.querySelector('.gm-play').hidden && !/INPUT|SELECT|TEXTAREA/.test(ev.target.tagName)) KEY(ev); });
+
+/* ---------------- игры ---------------- */
+function spell() {
+  frame('spell');
+  const items = pick(8, e => !e.sym || e.field !== 'day');
+  if (!items.length) return tooFew(1);
+  let i = 0, got = 0;
+  const step = () => {
+    if (i >= items.length) return finish('spell', got, items.length, 'На олимпиаде ошибка в написании = 0 баллов. Здесь «почти» тоже считается ошибкой.');
+    progress(i, items.length); score(`✓ ${got}`);
+    const e = items[i];
+    stage.innerHTML = `<div class="gm-card">${e.img ? `<img class="gm-pic small" src="${e.img}" alt="">` : ''}<div class="gm-q">${e.sym ? `The <b>${e.fieldEn}</b> of <b>${esc(e.country)}</b>` : mask(e.note, e)}</div>
+      <div class="gm-sub">Напиши по-английски — без ошибок. ${e.sec === 'people' ? 'Фамилии достаточно.' : ''}</div>
+      <div class="gm-type"><input spellcheck="false" autocomplete="off" placeholder="type here…"><button class="gm-btn">Проверить</button><button class="gm-btn ghost" data-skip>Не знаю</button></div>
+      <details class="gm-hint"><summary>Подсказка по-русски</summary>${mask(e.ru, e)}</details><div class="gm-after"></div></div>`;
+    const inp = stage.querySelector('input'); inp.focus();
+    const check = skip => {
+      if (stage.dataset.done === '1') return;
+      const v = norm(inp.value); if (!v && !skip) return inp.focus();
+      stage.dataset.done = '1';
+      const acc = answers(e), ok = !skip && acc.includes(v);
+      const near = !ok && !skip && acc.some(a => lev(a, v) <= (a.length > 9 ? 2 : 1));
+      if (ok) got++; mark(e, ok);
+      inp.disabled = true; inp.classList.add(ok ? 'right' : 'wrong');
+      stage.querySelector('.gm-after').innerHTML = `<div class="gm-verdict ${ok ? 'ok' : 'bad'}">${ok ? 'Верно!' : near ? 'Почти — проверь написание:' : 'Правильно:'} <b>${esc(e.en)}</b></div>` + reveal(e) + `<button class="gm-btn gm-next">Дальше →</button>`;
+      const nx = stage.querySelector('.gm-next'); nx.onclick = () => { i++; step(); }; setTimeout(() => nx.focus(), 60);
+    };
+    stage.dataset.done = '';
+    stage.querySelector('.gm-type .gm-btn').onclick = () => check(false);
+    stage.querySelector('[data-skip]').onclick = () => check(true);
+    inp.onkeydown = ev => { if (ev.key === 'Enter') { ev.preventDefault(); check(false); } };
+    KEY = null;
+  };
+  step();
+}
+
+function matchGame() {
+  frame('match');
+  const items = pick(6, e => e.note && !e.sym);
+  if (items.length < 3) return tooFew(3);
+  const right = shuffle(items);
+  let sel = null, got = 0; const done = new Set(); let miss = 0;
+  stage.innerHTML = `<div class="gm-sub">Нажми имя слева, потом описание справа.</div><div class="gm-match"><div class="gm-col L"></div><div class="gm-col R"></div></div><div class="gm-after"></div>`;
+  const L = stage.querySelector('.L'), R = stage.querySelector('.R');
+  items.forEach(e => { const b = document.createElement('button'); b.className = 'gm-tile'; b.textContent = e.en; b.dataset.id = e.id; L.append(b); });
+  right.forEach(e => { const b = document.createElement('button'); b.className = 'gm-tile desc'; b.innerHTML = mask(e.note, e); b.dataset.id = e.id; R.append(b); });
+  const upd = () => { score(`✓ ${got} / ${items.length} · промахов ${miss}`); progress(got, items.length); };
+  L.onclick = ev => { const b = ev.target.closest('.gm-tile'); if (!b || done.has(b.dataset.id)) return; L.querySelectorAll('.sel').forEach(x => x.classList.remove('sel')); b.classList.add('sel'); sel = b.dataset.id; };
+  R.onclick = ev => {
+    const b = ev.target.closest('.gm-tile'); if (!b || !sel || done.has(b.dataset.id)) return;
+    const ok = b.dataset.id === sel, e = BYID[sel];
+    if (ok) { done.add(sel); got++; mark(e, true); L.querySelector(`[data-id="${CSS.escape(sel)}"]`).className = 'gm-tile right'; b.className = 'gm-tile desc right'; b.innerHTML = esc(e.note); sel = null; }
+    else { miss++; mark(e, false); b.classList.add('shake'); setTimeout(() => b.classList.remove('shake'), 400); }
+    upd();
+    if (got === items.length) setTimeout(() => finish('match', Math.max(0, items.length - miss), items.length, `Промахов: ${miss}.`), 500);
+  };
+  upd(); KEY = null;
+}
+
+function memory() {
+  frame('memory');
+  const items = pick(6, e => e.img);
+  if (items.length < 3) return tooFew(3);
+  const cards = shuffle(items.flatMap(e => [{id: e.id, t: 'img'}, {id: e.id, t: 'name'}]));
+  let open = [], found = 0, moves = 0, lock = false;
+  stage.innerHTML = `<div class="gm-sub">Открой две карточки: картинку и название одного и того же.</div><div class="gm-memory"></div>`;
+  const g = stage.querySelector('.gm-memory');
+  cards.forEach((c, k) => {
+    const e = BYID[c.id], b = document.createElement('button'); b.className = 'gm-mcard'; b.dataset.k = k;
+    b.innerHTML = `<span class="back">?</span><span class="face">${c.t === 'img' ? `<img src="${e.img}" alt="">` : esc(e.en)}</span>`;
+    b.onclick = () => {
+      if (lock || b.classList.contains('open') || b.classList.contains('done')) return;
+      b.classList.add('open'); open.push([b, c]);
+      if (open.length === 2) {
+        moves++; lock = true;
+        const [[b1, c1], [b2, c2]] = open;
+        if (c1.id === c2.id) { setTimeout(() => { b1.classList.add('done'); b2.classList.add('done'); open = []; lock = false; found++; mark(BYID[c1.id], true); upd(); if (found === items.length) finish('memory', found, items.length, `Ходов: ${moves} (идеально — ${items.length}).`); }, 350); }
+        else setTimeout(() => { b1.classList.remove('open'); b2.classList.remove('open'); open = []; lock = false; }, 900);
+        upd();
+      }
+    };
+    g.append(b);
+  });
+  const upd = () => { score(`пар ${found}/${items.length} · ходов ${moves}`); progress(found, items.length); };
+  upd(); KEY = null;
+}
+
+function blitz() {
+  frame('blitz');
+  const p = pool(e => e.note);
+  if (p.length < 6) return tooFew(6);
+  let t = 60, got = 0, n = 0, timer = null, cur = null, truth = true;
+  stage.innerHTML = `<div class="gm-card"><div class="gm-clock">60</div><div class="gm-blitz"></div><div class="gm-opts two"><button class="gm-opt" data-v="1"><kbd>←</kbd>True</button><button class="gm-opt" data-v="0"><kbd>→</kbd>False</button></div><div class="gm-flash"></div></div>`;
+  const box = stage.querySelector('.gm-blitz'), flash = stage.querySelector('.gm-flash');
+  const next = () => {
+    cur = pick(1, null, p)[0] || p[rnd(p.length)];
+    truth = Math.random() < .5;
+    const d = truth ? cur : (distractors(cur, 1, x => x.note, x => x.note)[0] || cur);
+    if (d === cur) truth = true;
+    box.innerHTML = `<b>${esc(cur.sym ? cur.country : cur.en)}</b><span>${esc(cur.sym ? `${cur.fieldEn}: ${d.en}` : d.note)}</span>`;
+  };
+  const answer = v => {
+    if (t <= 0) return;
+    const ok = (v === 1) === truth; n++; if (ok) got++;
+    mark(cur, ok);
+    flash.textContent = ok ? '✓' : `✗ ${truth ? 'это правда' : 'это про другое'}`; flash.className = 'gm-flash ' + (ok ? 'ok' : 'bad');
+    score(`✓ ${got} из ${n}`); next();
+  };
+  stage.querySelectorAll('.gm-opt').forEach(b => b.onclick = () => answer(+b.dataset.v));
+  KEY = ev => { if (ev.key === 'ArrowLeft') answer(1); if (ev.key === 'ArrowRight') answer(0); };
+  next(); score('✓ 0');
+  timer = setInterval(() => {
+    t--; const c = stage.querySelector('.gm-clock'); if (!c) return clearInterval(timer);
+    c.textContent = t; progress(60 - t, 60);
+    if (t <= 0) { clearInterval(timer); KEY = null; finish('blitz', got, n, `Верных ответов за минуту: ${got} из ${n}.`); }
+  }, 1000);
+}
+
+function oddOne() {
+  frame('odd');
+  const subs = uniq(pool().map(e => e.sec + '|' + e.sub)).filter(s => E.filter(e => e.sec + '|' + e.sub === s).length >= 3);
+  if (subs.length < 1) return tooFew(3);
+  let i = 0, got = 0; const N = 8;
+  const step = () => {
+    if (i >= N) return finish('odd', got, N);
+    progress(i, N); score(`✓ ${got}`);
+    const s = subs[rnd(subs.length)], [sec, sub] = s.split('|');
+    const grp = pick(3, null, pool(e => e.sec === sec && e.sub === sub).length >= 3 ? pool(e => e.sec === sec && e.sub === sub) : E.filter(e => e.sec === sec && e.sub === sub));
+    const otherSubs = uniq(E.filter(e => e.sub !== sub && (e.sec === sec || !E.some(x => x.sec === sec && x.sub !== sub))).map(e => e.sub));
+    const os = otherSubs[rnd(otherSubs.length)];
+    const odd = shuffle(E.filter(e => e.sub === os && e.en !== grp[0].en))[0];
+    const four = shuffle([...grp, odd]);
+    stage.innerHTML = `<div class="gm-card"><div class="gm-q">Which one does <b>not</b> belong?</div><div class="gm-opts">${four.map((e, j) => `<button class="gm-opt" data-j="${j}"><kbd>${j + 1}</kbd>${e.img ? `<img src="${e.img}" alt="">` : ''}${esc(e.en)}</button>`).join('')}</div><div class="gm-after"></div></div>`;
+    const btns = [...stage.querySelectorAll('.gm-opt')];
+    const choose = j => {
+      if (stage.dataset.done === '1') return; stage.dataset.done = '1';
+      const ok = four[j] === odd; if (ok) got++;
+      four.forEach(e => mark(e, ok));
+      btns.forEach((b, x) => { b.disabled = true; if (four[x] === odd) b.classList.add('right'); else if (x === j) b.classList.add('wrong'); });
+      stage.querySelector('.gm-after').innerHTML = `<div class="gm-verdict ${ok ? 'ok' : 'bad'}">Три пункта — «${esc(sub)}», а <b>${esc(odd.en)}</b> — «${esc(odd.sub)}».</div><div class="gm-en-note">${esc(odd.note)}</div><button class="gm-btn gm-next">Дальше →</button>`;
+      const nx = stage.querySelector('.gm-next'); nx.onclick = () => { i++; step(); }; setTimeout(() => nx.focus(), 60);
+    };
+    stage.dataset.done = '';
+    btns.forEach((b, j) => b.onclick = () => choose(j));
+    KEY = ev => { if (/^[1-4]$/.test(ev.key)) choose(+ev.key - 1); };
+  };
+  step();
+}
+
+function sortGame() {
+  frame('sort');
+  const bySub = {};
+  pool().forEach(e => { (bySub[e.sec + '|' + e.sub] = bySub[e.sec + '|' + e.sub] || []).push(e); });
+  let keys = Object.keys(bySub).filter(k => bySub[k].length >= 3);
+  if (SCOPE.sec === 'all') { const s = shuffle(SECS.map(x => x.id))[0]; const k2 = keys.filter(k => k.startsWith(s + '|')); if (k2.length >= 2) keys = k2; }
+  if (keys.length < 2) return tooFew(6);
+  keys = shuffle(keys).slice(0, 3);
+  const cards = shuffle(keys.flatMap(k => pick(keys.length === 2 ? 4 : 3, null, bySub[k])));
+  const placed = {};
+  const draw = () => {
+    stage.innerHTML = `<div class="gm-sub">Разложи по корзинам: нажми карточку, потом корзину.</div><div class="gm-cards"></div><div class="gm-baskets">${keys.map((k, j) => `<div class="gm-basket" data-j="${j}"><h4>${esc(k.split('|')[1])}</h4><div class="in"></div></div>`).join('')}</div><div class="gm-row"><button class="gm-btn" data-check ${Object.keys(placed).length < cards.length ? 'disabled' : ''}>Проверить</button></div>`;
+    const cs = stage.querySelector('.gm-cards');
+    cards.forEach((e, c) => {
+      const b = document.createElement('button'); b.className = 'gm-chip' + (SEL === c ? ' sel' : ''); b.innerHTML = (e.img ? `<img src="${e.img}" alt="">` : '') + esc(e.en);
+      b.onclick = () => { SEL = c; draw(); };
+      (placed[c] != null ? stage.querySelector(`.gm-basket[data-j="${placed[c]}"] .in`) : cs).append(b);
+    });
+    stage.querySelectorAll('.gm-basket').forEach(bk => bk.onclick = ev => { if (SEL == null || ev.target.closest('.gm-chip')) return; placed[SEL] = +bk.dataset.j; SEL = null; draw(); });
+    stage.querySelector('[data-check]').onclick = () => {
+      let got = 0;
+      cards.forEach((e, c) => { const ok = keys[placed[c]] === e.sec + '|' + e.sub; if (ok) got++; mark(e, ok); });
+      stage.querySelectorAll('.gm-basket .gm-chip').forEach(b => {
+        const c = cards.findIndex((e, k) => b.textContent === e.en && placed[k] != null);
+        b.classList.add(keys[placed[c]] === cards[c].sec + '|' + cards[c].sub ? 'right' : 'wrong');
+        b.onclick = null;
+      });
+      const wrong = cards.filter((e, c) => keys[placed[c]] !== e.sec + '|' + e.sub);
+      stage.querySelector('.gm-row').innerHTML = `<div class="gm-verdict ${wrong.length ? 'bad' : 'ok'}">${wrong.length ? 'Ошибки: ' + wrong.map(e => `${esc(e.en)} → «${esc(e.sub)}»`).join('; ') : 'Всё по местам!'}</div><button class="gm-btn gm-next">Итог →</button>`;
+      stage.querySelector('.gm-next').onclick = () => finish('sort', got, cards.length);
+      score(`✓ ${got} / ${cards.length}`);
+    };
+    score(`разложено ${Object.keys(placed).length} / ${cards.length}`); progress(Object.keys(placed).length, cards.length);
+  };
+  let SEL = null; draw(); KEY = null;
+}
+
+function timeline() {
+  frame('timeline');
+  const dated = E.filter(e => e.sec === 'history' && /^\d{4}/.test(e.en)).map(e => ({e, y: parseInt(e.en)}));
+  const items = shuffle(pick(6, null, dated.map(x => x.e)).map(e => dated.find(x => x.e === e)));
+  const seq = [];
+  const draw = done => {
+    stage.innerHTML = `<div class="gm-sub">Выстрой события от раннего к позднему. Годы откроются после проверки.</div><div class="gm-seq">${seq.map((x, k) => `<button class="gm-ev ${done ? (x.ok ? 'right' : 'wrong') : ''}" data-k="${k}"><span class="n">${k + 1}</span>${done ? `<b>${esc(x.e.en)}</b> ` : ''}${esc(x.e.note)}</button>`).join('') || '<div class="gm-empty">здесь появится лента</div>'}</div>
+      ${done ? '' : `<div class="gm-pool">${items.filter(x => !seq.includes(x)).map(x => `<button class="gm-ev" data-y="${items.indexOf(x)}">${esc(x.e.note)}</button>`).join('')}</div>`}<div class="gm-row"></div>`;
+    if (!done) {
+      stage.querySelectorAll('.gm-pool .gm-ev').forEach(b => b.onclick = () => { seq.push(items[+b.dataset.y]); draw(); });
+      stage.querySelectorAll('.gm-seq .gm-ev').forEach(b => b.onclick = () => { seq.splice(+b.dataset.k, 1); draw(); });
+      if (seq.length === items.length) { const c = document.createElement('button'); c.className = 'gm-btn'; c.textContent = 'Проверить'; c.onclick = check; stage.querySelector('.gm-row').append(c); }
+    }
+    score(`${seq.length} / ${items.length}`); progress(seq.length, items.length);
+  };
+  const check = () => {
+    const sorted = items.slice().sort((a, b) => a.y - b.y); let got = 0;
+    seq.forEach((x, k) => { x.ok = x.y === sorted[k].y; if (x.ok) got++; mark(x.e, x.ok); });
+    draw(true);
+    stage.querySelector('.gm-row').innerHTML = `<div class="gm-verdict ${got === items.length ? 'ok' : 'bad'}">Верный порядок: ${sorted.map(x => x.e.en).join(' → ')}</div><button class="gm-btn gm-next">Итог →</button>`;
+    stage.querySelector('.gm-next').onclick = () => finish('timeline', got, items.length);
+  };
+  if (items.length < 3) return tooFew(3);
+  draw(); KEY = null;
+}
+
+function anagram() {
+  frame('anagram');
+  const target = e => e.en.split(/\s*[\/,(]\s*/)[0].replace(/^the\s+/i, '').trim();
+  const ok = e => { const t = target(e); const L = t.replace(/[^A-Za-z]/g, '').length; return L >= 4 && L <= 16 && /^[A-Za-z .’'-]+$/.test(t); };
+  const items = pick(6, ok);
+  if (!items.length) return tooFew(1);
+  let i = 0, got = 0;
+  const step = () => {
+    if (i >= items.length) return finish('anagram', got, items.length);
+    progress(i, items.length); score(`✓ ${got}`);
+    const e = items[i], t = target(e), letters = [...t].map((ch, k) => ({ch, k})).filter(x => /[A-Za-z]/.test(x.ch));
+    let tiles = shuffle(letters); if (tiles.map(x => x.ch).join('') === letters.map(x => x.ch).join('')) tiles = tiles.reverse();
+    const fill = [];
+    const draw = () => {
+      let li = 0;
+      const slots = [...t].map(ch => /[A-Za-z]/.test(ch) ? `<span class="gm-slot ${fill[li] != null ? 'full' : ''}" data-s="${li}">${fill[li++] != null ? tiles[fill[li - 1]].ch.toUpperCase() : ''}</span>` : `<span class="gm-gap">${ch === ' ' ? '&nbsp;' : esc(ch)}</span>`).join('');
+      stage.innerHTML = `<div class="gm-card">${e.img ? `<img class="gm-pic small" src="${e.img}" alt="">` : ''}<div class="gm-q">${mask(e.note, e)}</div><div class="gm-slots">${slots}</div>
+        <div class="gm-tiles">${tiles.map((x, k) => `<button class="gm-letter" data-k="${k}" ${fill.includes(k) ? 'disabled' : ''}>${x.ch.toUpperCase()}</button>`).join('')}</div>
+        <div class="gm-row"><button class="gm-btn ghost" data-clear>Стереть</button><button class="gm-btn ghost" data-skip>Сдаюсь</button></div><div class="gm-after"></div></div>`;
+      stage.querySelectorAll('.gm-letter').forEach(b => b.onclick = () => { fill.push(+b.dataset.k); if (fill.length === letters.length) return check(); draw(); });
+      stage.querySelectorAll('.gm-slot.full').forEach(s => s.onclick = () => { fill.splice(+s.dataset.s); draw(); });
+      stage.querySelector('[data-clear]').onclick = () => { fill.length = 0; draw(); };
+      stage.querySelector('[data-skip]').onclick = () => check(true);
+    };
+    const check = skip => {
+      const word = fill.map(k => tiles[k].ch).join('').toLowerCase(), good = !skip && word === letters.map(x => x.ch).join('').toLowerCase();
+      if (good) got++; mark(e, good);
+      draw();
+      stage.querySelectorAll('.gm-letter,.gm-slot,[data-clear],[data-skip]').forEach(b => { b.disabled = true; b.onclick = null; });
+      stage.querySelector('.gm-after').innerHTML = `<div class="gm-verdict ${good ? 'ok' : 'bad'}">${good ? 'Собрано!' : 'Ответ:'} <b>${esc(e.en)}</b></div><div class="gm-ru-note">${esc(e.ru)}</div><button class="gm-btn gm-next">Дальше →</button>`;
+      const nx = stage.querySelector('.gm-next'); nx.onclick = () => { i++; step(); }; setTimeout(() => nx.focus(), 60);
+    };
+    draw();
+  };
+  KEY = null; step();
+}
+
+function millionaire() {
+  frame('million');
+  const LADDER = [100, 200, 300, 500, 1000, 2000, 4000, 8000, 16000, 32000, 125000, 1000000];
+  const star = shuffle(pool(e => e.star)), rest = shuffle(pool(e => !e.star));
+  const src = pick(12, null, [...star, ...rest]);
+  if (src.length < 6) return tooFew(6);
+  const items = src.slice(0, 12);
+  const kinds = k => k < 4 ? 'img' : k < 8 ? 'cap' : k < 10 ? 'ru' : 'rev';
+  let i = 0, life = {half: true, ru: true, skip: true};
+  const step = () => {
+    if (i >= items.length) return finish('million', items.length, items.length, '💰 1 000 000! Ты прошла всю лестницу.');
+    const e = items[i]; let k = kinds(i); if (k === 'img' && !e.img) k = 'cap'; if (k === 'rev' && !e.note) k = 'cap';
+    const q = prompt(e, k);
+    score(`💰 ${i ? LADDER[i - 1].toLocaleString('ru') : 0}`); progress(i, items.length);
+    stage.innerHTML = `<div class="gm-million"><div class="gm-card">${q.html}<div class="gm-opts">${q.opts.map((o, j) => `<button class="gm-opt" data-j="${j}"><kbd>${'ABCD'[j]}</kbd>${q.optHtml ? q.optHtml[j] : esc(o)}</button>`).join('')}</div>
+      <div class="gm-row gm-life"><button data-l="half" ${life.half ? '' : 'disabled'}>50 : 50</button><button data-l="ru" ${life.ru ? '' : 'disabled'}>Подсказка RU</button><button data-l="skip" ${life.skip ? '' : 'disabled'}>Заменить вопрос</button></div><div class="gm-after"></div></div>
+      <ol class="gm-ladder" reversed>${LADDER.map((v, j) => `<li class="${j === i ? 'on' : j < i ? 'done' : ''} ${j === 4 || j === 9 ? 'safe' : ''}">${v.toLocaleString('ru')}</li>`).reverse().join('')}</ol></div>`;
+    const btns = [...stage.querySelectorAll('.gm-opt')];
+    stage.querySelectorAll('.gm-life button').forEach(b => b.onclick = () => {
+      const l = b.dataset.l; if (!life[l]) return; life[l] = false; b.disabled = true;
+      if (l === 'half') { let n = 0; btns.forEach((x, j) => { if (q.opts[j] !== q.ans && n < 2) { x.disabled = true; x.classList.add('gone'); n++; } }); }
+      if (l === 'ru') stage.querySelector('.gm-after').innerHTML = `<div class="gm-ru-note">${e.sym ? esc(e.ru) : mask(e.ru, e)}</div>`;
+      if (l === 'skip') { items.splice(i, 1, ...pick(1, x => !items.includes(x))); step(); }
+    });
+    const choose = j => {
+      if (stage.dataset.done === '1' || btns[j].disabled) return; stage.dataset.done = '1';
+      const ok = q.opts[j] === q.ans; mark(e, ok);
+      btns.forEach((b, x) => { b.disabled = true; if (q.opts[x] === q.ans) b.classList.add('right'); else if (x === j) b.classList.add('wrong'); });
+      const after = stage.querySelector('.gm-after');
+      if (ok) { after.innerHTML = reveal(e) + `<button class="gm-btn gm-next">${i === items.length - 1 ? 'Забрать миллион' : 'Следующий вопрос →'}</button>`; const nx = after.querySelector('.gm-next'); nx.onclick = () => { i++; step(); }; setTimeout(() => nx.focus(), 60); }
+      else {
+        const safe = i > 9 ? LADDER[9] : i > 4 ? LADDER[4] : 0;
+        after.innerHTML = reveal(e) + `<button class="gm-btn gm-next">Итог</button>`;
+        after.querySelector('.gm-next').onclick = () => finish('million', i, items.length, `Несгораемая сумма: ${safe.toLocaleString('ru')}. Правильных ответов подряд: ${i}.`);
+      }
+    };
+    stage.dataset.done = '';
+    btns.forEach((b, j) => b.onclick = () => choose(j));
+    KEY = ev => { const j = 'abcd1234'.indexOf(ev.key.toLowerCase()) % 4; if (j >= 0 && ev.key.length === 1) choose(j); };
+  };
+  step();
+}
+
+function symTableGame() {
+  frame('symtable');
+  if (!SYM.length) return tooFew(1);
+  const cells = []; SYM.forEach(r => FIELDS.forEach(([f]) => { if (r[f]) cells.push([r.country, f]); }));
+  const unsolved = cells.filter(([c, f]) => !ST.m['symbols:' + c + ':' + f]);
+  const blanks = new Set(shuffle(unsolved).concat(shuffle(cells.filter(x => !unsolved.includes(x)))).slice(0, 14).map(x => x.join('|')));
+  const colVals = f => shuffle(uniq(SYM.map(r => r[f]).filter(Boolean)));
+  stage.innerHTML = `<div class="gm-sub">Заполни пропуски в таблице — как на олимпиаде. В каждом списке только значения этого столбца.</div>
+    <div class="gm-symwrap"><table class="gm-sym"><tr><th>Country</th>${FIELDS.map(([, en]) => `<th>${en}</th>`).join('')}</tr>
+    ${SYM.map(r => `<tr><td><b>${esc(r.country)}</b></td>${FIELDS.map(([f]) => `<td>${!r[f] ? '—' : blanks.has(r.country + '|' + f) ? `<select data-c="${esc(r.country)}" data-f="${f}"><option value="">…</option>${colVals(f).map(v => `<option>${esc(v)}</option>`).join('')}</select>` : esc(r[f])}</td>`).join('')}</tr>`).join('')}</table></div>
+    <div class="gm-row"><button class="gm-btn" data-check>Проверить</button></div>`;
+  const sels = [...stage.querySelectorAll('select')];
+  const upd = () => { const n = sels.filter(s => s.value).length; score(`заполнено ${n} / ${sels.length}`); progress(n, sels.length); };
+  sels.forEach(s => s.onchange = upd); upd();
+  stage.querySelector('[data-check]').onclick = () => {
+    let got = 0;
+    sels.forEach(s => { const r = SYM.find(x => x.country === s.dataset.c), ok = s.value === r[s.dataset.f]; if (ok) got++; mark(BYID['symbols:' + r.country + ':' + s.dataset.f], ok); s.disabled = true; s.classList.add(ok ? 'right' : 'wrong'); if (!ok) s.insertAdjacentHTML('afterend', `<div class="gm-fix">${esc(r[s.dataset.f])}</div>`); });
+    stage.querySelector('.gm-row').innerHTML = `<button class="gm-btn gm-next">Итог →</button>`;
+    stage.querySelector('.gm-next').onclick = () => finish('symtable', got, sels.length);
+  };
+  KEY = null;
+}
+
+const GAMES = [
+  {id: 'who', icon: '🕵️', name: 'Who am I?', ru: 'описание по-английски → выбери, кто это', run: () => quiz('who', 'cap', 10, e => e.note || e.sym), need: e => e.note || e.sym},
+  {id: 'photo', icon: '📸', name: 'Photo guess', ru: 'портрет, место, блюдо → название', run: () => quiz('photo', 'img', 10, e => e.img), need: e => e.img},
+  {id: 'famous', icon: '⭐', name: 'Famous for…', ru: 'имя → чем знаменит (выбери описание)', run: () => quiz('famous', 'rev', 10, e => e.note && !e.sym || e.sym), need: e => e.note},
+  {id: 'ruclue', icon: '🇷🇺', name: 'Russian clue', ru: 'русская справка → английское название', run: () => quiz('ruclue', 'ru', 10, e => !e.sym), need: e => !e.sym},
+  {id: 'spell', icon: '✍️', name: 'Spell it', ru: 'напиши название без ошибок', run: spell, need: () => true},
+  {id: 'match', icon: '🔗', name: 'Match 6', ru: 'соедини шесть имён и описаний', run: matchGame, need: e => e.note && !e.sym},
+  {id: 'memory', icon: '🃏', name: 'Memory', ru: 'найди пары «картинка — название»', run: memory, need: e => e.img},
+  {id: 'blitz', icon: '⚡', name: 'True / False blitz', ru: 'минута: правда или нет?', run: blitz, need: e => e.note},
+  {id: 'odd', icon: '🧺', name: 'Odd one out', ru: 'найди лишнее из четырёх', run: oddOne, need: () => true},
+  {id: 'sort', icon: '🗂️', name: 'Sort it', ru: 'разложи карточки по корзинам', run: sortGame, need: () => true},
+  {id: 'anagram', icon: '🔤', name: 'Anagram', ru: 'собери название из букв', run: anagram, need: () => true},
+  {id: 'million', icon: '💰', name: 'Millionaire', ru: '12 вопросов, три подсказки', run: millionaire, need: () => true},
+  {id: 'timeline', icon: '⏳', name: 'Timeline', ru: 'выстрой даты по порядку', run: timeline, need: e => e.sec === 'history' && /^\d{4}/.test(e.en), fixed: 'history'},
+  {id: 'symtable', icon: '🏴', name: 'Symbols table', ru: 'заполни таблицу символов', run: symTableGame, need: e => e.sym, fixed: 'symbols'},
+];
+function start(id) { KEY = null; GAMES.find(g => g.id === id).run(); }
+
+/* ---------------- меню, фильтры, покрытие ---------------- */
+function coverage() {
+  const cov = root.querySelector('.gm-cov'); if (!cov) return;
+  const all = E.length, done = E.filter(e => ST.m[e.id]).length;
+  cov.innerHTML = `<div class="gm-total"><b>${done}</b> / ${all} пунктов решено <span>· XP ${ST.xp}</span></div><div class="gm-secs">${SECS.map(s => { const a = E.filter(e => e.sec === s.id), d = a.filter(e => ST.m[e.id]).length; return `<button class="gm-secbar ${SCOPE.sec === s.id ? 'on' : ''}" data-sec="${s.id}"><span>${s.short}</span><i><b style="width:${a.length ? d / a.length * 100 : 0}%"></b></i><em>${d}/${a.length}</em></button>`; }).join('')}</div>`;
+  cov.querySelectorAll('.gm-secbar').forEach(b => b.onclick = () => { SCOPE.sec = SCOPE.sec === b.dataset.sec ? 'all' : b.dataset.sec; SCOPE.sub = 'all'; saveScope(); menu(); });
+}
+function menu() {
+  KEY = null;
+  root.querySelector('.gm-play').hidden = true;
+  const m = root.querySelector('.gm-menu'); m.hidden = false;
+  const subs = SCOPE.sec === 'all' ? [] : uniq(E.filter(e => e.sec === SCOPE.sec).map(e => e.sub));
+  const inScope = pool();
+  m.innerHTML = `<div class="gm-filters">
+      <label>Раздел <select data-f="sec"><option value="all">Все разделы</option>${SECS.map(s => `<option value="${s.id}" ${SCOPE.sec === s.id ? 'selected' : ''}>${s.short}</option>`).join('')}</select></label>
+      ${subs.length > 1 ? `<label>Подраздел <select data-f="sub"><option value="all">Все</option>${subs.map(s => `<option ${SCOPE.sub === s ? 'selected' : ''}>${esc(s)}</option>`).join('')}</select></label>` : ''}
+      <label class="chk"><input type="checkbox" data-f="star" ${SCOPE.star ? 'checked' : ''}> только ★</label>
+      <span class="gm-count">в игре: <b>${inScope.length}</b> · ещё не решено: <b>${inScope.filter(e => !ST.m[e.id]).length}</b></span>
+      <button class="gm-link" data-left>что ещё не решено?</button></div>
+    <div class="gm-grid">${GAMES.map(g => { const n = (g.fixed ? E.filter(e => e.sec === g.fixed) : inScope).filter(g.need).length; return `<button class="gm-game" data-g="${g.id}" ${n < 3 ? 'disabled' : ''}><span class="ic">${g.icon}</span><b>${g.name}</b><span>${g.ru}</span><em>${g.fixed ? (g.fixed === 'history' ? 'даты' : 'таблица') + ' · ' : ''}${n} пунктов${ST.best[g.id] ? ' · рекорд ' + ST.best[g.id] : ''}</em></button>`; }).join('')}</div>
+    <div class="gm-left" hidden></div>`;
+  m.querySelectorAll('select,input').forEach(x => x.onchange = () => { const f = x.dataset.f; SCOPE[f] = x.type === 'checkbox' ? x.checked : x.value; if (f === 'sec') SCOPE.sub = 'all'; saveScope(); menu(); });
+  m.querySelectorAll('.gm-game').forEach(b => b.onclick = () => start(b.dataset.g));
+  m.querySelector('[data-left]').onclick = () => {
+    const box = m.querySelector('.gm-left'); box.hidden = !box.hidden;
+    const left = inScope.filter(e => !ST.m[e.id]);
+    box.innerHTML = left.length ? `<p>Нажми пункт — откроется его место в справочнике.</p>${SECS.map(s => { const l = left.filter(e => e.sec === s.id); return l.length ? `<h4>${s.short} · ${l.length}</h4><div>${l.map(e => `<button class="gm-chip small" data-id="${esc(e.id)}">${esc(e.sym ? e.country + ': ' + e.fieldEn : e.en)}</button>`).join('')}</div>` : ''; }).join('')}` : '<p>Всё в этом разделе уже решено! 🎉</p>';
+    box.querySelectorAll('[data-id]').forEach(b => b.onclick = () => {
+      const e = BYID[b.dataset.id];
+      const li = e.sym ? document.querySelector('#symbols') : [...document.querySelectorAll('main li')].find(l => l.dataset.en === e.en);
+      if (li) { li.scrollIntoView({behavior: 'smooth', block: 'center'}); li.classList.add('gm-flashli'); setTimeout(() => li.classList.remove('gm-flashli'), 2000); }
+    });
+  };
+  coverage();
+}
+root.querySelector('.gm-reset').onclick = () => { if (confirm('Стереть прогресс игр (решённые пункты, XP, рекорды)?')) { ST = {m: {}, xp: 0, best: {}}; save(); menu(); } };
+menu();
+window.__arcade = {E, SYM, answers, norm, start, ST: () => ST};
+})();
 </script></body></html>
