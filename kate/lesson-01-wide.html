@@ -372,41 +372,7 @@ body.still .confetti{display:none}
   .tfrow,.traprow{grid-template-columns:1fr;row-gap:5px}
 }
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
-/* ==========================================================================
-   Вертикальный кадр 420 × 910. Правила висят на классе portrait, а не на
-   медиазапросе: медиазапрос смотрит на окно браузера, а кадр остаётся узким
-   и в широком окне. Оглавление слева в такую ширину не помещается, сетки
-   в две-четыре колонки превращаются в кашу — то и другое чинится здесь.
-   ========================================================================== */
-.portrait .deck-stage{grid-template-columns:minmax(0,1fr)}
-.portrait .deck-rail{display:none}
-.portrait .stage{padding:14px 16px 12px}
-.portrait .controlbar{padding:0 16px}
-.portrait .footer{padding:0 16px}
-.portrait h1{font-size:23px}
-.portrait .two,.portrait .three,.portrait .four,
-.portrait .mirror,.portrait .sprint,.portrait .matchgrid,
-.portrait .scorewrap,.portrait .cover,.portrait .clientgrid,.portrait .hwgrid{
-  display:block}
-.portrait .grid>*+*,.portrait .clientgrid>*+*{margin-top:11px}
-.portrait .wordgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
-.portrait .split2,.portrait .split3,.portrait .split4{grid-template-columns:1fr}
-.portrait .passage.twocol{columns:1}
-.portrait .testq{grid-template-columns:18px minmax(0,1fr);row-gap:4px;padding:4px 0}
-.portrait .testq select{grid-column:2}
-.portrait .tfrow,.portrait .traprow{grid-template-columns:1fr;row-gap:5px}
-.portrait .mirror{display:flex;flex-direction:column}
-.portrait .mirror>.cuecard{order:1;margin-bottom:11px}
-.portrait .mirror>.figure{order:2;width:100%;max-width:168px;margin:0 auto 10px}
-.portrait .mirror>.saycard{order:3}
-.portrait .roadmap{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:12px}
-.portrait .rm-step:after{display:none}
-
-.portrait .saycard .pills span{font-size:9.5px;padding:1px 7px}
-.portrait .saycard .small{font-size:10.5px}
-.portrait .resource h2{font-size:12.5px}
-.portrait .resource p{font-size:10.5px}
-</style></head><body class="portrait">
+</style></head><body>
 <div class="controlbar"><strong id="topTitle">STUDIO · KATE · FIRST LESSON</strong><div class="ctools"><div class="levels" aria-label="Task level"><button data-level="0" onclick="setLevel(0)">Easy</button><button data-level="1" onclick="setLevel(1)">Medium</button><button data-level="2" onclick="setLevel(2)">Hard</button></div><button id="motion" onclick="toggleMotion()" aria-pressed="false" title="Motion">Motion</button><button onclick="if(!document.fullscreenElement){document.documentElement.requestFullscreen?.().catch(()=>toast('Fullscreen is not available'))}else document.exitFullscreen?.()" aria-label="Fullscreen">⛶</button></div></div>
 <aside id="drawer" class="drawer" aria-label="Lesson contents"><button onclick="$('drawer').classList.remove('open')">Close ×</button><nav id="nav"></nav></aside>
 <main id="stage" class="stage"></main><footer class="footer"><p><b id="slideCount"></b> · <span id="xp">0 XP</span> · placement test + modal verbs</p><div class="buttons"><button id="prev">←</button><button id="next" class="primary">→</button></div></footer><div class="progressline"><i id="progress"></i></div>
@@ -1594,7 +1560,7 @@ if(val('letter'))countWords('letter','letterCount');
    ============================================================ */
 
 .deck-viewport{position:fixed;inset:0;overflow:hidden;background:var(--deck-backdrop,#0e1116);z-index:0}
-.deck-stage{position:absolute;top:0;left:0;width:420px;height:910px;transform-origin:0 0;
+.deck-stage{position:absolute;top:0;left:0;width:1280px;height:720px;transform-origin:0 0;
  display:grid;grid-template-columns:var(--deck-rail-w,250px) minmax(0,1fr);
  overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,.45)}
 body.deck-on{margin:0;height:100%;overflow:hidden}
@@ -1682,7 +1648,7 @@ body.deck-flow .deck-scroll{overflow:visible;min-height:0}
 (function(){
 'use strict';
 if(window.__deckLayer)return;
-const W=420,H=910,BODY=document.body,ROOT=document.documentElement;
+const W=1280,H=720,BODY=document.body,ROOT=document.documentElement;
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
 /* ---------- палитра урока переносится на сцену ---------- */
@@ -1795,7 +1761,7 @@ if(sheet){
 /* ---------- вписывание сцены в окно ---------- */
 let scale=1;
 function fit(){
- const vw=window.innerWidth,vh=window.innerHeight,flow=false;
+ const vw=window.innerWidth,vh=window.innerHeight,flow=vw<860||vh<460;
  BODY.classList.toggle('deck-flow',flow);
  ROOT.style.overflow=flow?'':'hidden';
  if(flow){scale=1;stage.style.transform='';return}
