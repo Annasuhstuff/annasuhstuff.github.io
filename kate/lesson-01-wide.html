@@ -451,6 +451,10 @@ body.still .confetti{display:none}
 .practicecard .buttons{margin:0;gap:5px}
 .practicecard .tag{margin-right:4px}
 .practicecard button{font-size:10.5px;padding:3px 10px}
+/* ---------- отправка Ане ---------- */
+.tgbtn{background:#229ed9;border-color:#229ed9;color:#fff;font-weight:800}
+.tgbtn:hover{background:#1b86b8;border-color:#1b86b8}
+.sendrow{justify-content:flex-end;margin-top:8px}
 </style></head><body>
 <div class="controlbar"><strong id="topTitle">STUDIO · KATE · FIRST LESSON</strong><div class="ctools"><button class="menubtn" onclick="openMenu()" aria-label="Lesson menu">☰ Menu</button><div class="levels" aria-label="Task level"><button data-level="0" onclick="setLevel(0)">Easy</button><button data-level="1" onclick="setLevel(1)">Medium</button><button data-level="2" onclick="setLevel(2)">Hard</button></div><button id="motion" onclick="toggleMotion()" aria-pressed="false" title="Motion">Motion</button><button onclick="if(!document.fullscreenElement){document.documentElement.requestFullscreen?.().catch(()=>toast('Fullscreen is not available'))}else document.exitFullscreen?.()" aria-label="Fullscreen">⛶</button></div></div>
 <div id="menuShade" class="shade" onclick="closeMenu()"></div><aside id="drawer" class="drawer" aria-label="Lesson contents"><div class="drawerhead"><b>Lesson menu</b><button onclick="closeMenu()" aria-label="Close menu">×</button></div><nav id="nav"></nav></aside>
@@ -473,19 +477,19 @@ const PORTRAIT=document.body.classList.contains('portrait');
 const WIDE=[
  ['Hello, coach',()=>sheetHello()],
  ['The route',()=>sheetRoute()],
- ['Test · Grammar 1–12',()=>sheetTestG1()],
- ['Test · Grammar 13–24',()=>sheetTestG2()],
- ['Test · Vocabulary',()=>sheetTestV()],
- ['Test · Reading',()=>sheetTestR()],
- ['Test · Speaking check',()=>sheetTestS()],
- ['Test · Your level',()=>sheetResult()],
- ['Words · Studio 60',()=>sheetWords()],
- ['Words · Mirror the coach',()=>sheetMirror()],
- ['Words · Rep sprint',()=>sheetSprint()],
- ['Words · Build the cue',()=>sheetBuild()],
- ['Words · Odd one out',()=>sheetOdd()],
- ['Words · Pair up',()=>sheetPairs()],
- ['Words · What would you say?',()=>sheetSayWhat()],
+ ['Test · Grammar 1–12',()=>sheetTestG1(),'testg'],
+ ['Test · Grammar 13–24',()=>sheetTestG2(),'testg2'],
+ ['Test · Vocabulary',()=>sheetTestV(),'testv'],
+ ['Test · Reading',()=>sheetTestR(),'testr'],
+ ['Test · Speaking check',()=>sheetTestS(),'tests'],
+ ['Test · Your level',()=>sheetResult(),'result'],
+ ['Words · Studio 60',()=>sheetWords(),'words'],
+ ['Words · Mirror the coach',()=>sheetMirror(),'mirror'],
+ ['Words · Rep sprint',()=>sheetSprint(),'sprint'],
+ ['Words · Build the cue',()=>sheetBuild(),'build'],
+ ['Words · Odd one out',()=>sheetOdd(),'odd'],
+ ['Words · Pair up',()=>sheetPairs(),'pairs'],
+ ['Words · What would you say?',()=>sheetSayWhat(),'saywhat'],
  ['Grammar · Modal verbs',()=>sheetMap(),'modals'],
  ['Grammar · Present Simple',()=>sheetPsForm(),'ps'],
  ['Grammar · How often?',()=>sheetFreq(),'freq'],
@@ -501,11 +505,11 @@ const WIDE=[
  ['Practice · Domino of doom',()=>sheetDomino(),'domino','if'],
  ['Practice · Will-hunter',()=>sheetBugs(),'bugs','if'],
  ['Practice · Promises & threats',()=>sheetPromises(),'promises','if'],
- ['Skills · Reading · true or false',()=>sheetReading1()],
- ['Skills · Reading · match the client',()=>sheetReading2()],
- ['Skills · Role-play',()=>sheetRole()],
- ['Skills · Writing',()=>sheetWrite()],
- ['Finish · Homework',()=>sheetHomework()],
+ ['Skills · Reading · true or false',()=>sheetReading1(),'r1'],
+ ['Skills · Reading · match the client',()=>sheetReading2(),'r2'],
+ ['Skills · Role-play',()=>sheetRole(),'role'],
+ ['Skills · Writing',()=>sheetWrite(),'write'],
+ ['Finish · Homework',()=>sheetHomework(),'hw'],
  ['Finish · Explore',()=>sheetExplore()],
  ['Finish · My progress',()=>sheetProgress()],
 ];
@@ -513,24 +517,24 @@ const TALL=[
  ['Привет',()=>sheetHello(0)],
  ['Зачем тебе английский',()=>sheetHello(1)],
  ['Маршрут урока',()=>sheetRoute()],
- ['Тест · грамматика 1–6',()=>testSheet('grammar',0,6,'PLACEMENT TEST · 1 / 5','Grammar, part one','Выбери один вариант. Вопросы идут от простых к сложным — так и задумано.')],
- ['Тест · грамматика 7–12',()=>testSheet('grammar',6,12,'PLACEMENT TEST · 1 / 5','Grammar, part one','Продолжение. Не знаешь — ставь прочерк и иди дальше.')],
- ['Тест · грамматика 13–18',()=>testSheet('grammar',12,18,'PLACEMENT TEST · 2 / 5','Grammar, part two','Дальше начинается то, что обычно и решает уровень: времена и условия.')],
- ['Тест · грамматика 19–24',()=>testSheet('grammar',18,24,'PLACEMENT TEST · 2 / 5','Grammar, part two','Последние шесть — самые трудные. Спокойно.')],
- ['Тест · слова 1–4',()=>testSheet('vocab',0,4,'PLACEMENT TEST · 3 / 5','Words you already have','Лексика сразу из твоей области: если что-то знакомо — это хороший знак.')],
- ['Тест · слова 5–8',()=>testSheet('vocab',4,8,'PLACEMENT TEST · 3 / 5','Words you already have','Ещё четыре.')],
- ['Тест · чтение · текст',()=>sheetTestR(0)],
- ['Тест · чтение · вопросы',()=>sheetTestR(1)],
- ['Тест · говорение',()=>sheetTestS()],
- ['Твой уровень',()=>sheetResult(0)],
- ['Что это значит',()=>sheetResult(1)],
- ['Словарь · 60 слов',()=>sheetWords()],
- ['Игра 1 · фигура',()=>sheetMirror()],
- ['Игра 2 · спринт',()=>sheetSprint()],
- ['Игра 3 · собери фразу',()=>sheetBuild()],
- ['Игра 4 · лишнее слово',()=>sheetOdd()],
- ['Игра 5 · пары',()=>sheetPairs()],
- ['Игра 6 · что сказать',()=>sheetSayWhat()],
+ ['Тест · грамматика 1–6',()=>testSheet('grammar',0,6,'PLACEMENT TEST · 1 / 5','Grammar, part one','Выбери один вариант. Вопросы идут от простых к сложным — так и задумано.'),'testg'],
+ ['Тест · грамматика 7–12',()=>testSheet('grammar',6,12,'PLACEMENT TEST · 1 / 5','Grammar, part one','Продолжение. Не знаешь — ставь прочерк и иди дальше.'),'testg6'],
+ ['Тест · грамматика 13–18',()=>testSheet('grammar',12,18,'PLACEMENT TEST · 2 / 5','Grammar, part two','Дальше начинается то, что обычно и решает уровень: времена и условия.'),'testg12'],
+ ['Тест · грамматика 19–24',()=>testSheet('grammar',18,24,'PLACEMENT TEST · 2 / 5','Grammar, part two','Последние шесть — самые трудные. Спокойно.'),'testg18'],
+ ['Тест · слова 1–4',()=>testSheet('vocab',0,4,'PLACEMENT TEST · 3 / 5','Words you already have','Лексика сразу из твоей области: если что-то знакомо — это хороший знак.'),'testv'],
+ ['Тест · слова 5–8',()=>testSheet('vocab',4,8,'PLACEMENT TEST · 3 / 5','Words you already have','Ещё четыре.'),'testv4'],
+ ['Тест · чтение · текст',()=>sheetTestR(0),'testrtext'],
+ ['Тест · чтение · вопросы',()=>sheetTestR(1),'testr'],
+ ['Тест · говорение',()=>sheetTestS(),'tests'],
+ ['Твой уровень',()=>sheetResult(0),'result'],
+ ['Что это значит',()=>sheetResult(1),'result2'],
+ ['Словарь · 60 слов',()=>sheetWords(),'words'],
+ ['Игра 1 · фигура',()=>sheetMirror(),'mirror'],
+ ['Игра 2 · спринт',()=>sheetSprint(),'sprint'],
+ ['Игра 3 · собери фразу',()=>sheetBuild(),'build'],
+ ['Игра 4 · лишнее слово',()=>sheetOdd(),'odd'],
+ ['Игра 5 · пары',()=>sheetPairs(),'pairs'],
+ ['Игра 6 · что сказать',()=>sheetSayWhat(),'saywhat'],
  ['Грамматика · модальные 1',()=>sheetMap(0,5),'modals'],
  ['Грамматика · модальные 2',()=>sheetMap(5,11),'modals2'],
  ['Грамматика · Present Simple',()=>sheetPsForm(0),'ps'],
@@ -555,16 +559,16 @@ const TALL=[
  ['Игра 11 · домино',()=>sheetDomino(),'domino','if'],
  ['Игра 12 · охота на will',()=>sheetBugs(),'bugs','if'],
  ['Игра 13 · обещания и угрозы',()=>sheetPromises(),'promises','if'],
- ['Чтение · текст',()=>sheetReading1(0)],
- ['Чтение · вопросы',()=>sheetReading1(1)],
- ['Подбор · занятия',()=>sheetReading2(0)],
- ['Подбор · клиенты',()=>sheetReading2(1)],
- ['Ролевая · первая минута',()=>sheetRole(0,1)],
- ['Ролевая · упражнение',()=>sheetRole(1,2)],
- ['Ролевая · трудный случай',()=>sheetRole(2,3)],
- ['Письмо клиенту',()=>sheetWrite()],
- ['Домашка · слова и голос',()=>sheetHomework(0)],
- ['Домашка · письмо и квиз',()=>sheetHomework(1)],
+ ['Чтение · текст',()=>sheetReading1(0),'r1text'],
+ ['Чтение · вопросы',()=>sheetReading1(1),'r1'],
+ ['Подбор · занятия',()=>sheetReading2(0),'r2text'],
+ ['Подбор · клиенты',()=>sheetReading2(1),'r2'],
+ ['Ролевая · первая минута',()=>sheetRole(0,1),'role'],
+ ['Ролевая · упражнение',()=>sheetRole(1,2),'role2'],
+ ['Ролевая · трудный случай',()=>sheetRole(2,3),'role3'],
+ ['Письмо клиенту',()=>sheetWrite(),'write'],
+ ['Домашка · слова и голос',()=>sheetHomework(0),'hw'],
+ ['Домашка · письмо и квиз',()=>sheetHomework(1),'hw2'],
  ['Ресурсы 1',()=>sheetExplore(0,3)],
  ['Ресурсы 2',()=>sheetExplore(3,6)],
  ['Ресурсы 3',()=>sheetExplore(6,8)],
@@ -675,6 +679,7 @@ function render(){
  $('stage').innerHTML=renderers[current]();
  {const topic=sheetIds[current].replace(/\d$/,'');
   if(PRACTICE[topic])$('stage').insertAdjacentHTML('beforeend',practiceCard(topic))}
+ {const base=sheetIds[current].replace(/\d+$/,'');if(REPORT[base])sendButton(base)}
  if(ruleOf[current]){const e=document.querySelector('#stage .eyebrow');
   if(e)e.insertAdjacentHTML('beforeend',`<button class="rulebtn" onclick="goId('${ruleOf[current]}')">📖 Rule</button>`)}
  $('nav').innerHTML=menuHTML();
@@ -1650,6 +1655,123 @@ function promSpin(){const n=D.promises[level].cues.length;let k;
 function promSaid(){promCount++;saveScore('promises',promCount,0);
  if(promCount===5){award('promises',12);celebrate()}promShown=false;promSpin()}
 /* =========================================================================
+   ОТПРАВКА АНЕ В TELEGRAM. У каждого задания своя кнопка «Send to Anya».
+   Страница сама проверяет ответы и открывает чат с @annasuhstuff с готовым
+   текстом: ✅ верно, ❌ неверно (и что было правильно), ⬜ без ответа,
+   ✍️ открытый ответ — его Аня проверяет сама. Сервера нет: только ссылка
+   t.me, Катя жмёт «Отправить» в Telegram.
+   ========================================================================= */
+const TG_USER='annasuhstuff';
+const fill=(q,w)=>String(q).replace('___','«'+w+'»');
+const mark=(given,ok)=>given===''||given===undefined?'⬜':ok?'✅':'❌';
+const said=s=>String(s||'').trim()||'—';
+
+function testReport(sec){
+ return testItems(sec).map((it,i)=>{
+  const v=tval(sec,i),ok=isRight(sec,i),opt=k=>it[1][k];
+  return `${mark(v,ok)} ${i+1}. ${fill(it[0],v===''?'___':opt(+v))}${v!==''&&!ok?' → '+opt(it[2]):''}`})}
+const REPORT={
+ testg:{title:'Test · Grammar',score:()=>testItems('grammar').filter((_,i)=>isRight('grammar',i)).length+'/24',lines:()=>testReport('grammar')},
+ testv:{title:'Test · Vocabulary',score:()=>testItems('vocab').filter((_,i)=>isRight('vocab',i)).length+'/8',lines:()=>testReport('vocab')},
+ testr:{title:'Test · Reading',score:()=>D.test.reading.items.filter((_,i)=>isRight('reading',i)).length+'/4',lines:()=>testReport('reading')},
+ tests:{title:'Test · Speaking (self-check)',end:true,lines:()=>[
+   ...D.test.speaking.cando.map((c,i)=>(val('cando'+i)?'☑️ ':'▫️ ')+c),'✍️ трудно: '+said(val('speakNotes'))]},
+ result:{title:'Placement test · total',end:true,lines:()=>[...testLines(),'',
+   'Grammar:',...testReport('grammar'),'','Vocabulary:',...testReport('vocab'),'','Reading:',...testReport('reading')]},
+ words:{title:'Words · Studio 60',end:true,score:()=>S.known.length+'/60 known',
+   lines:()=>[S.known.length?'знает: '+S.known.map(i=>D.vocab[i].en).join(', '):'пока ничего не отмечено']},
+ mirror:{title:'Game 1 · Mirror the coach',lines:()=>D.mirror[level].cues.map((c,i)=>
+   `${mark(mirrorMarks[i],mirrorMarks[i]==='ok')} ${c[0]}${mirrorMarks[i]==='no'?' → '+D.zones.find(z=>z[0]===c[1])[1]:''}`),
+   score:()=>mirrorMarks.filter(m=>m==='ok').length+'/'+D.mirror[level].cues.length},
+ sprint:{title:'Game 2 · Rep sprint',lines:()=>{const s=S.scores[level+':sprint'];
+   return [s?'лучший подход: '+s.n+' слов':'спринт ещё не пройден']}},
+ build:{title:'Game 3 · Build the cue',lines:()=>D.build[level].lines.map((l,i)=>{
+   const won=!!S.wins[level+':build'+i],tried=!!val('buildChecked'+i);
+   return `${won?'✅':tried?'❌':'⬜'} ${l}`})},
+ odd:{title:'Game 4 · Odd one out',score:()=>oddMarks.filter(m=>m==='ok').length+'/'+D.odd[level].rounds.length,
+   lines:()=>D.odd[level].rounds.map((r,i)=>`${mark(oddMarks[i],oddMarks[i]==='ok')} ${r[0].join(' / ')}`+
+    (oddMarks[i]==='no'?` · выбрала ${r[0][oddMarks[i+'pick']]} → ${r[0][r[1]]}`:''))},
+ pairs:{title:'Game 5 · Pair up',lines:()=>[`собрано ${pairDone.length}/${pairSet.length||6}, промахов ${pairMiss}`,
+   ...pairSet.map(v=>`${pairDone.includes(v.i)?'✅':'⬜'} ${v.en} — ${v.ru}`)]},
+ saywhat:{title:'Game 6 · What would you say?',score:()=>sayMarks.filter(m=>m==='ok').length+'/'+D.saywhat[level].items.length,
+   lines:()=>D.saywhat[level].items.map((it,i)=>`${mark(sayMarks[i],sayMarks[i]==='ok')} ${it[0]}`+
+    (sayMarks[i]==='no'?`\n    выбрала: ${it[1][sayMarks[i+'pick']]}\n    → ${it[1][it[2]]}`:''))},
+ mgap:{title:'Modals · Form drill',check:()=>checkGap(),
+   score:()=>D.mgap[level].items.filter((it,i)=>gapOk(it[1],val('gap'+i))).length+'/'+D.mgap[level].items.length,
+   lines:()=>D.mgap[level].items.map((it,i)=>{const v=String(val('gap'+i)).trim(),ok=gapOk(it[1],v);
+    return `${mark(v,ok)} ${i+1}. ${fill(it[0],v||'___')}${v&&!ok?' → '+it[1].split('/')[0].split('|')[0]:''}`})},
+ mchoice:{title:'Modals · Which one?',check:()=>{if(!val('chShow'))toggleChoice()},
+   score:()=>D.mchoice[level].items.filter((it,i)=>String(val('ch'+i))===String(it[2])).length+'/'+D.mchoice[level].items.length,
+   lines:()=>D.mchoice[level].items.map((it,i)=>{const v=val('ch'+i),ok=String(v)===String(it[2]);
+    return `${mark(v,ok)} ${i+1}. ${it[0]}\n    ${v===''?'—':it[1][+v]}${v!==''&&!ok?' → '+it[1][it[2]]:''}`})},
+ mtrap:{title:'Modals · The negative trap',check:()=>{if(!val('trShow'))toggleTrap()},
+   score:()=>D.mtrap[level].items.filter((it,i)=>String(val('tr'+i))===String(it[1])).length+'/'+D.mtrap[level].items.length,
+   lines:()=>{const o=['mustn’t','don’t have to','shouldn’t'];
+    return D.mtrap[level].items.map((it,i)=>{const v=val('tr'+i),ok=String(v)===String(it[1]);
+     return `${mark(v,ok)} ${i+1}. ${fill(it[0],v===''?'___':o[+v])}${v!==''&&!ok?' → '+o[it[1]]:''}`})}},
+ mcoach:{title:'Modals · Coach the client',end:true,lines:()=>D.mcoach[level].clients.map((c,i)=>
+   `✍️ ${c[0]} (${c[2]}): ${said(val('coach'+i))}`)},
+ gossip:{title:'Game 7 · Gym gossip',check:()=>{if(D.gossip[level].lines.every((_,i)=>gossipSel[i]!==undefined)&&!gossipChecked)gossipCheck()},
+   score:()=>D.gossip[level].lines.filter((l,i)=>gossipSel[i]===l[2]).length+'/'+D.gossip[level].lines.length,
+   lines:()=>D.gossip[level].lines.map(([t,o,k],i)=>{const s=gossipSel[i];
+    return `${mark(s,s===k)} ${t.replace('{}',s===undefined?'___':'«'+o[s]+'»')}${s!==undefined&&s!==k?' → '+o[k]:''}`})},
+ diary:{title:'Game 8 · The lazy diary',score:()=>diaryMarks.filter(m=>m==='ok').length+'/'+D.diary[level].rounds.length,
+   lines:()=>D.diary[level].rounds.map((r,i)=>{const m=diaryMarks[i];
+    return `${mark(m,m==='ok')} ${r.who} ${r.icon}: ${m===undefined?r.text:r.opts[diaryMarks[i+'pick']]}${m==='no'?' → '+r.opts[r.key]:''}`})},
+ slot:{title:'Game 9 · Drop the adverb',score:()=>slotMarks.filter(m=>m==='ok').length+'/'+D.slot[level].rounds.length,
+   lines:()=>D.slot[level].rounds.map(([s,a,sl],i)=>{const m=slotMarks[i],w=s.split(' ');
+    const put=k=>[...w.slice(0,k),a.toUpperCase(),...w.slice(k)].join(' ');
+    return `${mark(m,m==='ok')} ${m===undefined?s+' + '+a:put(slotMarks[i+'pick'])}${m==='no'?' → '+put(sl[0]):''}`})},
+ reels:{title:'Game 10 · Body facts',lines:()=>{const P=D.reels[level].pairs;
+   return [`найдено ${reelSolved.length}/${P.length}, неверных комбинаций ${reelMiss}`,
+    ...P.map((p,i)=>`${reelSolved.includes(i)?'✅':'⬜'} If ${p[0]}, ${p[1]}.`)]}},
+ domino:{title:'Game 11 · Domino of doom',score:()=>domMarks.filter(m=>m==='ok').length+'/'+D.domino[level].steps.length,
+   lines:()=>D.domino[level].steps.map(([o,k],i)=>{const m=domMarks[i];
+    return `${mark(m,m==='ok')} ${m===undefined?'—':o[domMarks[i+'pick']]}${m==='no'?'\n    → '+o[k]:''}`})},
+ bugs:{title:'Game 12 · Will-hunter',check:()=>{if(!bugChecked)bugCheck()},
+   score:()=>D.bugs[level].cards.filter((c,i)=>!!bugHit[i]===!!c[1]).length+'/'+D.bugs[level].cards.length,
+   lines:()=>D.bugs[level].cards.map(([t,bad,fix],i)=>{const ok=!!bugHit[i]===!!bad;
+    return `${ok?'✅':'❌'} ${bugHit[i]?'🔨 ':''}${t}${bad?' → '+fix:''}${!ok?(bad?' (ошибку пропустила)':' (фраза была верной)'):''}`})},
+ promises:{title:'Game 13 · Promises & threats',end:true,lines:()=>[`сказала вслух: ${promCount}`,'✍️ своё: '+said(val('promOwn'))]},
+ r1:{title:'Reading · True or false',check:()=>{if(!val('r1Show'))toggleR1()},
+   score:()=>D.reading1[level].items.filter((it,i)=>String(val('r1_'+i))===String(it[1])).length+'/'+D.reading1[level].items.length,
+   lines:()=>{const d=D.reading1[level];return d.items.map((it,i)=>{const v=val('r1_'+i),ok=String(v)===String(it[1]);
+    return `${mark(v,ok)} ${i+1}. ${it[0]} — ${v===''?'—':d.opts[+v]}${v!==''&&!ok?' → '+d.opts[it[1]]:''}`})}},
+ r2:{title:'Reading · Match the client',check:()=>{if(!val('r2Show'))toggleR2()},
+   score:()=>D.reading2[level].clients.filter((c,i)=>String(val('r2_'+i))===String(c[2])).length+'/'+D.reading2[level].clients.length,
+   lines:()=>{const d=D.reading2[level];return d.clients.map((c,i)=>{const v=val('r2_'+i),ok=String(v)===String(c[2]);
+    return `${mark(v,ok)} ${c[0]} — ${v===''?'—':d.classes[+v][0]}${v!==''&&!ok?' → '+d.classes[c[2]][0]:''}`})}},
+ role:{title:'Role-play · notes',end:true,lines:()=>D.roleplay[level].cards.map((c,i)=>`✍️ ${c[0]}: ${said(val('role'+i))}`)},
+ write:{title:'Writing · message to a client',end:true,lines:()=>{const t=String(val('letter')).trim(),d=D.writing[level];
+   return [`слов: ${t?t.split(/\s+/).length:0}`,...d.must.map((m,i)=>(val('must'+i)?'☑️ ':'▫️ ')+m.replace(/<[^>]+>/g,'')),'',
+    '✍️ '+(t||'— письмо не написано')]}},
+ hw:{title:'Homework',check:()=>{if(!val('hwShow'))toggleHq()},
+   score:()=>D.homework[level].quiz.filter((q,i)=>String(val('hq'+i))===String(q[2])).length+'/'+D.homework[level].quiz.length,
+   lines:()=>{const d=D.homework[level];return ['Quiz:',...d.quiz.map((q,i)=>{const v=val('hq'+i),ok=String(v)===String(q[2]);
+    return `${mark(v,ok)} ${i+1}. ${fill(q[0],v===''?'___':q[1][+v])}${v!==''&&!ok?' → '+q[1][q[2]]:''}`}),
+    '','✍️ примеры к словам: '+said(val('hwWords')),'✍️ письмо: '+said(val('hwWrite'))]}},
+};
+
+function taskText(base){
+ const r=REPORT[base],sc=r.score?r.score():'';
+ return ['🏋️ STUDIO · Kate · lesson 1 · '+reportDate(),
+  r.title+(/^(test|result)/.test(base)?'':' · '+LEVELS[level])+(sc?' · '+sc:''),'',...r.lines()].join('\n')}
+function sendTask(base){
+ const r=REPORT[base];
+ if(r.check){try{r.check()}catch(e){}}
+ tgOpen(taskText(base));toast('Открываю Telegram — нажми «Отправить».')}
+function tgOpen(text){
+ const url='https://t.me/'+TG_USER+'?text='+encodeURIComponent(text.slice(0,3500));
+ const a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener';
+ document.body.append(a);a.click();a.remove()}
+function sendButton(base){
+ const html=`<button class="tgbtn" onclick="sendTask('${base}')">📨 Send to Anya</button>`;
+ const rows=[...document.querySelectorAll('#stage .buttons')].filter(b=>!b.closest('.practicecard'));
+ const rec=rows.find(b=>b.querySelector('[onclick^="openRecorder"]'));
+ const host=REPORT[base].end?rec:rows[rows.length-1];
+ if(host)host.insertAdjacentHTML('beforeend',html);
+ else $('stage').insertAdjacentHTML('beforeend',`<div class="buttons sendrow">${html}</div>`)}
+/* =========================================================================
    ЧТЕНИЕ
    ========================================================================= */
 function sheetReading1(part=0){
@@ -1810,6 +1932,7 @@ function buildReport(kind){
 
 async function sendReport(kind){
  const text=buildReport(kind);
+ tgOpen(text);toast('Открываю Telegram — нажми «Отправить».');return;
  if(navigator.share){
   try{await navigator.share({title:'STUDIO · Катя',text});toast('Отправлено.');return}
   catch(e){if(e.name==='AbortError')return}
@@ -1886,7 +2009,7 @@ function sheetProgress(part=0){
    return `<div class="resultrow"><span>${name}</span><b class="num">${sc?(sc.total?sc.n+' / '+sc.total:sc.n+' повт.'):'—'}</b></div>`}).join('');
  const score=testScore(),band=currentBand(score);
  const send=`<div class="card limecard"><span class="tag">Отправить Ане · send to your teacher</span>
-    <p class="small">Нажми — телефон предложит, куда отправить. Выбери наш чат. Уйдёт только этот текст:</p>
+    <p class="small">Нажми — откроется наш чат в Telegram с готовым текстом. Останется нажать «Отправить»:</p>
     <pre class="reportpreview">${esc(buildReport())}</pre>
     <div class="buttons"><button class="primary" onclick="sendReport()">Отправить Ане ↗</button></div>
     <textarea id="reportBox" class="hidden" rows="6" readonly>${esc(buildReport())}</textarea>
