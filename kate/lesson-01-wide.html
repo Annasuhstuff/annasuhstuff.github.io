@@ -297,7 +297,7 @@ input[type=checkbox]{width:15px;height:15px;flex:0 0 auto;margin:3px 8px 0 0;acc
   border:1.5px solid #d8ee8a;border-radius:12px;max-height:168px;overflow:auto}
 
 /* ---------- маршрут урока ---------- */
-.roadmap{position:relative;display:grid;grid-template-columns:repeat(10,minmax(0,1fr));padding:7px 0 3px}
+.roadmap{position:relative;display:grid;grid-template-columns:repeat(9,minmax(0,1fr));padding:7px 0 3px}
 .rm-step{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:5px;
   background:none;border:0;border-radius:13px;padding:0 4px 7px;text-align:center;
   font-family:inherit;font-weight:400;color:inherit;line-height:1.25}
@@ -441,6 +441,16 @@ body.still .confetti{display:none}
 .menuhead{display:flex;justify-content:space-between;align-items:baseline;padding:2px 11px 4px}
 .menuhead b{font-family:Rubik,sans-serif;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--pink-deep)}
 .menuhead .small{white-space:nowrap}
+.rulebtn{margin-left:auto;padding:2px 11px;font-size:10px;letter-spacing:0;text-transform:none;font-weight:700;
+  background:var(--lime);border-color:var(--lime-deep)}
+.practicecard{background:var(--ink);border-color:var(--ink)}
+.practicecard .tag{color:#d9c3d0}
+.practicecard .buttons{margin-bottom:0}
+.practicecard button{font-size:11px;padding:4px 12px}
+.practicecard{padding:8px 12px}
+.practicecard .buttons{margin:0;gap:5px}
+.practicecard .tag{margin-right:4px}
+.practicecard button{font-size:10.5px;padding:3px 10px}
 </style></head><body>
 <div class="controlbar"><strong id="topTitle">STUDIO · KATE · FIRST LESSON</strong><div class="ctools"><button class="menubtn" onclick="openMenu()" aria-label="Lesson menu">☰ Menu</button><div class="levels" aria-label="Task level"><button data-level="0" onclick="setLevel(0)">Easy</button><button data-level="1" onclick="setLevel(1)">Medium</button><button data-level="2" onclick="setLevel(2)">Hard</button></div><button id="motion" onclick="toggleMotion()" aria-pressed="false" title="Motion">Motion</button><button onclick="if(!document.fullscreenElement){document.documentElement.requestFullscreen?.().catch(()=>toast('Fullscreen is not available'))}else document.exitFullscreen?.()" aria-label="Fullscreen">⛶</button></div></div>
 <div id="menuShade" class="shade" onclick="closeMenu()"></div><aside id="drawer" class="drawer" aria-label="Lesson contents"><div class="drawerhead"><b>Lesson menu</b><button onclick="closeMenu()" aria-label="Close menu">×</button></div><nav id="nav"></nav></aside>
@@ -476,21 +486,21 @@ const WIDE=[
  ['Words · Odd one out',()=>sheetOdd()],
  ['Words · Pair up',()=>sheetPairs()],
  ['Words · What would you say?',()=>sheetSayWhat()],
- ['Modals · The map',()=>sheetMap()],
- ['Modals · Form drill',()=>sheetGap()],
- ['Modals · Which one?',()=>sheetChoice()],
- ['Modals · The negative trap',()=>sheetTrap()],
- ['Modals · Coach the client',()=>sheetCoach()],
- ['Present Simple · The form',()=>sheetPsForm()],
- ['Present Simple · How often?',()=>sheetFreq()],
- ['Present Simple · Gym gossip',()=>sheetGossip()],
- ['Present Simple · The lazy diary',()=>sheetDiary()],
- ['Present Simple · Drop the adverb',()=>sheetSlot()],
- ['If · Zero and first',()=>sheetIfMap()],
- ['If · Body facts',()=>sheetReels()],
- ['If · Domino of doom',()=>sheetDomino()],
- ['If · Will-hunter',()=>sheetBugs()],
- ['If · Promises & threats',()=>sheetPromises()],
+ ['Grammar · Modal verbs',()=>sheetMap(),'modals'],
+ ['Grammar · Present Simple',()=>sheetPsForm(),'ps'],
+ ['Grammar · How often?',()=>sheetFreq(),'freq'],
+ ['Grammar · If: zero and first',()=>sheetIfMap(),'if'],
+ ['Practice · Modals · Form drill',()=>sheetGap(),'mgap','modals'],
+ ['Practice · Modals · Which one?',()=>sheetChoice(),'mchoice','modals'],
+ ['Practice · Modals · The negative trap',()=>sheetTrap(),'mtrap','modals'],
+ ['Practice · Modals · Coach the client',()=>sheetCoach(),'mcoach','modals'],
+ ['Practice · Gym gossip',()=>sheetGossip(),'gossip','ps'],
+ ['Practice · The lazy diary',()=>sheetDiary(),'diary','freq'],
+ ['Practice · Drop the adverb',()=>sheetSlot(),'slot','freq'],
+ ['Practice · Body facts',()=>sheetReels(),'reels','if'],
+ ['Practice · Domino of doom',()=>sheetDomino(),'domino','if'],
+ ['Practice · Will-hunter',()=>sheetBugs(),'bugs','if'],
+ ['Practice · Promises & threats',()=>sheetPromises(),'promises','if'],
  ['Skills · Reading · true or false',()=>sheetReading1()],
  ['Skills · Reading · match the client',()=>sheetReading2()],
  ['Skills · Role-play',()=>sheetRole()],
@@ -521,30 +531,30 @@ const TALL=[
  ['Игра 4 · лишнее слово',()=>sheetOdd()],
  ['Игра 5 · пары',()=>sheetPairs()],
  ['Игра 6 · что сказать',()=>sheetSayWhat()],
- ['Модальные · карта 1',()=>sheetMap(0,6)],
- ['Модальные · карта 2',()=>sheetMap(6,11)],
- ['Форма · 1–5',()=>sheetGap(0,5)],
- ['Форма · 6–10',()=>sheetGap(5,10)],
- ['Какой глагол · 1–4',()=>sheetChoice(0,4)],
- ['Какой глагол · 5–8',()=>sheetChoice(4,8)],
- ['Отрицания · 1–4',()=>sheetTrap(0,4)],
- ['Отрицания · 5–8',()=>sheetTrap(4,8)],
- ['Клиенты · 1–3',()=>sheetCoach(0,3,false)],
- ['Клиенты · 4–6',()=>sheetCoach(3,6,false)],
- ['Клиенты · проговори',()=>sheetCoach(0,0,true)],
- ['Present Simple · форма',()=>sheetPsForm(0)],
- ['Present Simple · -s / -es',()=>sheetPsForm(1)],
- ['Маркеры · как часто',()=>sheetFreq(0)],
- ['Маркеры · куда ставить',()=>sheetFreq(1)],
- ['Игра 7 · сплетни',()=>sheetGossip()],
- ['Игра 8 · дневник лентяя',()=>sheetDiary()],
- ['Игра 9 · вставь наречие',()=>sheetSlot()],
- ['If · zero и first',()=>sheetIfMap(0)],
- ['If · правила и слова',()=>sheetIfMap(1)],
- ['Игра 10 · факты о теле',()=>sheetReels()],
- ['Игра 11 · домино',()=>sheetDomino()],
- ['Игра 12 · охота на will',()=>sheetBugs()],
- ['Игра 13 · обещания и угрозы',()=>sheetPromises()],
+ ['Грамматика · модальные 1',()=>sheetMap(0,5),'modals'],
+ ['Грамматика · модальные 2',()=>sheetMap(5,11),'modals2'],
+ ['Грамматика · Present Simple',()=>sheetPsForm(0),'ps'],
+ ['Грамматика · -s / -es',()=>sheetPsForm(1),'ps2'],
+ ['Грамматика · как часто',()=>sheetFreq(0),'freq'],
+ ['Грамматика · куда наречие',()=>sheetFreq(1),'freq2'],
+ ['Грамматика · if: zero и first',()=>sheetIfMap(0),'if'],
+ ['Грамматика · if: правила, слова',()=>sheetIfMap(1),'if2'],
+ ['Модальные · форма 1–5',()=>sheetGap(0,5),'mgap','modals'],
+ ['Модальные · форма 6–10',()=>sheetGap(5,10),'mgap2','modals'],
+ ['Модальные · выбор 1–4',()=>sheetChoice(0,4),'mchoice','modals'],
+ ['Модальные · выбор 5–8',()=>sheetChoice(4,8),'mchoice2','modals'],
+ ['Отрицания · 1–4',()=>sheetTrap(0,4),'mtrap','modals'],
+ ['Отрицания · 5–8',()=>sheetTrap(4,8),'mtrap2','modals'],
+ ['Клиенты · 1–3',()=>sheetCoach(0,3,false),'mcoach','modals'],
+ ['Клиенты · 4–6',()=>sheetCoach(3,6,false),'mcoach2','modals'],
+ ['Клиенты · проговори',()=>sheetCoach(0,0,true),'mcoach3','modals'],
+ ['Игра 7 · сплетни',()=>sheetGossip(),'gossip','ps'],
+ ['Игра 8 · дневник лентяя',()=>sheetDiary(),'diary','freq'],
+ ['Игра 9 · вставь наречие',()=>sheetSlot(),'slot','freq'],
+ ['Игра 10 · факты о теле',()=>sheetReels(),'reels','if'],
+ ['Игра 11 · домино',()=>sheetDomino(),'domino','if'],
+ ['Игра 12 · охота на will',()=>sheetBugs(),'bugs','if'],
+ ['Игра 13 · обещания и угрозы',()=>sheetPromises(),'promises','if'],
  ['Чтение · текст',()=>sheetReading1(0)],
  ['Чтение · вопросы',()=>sheetReading1(1)],
  ['Подбор · занятия',()=>sheetReading2(0)],
@@ -564,6 +574,20 @@ const TALL=[
 const SHEETS=PORTRAIT?TALL:WIDE;
 const titles=SHEETS.map(x=>x[0]);
 const renderers=SHEETS.map(x=>x[1]);
+/* Третий элемент — id листа, четвёртый — id правила, к которому лист
+   отсылает кнопкой «Rule». Теория и задания ссылаются друг на друга по id,
+   поэтому перестановка листов ссылок не ломает. */
+const sheetIds=SHEETS.map(x=>x[2]||''),ruleOf=SHEETS.map(x=>x[3]||'');
+function goId(id){const i=sheetIds.indexOf(id);if(i>=0)go(i)}
+/* Какие задания тренируют какое правило: на листе теории — кнопки к ним. */
+const PRACTICE={
+ modals:[['Form drill','mgap'],['Which one?','mchoice'],['The negative trap','mtrap'],['Coach the client','mcoach']],
+ ps:[['Gym gossip','gossip'],['The lazy diary','diary']],
+ freq:[['The lazy diary','diary'],['Drop the adverb','slot']],
+ if:[['Body facts · zero','reels'],['Domino of doom','domino'],['Will-hunter','bugs'],['Promises & threats','promises']]};
+function practiceCard(topic){
+ const done=k=>S.scores[level+':'+({mgap:'gap',mchoice:'choice',mtrap:'trap'}[k]||k)]?' ✓':'';
+ return `<div class="card practicecard spaced"><div class="buttons"><span class="tag">Practise it ▸</span>${PRACTICE[topic].map(([t,id])=>`<button class="primary" onclick="goId('${id}')">▶ ${esc(t)}${done(id)}</button>`).join('')}</div></div>`}
 
 const blank=()=>({level:1,slide:0,answers:{},test:{},scores:{},wins:{},known:[],seen:[],sprint:[0,0,0]});
 let S=blank(),storageOK=true;
@@ -649,6 +673,10 @@ function closeMenu(){$('drawer').classList.remove('open');$('menuShade').classLi
 window.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()});
 function render(){
  $('stage').innerHTML=renderers[current]();
+ {const topic=sheetIds[current].replace(/\d$/,'');
+  if(PRACTICE[topic])$('stage').insertAdjacentHTML('beforeend',practiceCard(topic))}
+ if(ruleOf[current]){const e=document.querySelector('#stage .eyebrow');
+  if(e)e.insertAdjacentHTML('beforeend',`<button class="rulebtn" onclick="goId('${ruleOf[current]}')">📖 Rule</button>`)}
  $('nav').innerHTML=menuHTML();
  $('prev').disabled=current===0;$('next').disabled=current===titles.length-1;
  $('topTitle').textContent='STUDIO · KATE · FIRST LESSON';
@@ -737,20 +765,18 @@ const ROUTE=PORTRAIT?[
  ['Warm-up',4,0,2,'Кто ты и что тебе нужно'],
  ['Placement test',18,3,13,'Грамматика, слова, чтение'],
  ['Word studio',6,14,14,'60 слов зала'],
- ['Games',10,15,20,'Шесть игр на слова'],
- ['Modal verbs',14,21,31,'must · have to · should'],
- ['Present Simple',12,32,38,'always · rarely · once a week'],
- ['If 0 & 1',12,39,44,'If you skip leg day…'],
+ ['Word games',10,15,20,'Шесть игр на слова'],
+ ['Grammar',16,21,28,'Только правила: modals · present simple · if'],
+ ['Practice',22,29,44,'Задания и игры на грамматику'],
  ['Reading',7,45,48,'Верно или нет, подбор'],
  ['Speak & write',5,49,52,'Ролевая и сообщение'],
  ['Homework',2,53,59,'Что делать на неделе']]:[
  ['Warm-up',4,0,1,'Кто ты и что тебе нужно'],
  ['Placement test',18,2,7,'Грамматика, слова, чтение'],
  ['Word studio',6,8,8,'60 слов зала'],
- ['Games',10,9,14,'Шесть игр на слова'],
- ['Modal verbs',14,15,19,'must · have to · should'],
- ['Present Simple',12,20,24,'always · rarely · once a week'],
- ['If 0 & 1',12,25,29,'If you skip leg day…'],
+ ['Word games',10,9,14,'Шесть игр на слова'],
+ ['Grammar',16,15,18,'Только правила: modals · present simple · if'],
+ ['Practice',22,19,29,'Задания и игры на грамматику'],
  ['Reading',7,30,31,'Верно или нет, подбор'],
  ['Speak & write',5,32,33,'Ролевая и сообщение'],
  ['Homework',2,34,36,'Что делать на неделе']];
@@ -762,9 +788,9 @@ function sheetRoute(){
   return `<button class="rm-step${done?' done':''}${here?' here':''}" onclick="go(${a})">
    <span class="rm-dot">${done?'✓':i+1}</span>
    <span class="rm-name">${esc(name)}</span>
-   <span class="rm-weight"><span style="width:${min/18*100}%"></span></span>
+   <span class="rm-weight"><span style="width:${min/22*100}%"></span></span>
    <span class="rm-meta">${min} min · ${a===b?String(a+1).padStart(2,'0'):String(a+1).padStart(2,'0')+'–'+String(b+1).padStart(2,'0')}</span></button>`}).join('');
- return header('THE ROUTE','90 minutes, ten stops.',
+ return header('THE ROUTE','90 minutes, nine stops.',
   'Нажми на любой этап, чтобы перейти. Пройденные отмечаются галочкой, полоска под названием показывает, сколько это по времени.')
  +`<div class="roadmap">${steps}</div>
   ${PORTRAIT?`<div class="card pink spaced"><span class="tag">Три уровня</span>
@@ -1251,7 +1277,7 @@ function sheetMap(from=0,to=99){
   `<div class="maprow"><b class="modal">${m}</b><span>${use}<br><span class="ru">${note}</span></span>
    <span class="ex">${ex}</span></div>`).join('');
  return header('MODAL VERBS · THE MAP',from?'':'The words that tell people what to do.',
-  from?'Продолжение справочника: возможность, вежливость и предупреждение.'
+  from?'Продолжение справочника: совет, умение, возможность, вежливость и предупреждение.'
       :'Это справочник — к нему можно вернуться с любого следующего листа. Слева глагол, в центре значение, справа фраза из зала.')
  +(from?'':`<div class="note limenote">${D.map.rule}</div>`)
  +`<div class="card">${rows}</div>`}
