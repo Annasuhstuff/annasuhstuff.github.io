@@ -347,7 +347,7 @@ body.deck-flow .kwt .s2 input,body.deck-flow .gq input{width:100%}
 .traps small{display:block;color:#b9c0d8;font-size:10.5px}
 .prow{display:flex;align-items:center;gap:7px;margin-top:9px;flex-wrap:wrap}
 .prow .tag{margin:0}
-.prow button{background:var(--rc);border-color:var(--rc);color:#fff}
+.prow button{padding:3px 9px;background:var(--rc);border-color:var(--rc);color:#fff}
 .prow button:hover:not(:disabled){background:var(--rc);filter:brightness(.9)}
 .fixl{display:grid;gap:6px}
 .fixq{display:grid;grid-template-columns:18px minmax(0,1fr);gap:2px 6px;font-size:12px}
@@ -355,6 +355,32 @@ body.deck-flow .kwt .s2 input,body.deck-flow .gq input{width:100%}
 .fixq .wr{font-family:var(--serif);font-size:13px;color:var(--bad)}
 .fixq input{grid-column:2}
 body.deck-flow .pairs,body.deck-flow .pair,body.deck-flow .traps,body.deck-flow .vs{grid-template-columns:1fr}
+
+/* ---------- rung 4 · wish arcade ---------- */
+.match{display:grid;grid-template-columns:1fr 1.25fr;gap:8px}
+.mcol{display:grid;gap:5px;align-content:start}
+.mb{text-align:left;font-size:12px;font-weight:600;padding:6px 9px;border-radius:9px;line-height:1.25}
+.mb.w{font-family:var(--serif);font-size:13px;font-weight:500}
+.mb.sel{background:var(--ink);color:#fff;border-color:var(--ink)}
+.mb.ok{background:var(--okbg);border-color:var(--ok);color:var(--ok);opacity:1}
+.mb.ok:disabled{opacity:.75}
+.mb.no{background:var(--badbg);border-color:var(--bad);animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.card.dark button.go{background:var(--gold);color:var(--ink);border-color:var(--gold);font-size:13px;padding:6px 14px}
+.rbar{display:flex;gap:12px;align-items:center;font-size:13px;font-weight:700}
+.rbar b{color:var(--gold);font-size:15px;font-variant-numeric:tabular-nums}
+.rtime{height:5px;border-radius:4px;background:rgba(255,255,255,.12);margin:5px 0 10px;overflow:hidden}
+.rtime i{display:block;height:100%;background:var(--gold);transition:width .5s linear}
+.rq{font-family:var(--serif);font-size:20px;margin-bottom:10px}
+.ropts{display:grid;gap:6px}
+.card.dark .ropts button{text-align:left;font-size:14px;padding:8px 12px}
+.ropts b{display:inline-block;width:20px;color:var(--gold)}
+.rlast{margin-top:8px;font-size:12px;min-height:18px}
+.rend{display:flex;align-items:flex-end;gap:12px;margin-bottom:6px}
+.rlog{columns:2;column-gap:14px;font-size:10.8px;color:#d9dcea}
+.rmcq{grid-template-columns:1fr 1fr;display:grid;gap:7px 18px}
+.rmcq .mq{font-size:12px}
+body.deck-flow .match,body.deck-flow .rmcq{grid-template-columns:1fr}
 </style></head><body><header class="topbar">
  <span class="state" id="topTitle"></span>
  <span class="right">
@@ -398,6 +424,11 @@ const SRC = {
   arh2324: ['Arkhangelsk · municipal 2023/24', T + '2023/tasks-engl-9-11-pism-mun-arh-23-24.pdf', T + '2023/ans-engl-9-11-pism-mun-arh-23-24.pdf'],
   len2223: ['Leningrad region · municipal 2022/23', T + '2022/tasks-engl-9-11-pism-mun-lenobl-22-23.pdf', T + '2022/ans-engl-9-11-pism-mun-lenobl-22-23.pdf'],
   amur2223: ['Amur region · municipal 2022/23', T + '2022/tasks-engl-9-11-pism-mun-amur-22-23.pdf', T + '2022/ans-engl-9-11-pism-mun-amur-22-23.pdf'],
+  len2526: ['Leningrad region · municipal 2025/26', T + '2025/tasks-engl-9-11-pism-mun-lenobl-25-26.pdf', T + '2025/ans-engl-9-11-pism-mun-lenobl-25-26.pdf'],
+  tula2526: ['Tula · municipal 2025/26', T + '2025/tasks-engl-9-11-pism-mun-tula-25-26.pdf', T + '2025/ans-engl-9-11-pism-mun-tula-25-26.pdf'],
+  kal2526: ['Kaluga · municipal 2025/26 (no key online)', T + '2025/tasks-engl-9-11-pism-mun-kaluga-25-26.pdf', T + '2025/tasks-engl-9-11-pism-mun-kaluga-25-26.pdf'],
+  sverd2425: ['Sverdlovsk region · municipal 2024/25', T + '2024/tasks-engl-9-11-pism-mun-sverd-24-25.pdf', T + '2024/ans-engl-9-11-pism-mun-sverd-24-25.pdf'],
+  cpmk: ['CPMK sample papers · 2025/26', 'https://vserosolimp.edsoo.ru/anglyaz', 'https://vserosolimp.edsoo.ru/anglyaz'],
   bur2324: ['Buryatia · municipal 2023/24', T + '2023/tasks-engl-9-11-pism-mun-bur-23-24.pdf', T + '2023/ans-engl-9-11-pism-mun-bur-23-24.pdf'],
 };
 
@@ -556,6 +587,20 @@ kwt: {
     ['John wishes he had taken an umbrella to work this morning.', 'TAKING', 'John ___ an umbrella to work this morning.', ['regrets not taking'], 'wish + past perfect = regret + not + -ing.', '3', 'arh2324', 'Transformations · item 38'],
     ['Jill wished she had tried to have a better relationship with her father.', 'GET', 'Jill regretted ___ better with her father.', ['not trying to get on', 'not having tried to get on'], 'regretted + not + -ing; have a good relationship = get on (well).', '', 'len2223', 'Task 2 · item 14'],
   ],
+  wdrill: [
+    ['I have second thoughts about buying this dress; it does not look nice on me.', 'REGRET', 'I ___ this dress; it does not look nice on me.', ['regret having bought', 'regret buying'], 'Second thoughts about a past action → regret + having V3. Official key: regret having bought.', '3', 'msk2526', 'Task 2 · item 3'],
+    ['I wish I had spoken to my sister before she left.', 'REGRET', 'I ___ my sister before she left.', ['regret not having spoken to', 'regret not speaking to'], 'wish + had V3 = regret not having V3. This is the official worked example (0) of the task.', '', 'tat2324', 'Task 4 · example 0'],
+    ['It’s a shame I can’t drive.', 'WISH', 'I ___ drive.', ['wish i could', 'wish i was able to', 'wish i were able to'], 'can’t → wish + could.', '2–5'],
+    ['Why don’t you ever listen to me? It drives me mad!', 'WOULD', 'I wish ___ to me!', ['you would listen', 'you would ever listen'], 'Annoyed with another person → wish + would.', '2–5'],
+    ['You should have told me the truth.', 'RATHER', 'I ___ me the truth.', ['would rather you had told', 'would rather you\'d told', '\'d rather you had told', '\'d rather you\'d told'], 'Another person + the past → would rather + past perfect.', '2–5'],
+    ['Please don’t smoke in the house.', 'PREFER', 'I’d ___ smoke in the house.', ['prefer you not to', 'prefer it if you didn\'t', 'prefer it if you did not'], 'prefer + object + not to, or prefer it if + past simple.', '2–6'],
+    ['We should have left ages ago!', 'HIGH', 'It’s ___ left.', ['high time we'], 'It’s high time + subject + past simple.', '2–5'],
+    ['He behaves like a king, but he isn’t one.', 'IF', 'He behaves ___ a king.', ['as if he were', 'as if he was'], 'as if + were: not true. (was is informal.)', '2–5'],
+    ['I’m sorry I didn’t come to your party.', 'ONLY', '___ to your party!', ['if only i had come', 'if only i\'d come'], 'Regret about the past → If only + had V3.', '2–5'],
+    ['Imagine you lost your phone – what would you do?', 'SUPPOSE', '___ your phone – what would you do?', ['suppose you lost'], 'suppose + past = imagine.', '2–5'],
+    ['She regrets not studying harder at school.', 'WISHES', 'She ___ harder at school.', ['wishes she had studied', 'wishes she\'d studied'], 'regret not + -ing → wishes + had V3.', '2–5'],
+    ['Not having a car is a real nuisance.', 'WISH', 'I ___ a car.', ['wish i had'], 'A state now → wish + past simple.', '2–5'],
+  ],
   inv: [
     ['There was a strong wind which caused the fire to spread quickly.', 'SO', 'The fire ___ quickly but for a strong wind.', ['would not have spread so'], 'but for + noun = if it hadn’t been for. Past → would not have + V3. The paper says: do not use contractions.', '5', 'msk2526', 'Task 2 · item 1'],
     ['If it wasn’t for the good pay, I wouldn’t stay in this job.', 'BUT', 'I would not ___ pay.', ['stay in this job but for the good'], 'If it wasn’t for = but for. Present unreal, so the result stays would + V.', '8', 'tat2324', 'Task 4 · item 21'],
@@ -686,6 +731,63 @@ wish: {
   ],
 },
 
+/* ---------- rung 4 · wish arcade, real texts, drill, cloze ---------- */
+wishPlay: {
+  /* match: fact → wish. right column is shown in `order` */
+  match: [
+    ['I can’t whistle.', 'I wish I could whistle.'],
+    ['I told her my secret.', 'I wish I hadn’t told her.'],
+    ['He keeps borrowing my pens.', 'I wish he would stop borrowing them.'],
+    ['I’m not on holiday.', 'I wish I were on holiday.'],
+    ['I don’t have a dog.', 'I wish I had a dog.'],
+    ['I didn’t bring a coat.', 'I wish I had brought a coat.'],
+    ['You go to bed too late.', 'It’s high time you went to bed.'],
+    ['Please don’t call me “kid”.', 'I’d rather you didn’t call me “kid”.'],
+  ],
+  order: [5, 2, 7, 0, 4, 1, 6, 3],
+  /* lightning race: 90 seconds, 3 lives: [sentence, options, correct] */
+  race: [
+    ['I wish I ___ the answer.', ['know', 'knew', 'would know'], 1],
+    ['If only it ___ Friday!', ['were', 'is', 'will be'], 0],
+    ['I wish you ___ shouting!', ['stop', 'would stop', 'stopped'], 1],
+    ['I wish I ___ to the party yesterday.', ['went', 'had gone', 'would go'], 1],
+    ['I ___ you a happy birthday!', ['wish', 'hope'], 0],
+    ['I wish I ___ ski.', ['could', 'would', 'can'], 0],
+    ['It’s high time we ___ .', ['leave', 'left', 'had left'], 1],
+    ['I’d rather you ___ my phone.', ['don’t touch', 'didn’t touch', 'not touch'], 1],
+    ['I ___ she gets the job.', ['wish', 'hope'], 1],
+    ['I’d rather ___ by train.', ['go', 'to go', 'went'], 0],
+    ['She looks as if she ___ a ghost.', ['saw', 'has seen', 'had seen'], 2],
+    ['I wish I ___ have to work today.', ['didn’t', 'don’t', 'wouldn’t'], 0],
+    ['I’d rather ___ stopped interrupting.', ['him', 'he', 'his'], 1],
+    ['___ you won the lottery — what then?', ['Suppose', 'Unless', 'In case'], 0],
+    ['I wish I ___ that.', ['hadn’t said', 'wouldn’t have said', 'didn’t say'], 0],
+  ],
+  /* restore the real text: [text with ___, options, correct, why, src, item] */
+  real: [
+    ['…my own voice sounded as if it ___ coming from several meters away.', ['is', 'were', 'would be'], 1, 'Original: <b>were</b>. The voice was not really far away → unreal → were.', 'msk2324', 'Reading text'],
+    ['He made it sound as if he ___ interested.', ['is', 'were', 'will be'], 1, 'Original: <b>were</b> — he only seemed interested.', 'tat2324', 'Reading text'],
+    ['…he had just been so open, as if he ___ already decided to consider the project.', ['has', 'had', 'would'], 1, 'Original: <b>had decided</b>. as if + past perfect = an earlier action that only seemed to happen.', 'tat2324', 'Reading text'],
+    ['Bob Powell was going on and on with pride, as though his son ___ a superstar and not the show-off that he was.', ['is', 'were', 'has been'], 1, 'Original: <b>were</b>. The author says it directly: not a superstar, a show-off.', 'komi2425', 'Reading · Task 1'],
+    ['It’s as if a deep blue curtain ___ fallen over the daytime sky.', ['has', 'had', 'would'], 1, 'Original: <b>had fallen</b> — a comparison, not a fact.', 'cpmk', 'Sample paper text'],
+    ['…the way he spoke and waved his hands around as if he ___ some kind of intellectual.', ['is', 'was', 'would be'], 1, 'Original: <b>was</b> — an informal narrator. In your exam essay write <b>were</b>; the meaning is the same: he is not.', 'kal2526', 'Reading · Task 1'],
+    ['The meerkats will simply go about their lives as if nothing out of the ordinary ___ going on around them.', ['was', 'would be', 'has'], 0, 'Original: <b>was</b> (informal). <b>were</b> would also be correct.', 'komi2425', 'Reading text'],
+    ['The car next to you edges forward – you feel as though you ___ moving.', ['are', 'would be', 'had been'], 0, 'Original: <b>are</b>. as if / as though + present describes how something feels right now. The unreal past is not obligatory after as if.', 'lip2324', 'Reading text'],
+    ['It’s as if the story and the characters ___ taken me over and I have to struggle to keep up!', ['have', 'would have', 'will have'], 0, 'Original: <b>have taken</b> — it feels real to the writer, so no step back.', 'sverd2425', 'Reading · Task 2'],
+    ['It is high time for us ___ alternative sources.', ['to use', 'used', 'using'], 0, 'It’s high time + <b>for us to use</b>. With a subject: It’s high time we <b>used</b>…', 'tula2526', 'Reading text'],
+    ['…people who can’t concentrate on their work because they wish it ___ time to stop.', ['is', 'was', 'will be'], 1, 'Original: <b>was</b> (informal). <b>were</b> is also correct. is / will be are impossible after wish.', 'msk2223', 'Task 4 · culture'],
+    ['She definitely had green fingers. I wish I ___ too!', ['do', 'did', 'will'], 1, 'I wish I <b>did</b> = I wish I had green fingers. did replaces the verb.', 'komi2324', 'Task 1 · item 6'],
+    ['I ___ eat all this food.', ['would rather not to', '’d rather not', '’d not rather'], 1, 'Official key: B. would rather <b>not</b> + bare infinitive.', 'bur2324', 'Use of English · item 20'],
+    ['I think I’d prefer that ___ to the supermarket!', ['to going', 'than going', 'to go'], 0, 'prefer A <b>to</b> B (+ -ing). Compare: I’d rather grow food <b>than go</b> shopping.', 'len2526', 'Reading text'],
+    ['Firth’s face is a picture of misery, under his top hat, as if being attending his own funeral. Which word is extra?', ['as', 'if', 'being', 'his'], 2, 'Official key: <b>being</b>. as if + -ing (as if attending…) is fine.', 'msk2526', 'Error correction · line 7'],
+  ],
+},
+wishCloze: {
+  title: 'Be careful what you wish for',
+  text: 'Almost everyone has said “I (0) wish I were rich” at least once. But {1} only it were that simple! Psychologists who studied lottery winners found that many of them later wished they {2} never bought the ticket. “I’d {3} have stayed in my old job,” one winner admitted. “Now everyone treats me as {4} I were a bank.” Another said: “I wish people {5} stop asking me for money!” Experts agree that it is high {6} we stopped believing that money solves everything. {7} you suddenly won a million — what would you do? Most of us {8} like to think we would stay the same. But {9} I you, I would not be so sure. As one winner put it: “I {10} I had listened to my grandmother. Be careful what you wish for.”',
+  answers: [['if'], ['had'], ['rather', 'sooner'], ['if', 'though'], ['would'], ['time'], ['suppose', 'supposing', 'if'], ['would'], ['were'], ['wish']],
+  why: ['If only = a strong wish.', 'wished + past perfect: regret about the past.', 'would rather / would sooner + have V3.', 'as if / as though + were.', 'Annoying behaviour of others → wish + would.', 'It is high time + past simple.', 'Suppose / Supposing + past = imagine.', 'would like to = want to.', 'Inversion: Were I you = If I were you.', 'I wish I had listened = regret.'],
+},
 /* ---------- rung 5 · mixed ---------- */
 mixed: {
   gaps: [
@@ -855,20 +957,23 @@ const titles=['Start · the Willett sentence','Start · the ladder',
  'Rung 2 · type switcher','Rung 2 · second & third',
  'Rung 3 · beyond if','Rung 3 · transformations',
  'Rung 4 · wish rules: one step back','Rung 4 · wish rules: past, could, would','Rung 4 · would rather, it’s time, as if',
- 'Rung 4 · wish machine','Rung 4 · wish clinic','Rung 4 · real papers',
+ 'Rung 4 · wish machine','Rung 4 · wish clinic','Rung 4 · wish arcade','Rung 4 · restore the real text',
+ 'Rung 4 · real papers','Rung 4 · olympiad drill','Rung 4 · open cloze',
  'Rung 5 · mixed conditionals',
  'Rung 6 · inversion forge','Rung 6 · judge the traps','Rung 6 · spot it in real texts',
  'Rung 7 · the “if not for” family','Rung 7 · real transformations','Rung 7 · what-if history',
  'Arena · open cloze','Arena · extra word','Arena · sprint 16','Arena · writing',
  'Finish · homework','Finish · cheat sheet & score','Finish · hacks & sources'];
-const RUNG=[0,0,1,2,2,3,3,4,4,4,4,4,4,5,6,6,6,7,7,7,8,8,8,8,9,9,9];
+const RUNG=[0,0,1,2,2,3,3,4,4,4,4,4,4,4,4,4,4,5,6,6,6,7,7,7,8,8,8,8,9,9,9];
 const RC=['#f26b3a','#d68a00','#2f9e62','#2386b5','#0f8f89','#d6457a','#3a58d6','#1d2640','#c2410c','#1d2640'];
 const RCBG=['#fff1e8','#fff5dc','#e6f5ec','#e3f1f9','#dff3f2','#fce8ef','#e8ecfc','#e7e9f0','#fdeee4','#e7e9f0'];
+const at=t=>{const i=titles.indexOf(t);if(i<0)throw new Error('no slide '+t);return i};
+const IX={hist:at('Rung 7 · what-if history'),sprint:at('Arena · sprint 16'),writing:at('Arena · writing')};
 const RUNGNAME=['Start','Rung 1 · A2–B1','Rung 2 · B1','Rung 3 · B1–B2','Rung 4 · B2','Rung 5 · B2','Rung 6 · B2+','Rung 7 · C1','Arena · olympiad','Finish'];
 /* which exercise belongs to which rung (ladder progress + score table) */
-const EXR={hookq:0,r1:1,sort:2,r2:2,lmcq:3,k_linkers:3,wishg:4,wishc:4,wishf:4,k_wish:4,mixed:5,tiles:6,judge:6,spot:6,pick:7,k_inv:7,history:7,cloze:8,extra:8,sprint:8,writing:8,k_hw:9};
+const EXR={hookq:0,r1:1,sort:2,r2:2,lmcq:3,k_linkers:3,wishg:4,wishc:4,wishf:4,wmatch:4,wrace:4,wreal:4,k_wish:4,k_wdrill:4,wishz:4,mixed:5,tiles:6,judge:6,spot:6,pick:7,k_inv:7,history:7,cloze:8,extra:8,sprint:8,writing:8,k_hw:9};
 const EXNAME={hookq:'Willett sentence quiz',r1:'Zero & first',sort:'Sort the ifs',r2:'Second & third',lmcq:'Beyond if · choice',k_linkers:'Beyond if · transformations',
- wishg:'Wish machine',wishc:'Wish clinic · choose',wishf:'Wish clinic · fix it',k_wish:'Wish · real papers',mixed:'Mixed conditionals',tiles:'Inversion forge',judge:'Judge the traps',spot:'Spot it in real texts',
+ wishg:'Wish machine',wishc:'Wish clinic · choose',wishf:'Wish clinic · fix it',wmatch:'Wish arcade · match',wrace:'Wish arcade · race',wreal:'Restore the real text',k_wish:'Wish · real papers',k_wdrill:'Wish · olympiad drill',wishz:'Wish · open cloze',mixed:'Mixed conditionals',tiles:'Inversion forge',judge:'Judge the traps',spot:'Spot it in real texts',
  pick:'If-not-for family',k_inv:'Real transformations',history:'What-if history',cloze:'Open cloze',extra:'Extra word',sprint:'Sprint 16',writing:'Writing',k_hw:'Homework'};
 
 const blank=()=>({slide:0,answers:{},scores:{},open:{},sprint:{i:0,pick:{},done:false,start:0}});
@@ -938,10 +1043,11 @@ function render(){
 }
 function after(){
  if(current===0)hookGate();
- if([6,12,18,24].includes(current))document.querySelectorAll('.kwt input').forEach(el=>wc(el.dataset.save));
- if(current===19)D.history.forEach((_,i)=>histLive(i));
- if(current===22)sprintDraw();
- if(current===23)writingLive();
+ if(document.querySelector('.kwt'))document.querySelectorAll('.kwt input').forEach(el=>wc(el.dataset.save));
+ if(current===IX.hist)D.history.forEach((_,i)=>histLive(i));
+ if(current===IX.sprint)sprintDraw();
+ if(current===IX.writing)writingLive();
+ if(current===W_ARCADE){raceDraw();if(S.race&&S.race.start&&!S.race.done){if(raceLeft()<=0)raceEnd();else raceClock()}}
 }
 function live(id){
  if(id==='hookT')hookGate();
@@ -988,9 +1094,9 @@ function openModel(){if(words(val('hookT'))<4)return;S.open.model=1;persist();re
 /* ============================================================
    02 · THE LADDER
    ============================================================ */
-const FIRST=[0,2,3,5,7,13,14,17,20];
+const FIRST=[0,2,3,5,7,at('Rung 5 · mixed conditionals'),at('Rung 6 · inversion forge'),at('Rung 7 · the “if not for” family'),at('Arena · open cloze')];
 function rungProgress(r){let n=0,t=0;for(const k in EXR)if(EXR[k]===r&&REG_T[k]){t+=REG_T[k];n+=(S.scores[k]||{}).n||0}return t?n/t:0}
-const REG_T={hookq:3,r1:10,sort:10,r2:10,lmcq:8,k_linkers:6,wishg:16,wishc:12,wishf:8,k_wish:9,mixed:8,tiles:6,judge:12,spot:8,pick:6,k_inv:10,history:6,cloze:10,extra:10,sprint:16,writing:6,k_hw:10};
+const REG_T={hookq:3,r1:10,sort:10,r2:10,lmcq:8,k_linkers:6,wishg:16,wishc:12,wishf:8,wmatch:8,wrace:15,wreal:15,k_wish:9,k_wdrill:12,wishz:10,mixed:8,tiles:6,judge:12,spot:8,pick:6,k_inv:10,history:6,cloze:10,extra:10,sprint:16,writing:6,k_hw:10};
 function ladder(){
  return head('From <span class="acc">if</span> to <span class="acc">had it not been for</span>: 7 rungs up','Every rung is built on the one below. The sky in the top bar moves from sunrise to night as you climb. Click a step to jump there; the white bar fills as you score.')+
  `<div class="ladder">${D.rungs.map((r,i)=>{const p=rungProgress(i);return `<button type="button" class="step" style="--c:${RC[i]};background:${RC[i]};height:${30+i*8.5}%" onclick="go(${FIRST[i]})"><b>${esc(r[0])}</b><span>${esc(r[1])}</span><em>${esc(r[2])}</em><div class="bar"><i style="width:${Math.round(p*100)}%"></i></div></button>`}).join('')}</div>
@@ -1066,13 +1172,18 @@ function kwtSheet(set,title,lead,extra=''){return head(title,lead,extra)+kwtBloc
    RUNG 4 · wish — grammar first (3 sheets), then practice
    (2 sheets + real papers). Rules link to practice and back.
    ============================================================ */
-const W_RULES=[7,8,9],W_MACHINE=10,W_CLINIC=11,W_REAL=12;
+const W_RULES=['Rung 4 · wish rules: one step back','Rung 4 · wish rules: past, could, would','Rung 4 · would rather, it’s time, as if'].map(at),
+ W_MACHINE=at('Rung 4 · wish machine'),W_CLINIC=at('Rung 4 · wish clinic'),W_ARCADE=at('Rung 4 · wish arcade'),W_REAL=at('Rung 4 · real papers');
 function ruBtn(){return `<button type="button" class="tool" aria-pressed="${!!S.open.ru}" onclick="ruToggle()">RU notes: ${S.open.ru?'on':'off'}</button>`}
 function ruToggle(){S.open.ru=!S.open.ru;persist();render()}
 function practiseRow(){return `<div class="prow"><span class="tag">Practise it</span>
- <button type="button" onclick="go(${W_MACHINE})">▸ Wish machine · 16 situations</button>
- <button type="button" onclick="go(${W_CLINIC})">▸ Wish clinic · choose &amp; fix</button>
- <button type="button" onclick="go(${W_REAL})">▸ Real olympiad papers</button></div>`}
+ <button type="button" onclick="go(${W_MACHINE})">▸ Machine · 16</button>
+ <button type="button" onclick="go(${W_CLINIC})">▸ Clinic · choose &amp; fix</button>
+ <button type="button" onclick="go(${W_ARCADE})">▸ Arcade · match &amp; race</button>
+ <button type="button" onclick="go(${at('Rung 4 · restore the real text')})">▸ Real texts</button>
+ <button type="button" onclick="go(${W_REAL})">▸ Real papers</button>
+ <button type="button" onclick="go(${at('Rung 4 · olympiad drill')})">▸ Drill · 12</button>
+ <button type="button" onclick="go(${at('Rung 4 · open cloze')})">▸ Open cloze</button></div>`}
 function ruleBtns(){return ['one step back','past · could · would','would rather · time'].map((t,i)=>`<button type="button" class="tool" onclick="go(${W_RULES[i]})">📖 Rule: ${t}</button>`).join('')}
 const rn=t=>`<span class="rn">${esc(t)}</span>`;
 
@@ -1132,6 +1243,63 @@ function wishClinic(){
   <div class="card"><span class="tag">Choose the right form</span><div class="mcq">${d.mcq.map((q,i)=>`<div class="mq" ${whyAttr('wishc',q[3])}><i>${i+1}</i><div>${esc(q[0])} ${choice('wm'+i,q[1])}</div></div>`).join('')}</div>${toolrow('wishc')}</div>
   <div class="card"><span class="tag">Fix the mistake</span><div class="fixl">${d.fix.map((q,i)=>`<div class="fixq" ${whyAttr('wishf','<b>'+esc(q[1][0])+'</b> — '+q[2])}><i>${i+1}</i><span class="wr">${esc(q[0])}</span>${input('wf'+i,'Correct sentence '+(i+1))}</div>`).join('')}</div>${toolrow('wishf')}</div>
  </div>`}
+
+/* ---------------- wish arcade: match pairs + lightning race ---------------- */
+const RACE_SEC=90;
+function getMatch(){const m=S.open.wmatch;return m&&Array.isArray(m.done)?m:{sel:-1,done:[],bad:[]}}
+function wishArcade(){
+ const d=D.wishPlay,m=getMatch(),r=S.race||null;
+ return head('Wish <span class="acc">arcade</span>: match &amp; race','Left: click a fact, then the wish that fixes it. Right: 15 questions, 90 seconds, 3 lives — keys 1–3 answer.',ruleBtns())+
+ `<div class="grid g2">
+  <div class="card"><span class="tag">Match the fact to the wish</span><div class="match">
+   <div class="mcol">${d.match.map((p,i)=>`<button type="button" class="mb ${m.done.includes(i)?'ok':''} ${m.sel===i?'sel':''}" ${m.done.includes(i)?'disabled':''} onclick="matchFact(${i})">${esc(p[0])}</button>`).join('')}</div>
+   <div class="mcol">${d.order.map(i=>`<button type="button" class="mb w ${m.done.includes(i)?'ok':''}" id="mw${i}" ${m.done.includes(i)?'disabled':''} onclick="matchWish(${i})">${esc(d.match[i][1])}</button>`).join('')}</div></div>
+   <div class="toolrow"><button type="button" onclick="matchReset()">Shuffle again</button><span class="score">${m.done.length===d.match.length?(S.scores.wmatch||{}).n+' / 8 first try':m.done.length+' / 8 matched'}</span><span class="whybar" id="mhint">${m.sel>=0?'Now click the wish for: <b>'+esc(d.match[m.sel][0])+'</b>':'A pair you get wrong still counts, but not as “first try”.'}</span></div></div>
+  <div class="card dark"><span class="tag">Lightning race · 90 s · ❤️❤️❤️</span><div id="race"></div></div>
+ </div>`}
+function matchFact(i){const m=getMatch();m.sel=i;S.open.wmatch=m;persist();render()}
+function matchWish(i){const m=getMatch();if(m.sel<0){toast('First click a fact on the left.');return}
+ if(i===m.sel){m.done.push(i);m.sel=-1;
+  if(m.done.length===D.wishPlay.match.length){const n=m.done.filter(k=>!m.bad.includes(k)).length;S.scores.wmatch={n,t:8};stats();bump();if(n>=6)confetti()}
+  S.open.wmatch=m;persist();render()}
+ else{if(!m.bad.includes(m.sel))m.bad.push(m.sel);S.open.wmatch=m;persist();const b=$('mw'+i);if(b){b.classList.add('no');setTimeout(()=>b.classList.remove('no'),450)}}}
+function matchReset(){delete S.open.wmatch;delete S.scores.wmatch;persist();render()}
+
+function raceLeft(){const r=S.race;return r&&r.start?Math.max(0,RACE_SEC-Math.floor((Date.now()-r.start)/1000)):RACE_SEC}
+function raceDraw(){
+ const el=$('race');if(!el)return;const r=S.race,d=D.wishPlay.race;
+ if(!r||!r.start){el.innerHTML=`<p style="font-family:var(--serif);font-size:15px">How many can you do before the clock or your lives run out?</p><p class="small">Every wrong answer costs a life ❤️. Streaks of 3+ get a 🔥.</p><div class="row" style="margin-top:8px"><button type="button" class="go" onclick="raceStart()">▶ Start the race</button>${S.scores.wrace?`<span class="small">Best so far: ${S.scores.wrace.n} / 15</span>`:''}</div>`;return}
+ const hearts='❤️'.repeat(r.lives)+'<span style="opacity:.25">'+'❤️'.repeat(3-r.lives)+'</span>';
+ const bar=`<div class="rbar"><span>${hearts}</span><span>🔥 ${r.streak}</span><span>✓ ${r.ok}</span><span class="spacer"></span><b>${raceLeft()} s</b></div><div class="rtime"><i style="width:${raceLeft()/RACE_SEC*100}%"></i></div>`;
+ if(r.done){el.innerHTML=bar+`<div class="rend"><span class="bigscore" style="color:var(--gold)">${r.ok}/15</span><span class="small">${r.lives===0?'Out of lives.':raceLeft()===0?'Time is up.':'All done!'} ${r.ok>=13?'Olympiad speed!':r.ok>=9?'Good — redo the red ones.':'Back to the rules, then race again.'}</span></div>
+  <div class="rlog">${r.log.map(l=>`<div>${l[1]?'✓':'✗'} ${esc(d[l[0]][0].replace('___',d[l[0]][1][d[l[0]][2]]))}</div>`).join('')}</div>
+  <div class="row" style="margin-top:7px"><button type="button" class="go" onclick="raceStart()">↻ Race again</button></div>`;return}
+ const q=d[r.i],last=r.log[r.log.length-1];
+ el.innerHTML=bar+`<div class="rq">${r.i+1}. ${esc(q[0])}</div><div class="ropts">${q[1].map((o,k)=>`<button type="button" onclick="racePick(${k})"><b>${k+1}</b> ${esc(o)}</button>`).join('')}</div>
+  <div class="rlast">${last?(last[1]?'<span style="color:#7be0a8">✓ right!</span>':'<span style="color:#ff9aa9">✗ '+esc(d[last[0]][0].replace('___',d[last[0]][1][d[last[0]][2]]))+'</span>'):''}</div>`}
+function raceStart(){S.race={i:0,ok:0,lives:3,streak:0,start:Date.now(),done:false,log:[]};persist();raceClock();raceDraw()}
+function raceClock(){clearInterval(clockT);clockT=setInterval(()=>{const r=S.race;if(!r||r.done||current!==W_ARCADE){clearInterval(clockT);return}
+ if(raceLeft()<=0)raceEnd();else raceDraw()},500)}
+function racePick(k){const r=S.race;if(!r||!r.start||r.done)return;const q=D.wishPlay.race[r.i],ok=k===q[2];
+ r.log.push([r.i,ok]);if(ok){r.ok++;r.streak++}else{r.lives--;r.streak=0}r.i++;
+ if(r.lives<=0||r.i>=D.wishPlay.race.length)return raceEnd();persist();raceDraw()}
+function raceEnd(){const r=S.race;r.done=true;clearInterval(clockT);
+ const best=(S.scores.wrace||{}).n||0;if(r.ok>=best){S.scores.wrace={n:r.ok,t:15};stats();bump()}if(r.ok>=12)confetti();persist();raceDraw()}
+
+/* ---------------- restore the real text ---------------- */
+function wishReal(){
+ const d=D.wishPlay.real;reg('wreal',d.map((q,i)=>({id:'wr'+i,a:[String(q[2])],kind:'choice',why:q[3]})));
+ return head('Restore the <span class="acc">real</span> text','Fifteen sentences from real olympiad papers. Which form did the author actually use? Watch out: real writers sometimes use <i>was</i>, and <i>as if</i> does not always need a step back.',ruleBtns())+
+ `<div class="card"><div class="mcq rmcq">${d.map((q,i)=>`<div class="mq" ${whyAttr('wreal',q[3])}><i>${i+1}</i><div>${realTag(q[4],q[5])} ${esc(q[0])} ${choice('wr'+i,q[1])}</div></div>`).join('')}</div>${toolrow('wreal')}</div>`}
+
+/* ---------------- open cloze on wish ---------------- */
+function clozeBlock(d,name,pre){
+ reg(name,d.answers.map((a,i)=>({id:pre+i,a,why:d.why[i]})));
+ const html=d.text.replace(/\{(\d+)\}/g,(m,n)=>{const i=+n-1;return `<span class="gap" ${whyAttr(name,d.why[i])}><span class="n">${n}</span>${input(pre+i,'Gap '+n)}</span>`});
+ return `<div class="passage"><h2>${esc(d.title)}</h2>${html}</div>${toolrow(name)}`}
+function wishClozeSheet(){
+ return head('Open cloze: <span class="acc">be careful</span> what you wish for','Olympiad format: one word per gap, no options. Every gap is a construction from rung 4. Example: (0) wish.',ruleBtns())+clozeBlock(D.wishCloze,'wishz','wz')}
+
 
 /* ============================================================
    RUNG 5 · mixed
@@ -1242,10 +1410,8 @@ function histModel(i){S.open['hm'+i]=1;persist();render()}
    ARENA
    ============================================================ */
 function cloze(){
- const d=D.cloze;reg('cloze',d.answers.map((a,i)=>({id:'cz'+i,a,why:d.why[i]})));
- let k=0;const html=d.text.replace(/\{(\d+)\}/g,(m,n)=>{const i=+n-1;return `<span class="gap" ${whyAttr('cloze',d.why[i])}><span class="n">${n}</span>${input('cz'+i,'Gap '+n)}</span>`});
  return head('Open cloze: <span class="acc">one word</span> per gap','Olympiad format: no options, one word only. Every gap is a construction from today’s ladder. Example: (0) down.')+
- `<div class="passage"><h2>${esc(d.title)}</h2>${html}</div>${toolrow('cloze')}`}
+ clozeBlock(D.cloze,'cloze','cz')}
 function extra(){
  const d=D.extra;reg('extra',d.map((r,i)=>({id:'ex'+i,a:[r[1]],why:r[2]})));
  return head('Extra word: find the <span class="acc">one</span> word that should not be there','Moscow school-stage format. Some lines are correct: write <b>V</b>. Otherwise write the extra word.')+
@@ -1370,8 +1536,10 @@ function resetAll(){if(!confirm('Delete every answer and score on this device?')
 /* ---------------- wiring ---------------- */
 const renderers=[hook,ladder,rung1,switcher,rung2,linkers,
  ()=>kwtSheet('linkers','Transform it: <span class="acc">unless · in case · as long as · otherwise</span>','Key word transformation, olympiad style: use the word in capitals, do not change it, keep the meaning. The counter checks length and the key word; contractions count as two words.'),
- wishShift,wishForms,wishFamily,wish,wishClinic,
+ wishShift,wishForms,wishFamily,wish,wishClinic,wishArcade,wishReal,
  ()=>kwtSheet('wish','Real papers: <span class="acc">wish · regret · would rather</span>','Nine items from real municipal papers, official keys. Watch the switch: the same regret can be <i>wish + past perfect</i> or <i>regret + not + -ing</i>.',ruleBtns()),
+ ()=>kwtSheet('wdrill','Olympiad drill: <span class="acc">wish · rather · time · as if · suppose</span>','Twelve transformations in olympiad format. The first two are real municipal items (Moscow 2025/26, Tatarstan 2023/24); the rest are built the same way. Contractions count as two words.',ruleBtns()),
+ wishClozeSheet,
  mixed,forge,judge,spot,family,
  ()=>kwtSheet('inv','Real & olympiad transformations: <span class="acc">But for · Were · Had · Should</span>','The first three are real municipal items (Moscow, Tatarstan, Krasnoyarsk). The rest are built the same way, from easy to hard.'),
  history,cloze,extra,sprint,writing,homework,cheat,sources];
@@ -1382,7 +1550,8 @@ $('next').onclick=()=>go(current+1);
 document.addEventListener('keydown',e=>{
  if(e.ctrlKey||e.metaKey||e.altKey)return;const t=e.target;
  if(t&&(t.isContentEditable||/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)))return;
- if(current===22&&/^[1-4]$/.test(e.key)&&!S.sprint.done){e.preventDefault();sprintPick(+e.key-1);return}
+ if(current===W_ARCADE&&/^[1-3]$/.test(e.key)&&S.race&&S.race.start&&!S.race.done){e.preventDefault();racePick(+e.key-1);return}
+ if(current===IX.sprint&&/^[1-4]$/.test(e.key)&&!S.sprint.done){e.preventDefault();sprintPick(+e.key-1);return}
  if(t&&t.tagName==='BUTTON'&&(e.key===' '||e.key==='Enter'))return;
  if(e.key==='ArrowRight'){e.preventDefault();go(current+1)}
  else if(e.key==='ArrowLeft'){e.preventDefault();go(current-1)}
@@ -1390,7 +1559,7 @@ document.addEventListener('keydown',e=>{
 function fullscreen(){if(!document.fullscreenElement)document.documentElement.requestFullscreen?.().catch(()=>toast('Full screen is not available here.'));else document.exitFullscreen?.()}
 window.addEventListener('beforeunload',persist);
 render();
-if(S.sprint.start&&!S.sprint.done&&current===22)startClock(12);
+if(S.sprint.start&&!S.sprint.done&&current===IX.sprint)startClock(12);
 </script><style>/* ============================================================
    DECK LAYER · общий слой презентации для всех уроков.
    Сцена ровно 1280×720 — стандартный слайд PowerPoint 16:9
