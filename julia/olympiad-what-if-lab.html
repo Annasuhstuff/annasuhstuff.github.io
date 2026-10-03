@@ -312,6 +312,49 @@ body.deck-flow .kwt .s2 input,body.deck-flow .gq input{width:100%}
 .scgrid{display:grid;grid-template-columns:1fr 1fr;gap:0 16px;font-size:11.2px}
 .scgrid div{display:flex;justify-content:space-between;border-bottom:1px dotted var(--line2);padding:2px 0}
 .scgrid b{font-variant-numeric:tabular-nums}
+
+/* ---------- rung 4 · wish grammar sheets ---------- */
+.wsheet{display:flex;flex-direction:column}
+.wsheet .rn{display:none}
+.wsheet.ru-on .rn{display:block;font-family:var(--serif);font-style:italic;color:var(--muted);font-size:11px;margin-top:2px}
+.card.dark .rn{color:#b9c0d8!important}
+.wsheet u,.mq u{text-decoration:none;background:var(--gold);color:var(--ink);padding:0 2px;border-radius:3px}
+.wtab{width:100%;border-collapse:collapse;font-size:12px}
+.wtab th{text-align:left;font-size:8.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);padding:0 6px 4px}
+.wtab td{padding:4px 6px;border-top:1px solid var(--line);vertical-align:top}
+.wtab td.fact{color:var(--muted);font-family:var(--serif);font-style:italic;font-size:13px}
+.wtab td.w{font-family:var(--serif);font-size:14px}
+.wtab td.chg{font-size:11px;font-weight:650}
+.wtab td.chg b{color:var(--rc)}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:2px 0 7px}
+.vs>div{background:rgba(255,255,255,.08);border-radius:10px;padding:6px 8px;font-size:11.5px}
+.vs b{color:var(--gold);font-size:15px}
+.vs i{display:block;font-family:var(--serif);font-size:13.5px}
+.vs small{display:block;color:#b9c0d8}
+.fcard{background:#fff;border:1px solid var(--line);border-top:5px solid var(--rc);border-radius:12px;padding:8px 10px;font-size:11.5px;line-height:1.35;min-width:0}
+.fcard b.l{display:block;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--rc)}
+.fcard .f{font-weight:760;font-size:13px;margin:1px 0 4px}
+.fcard .ex{font-family:var(--serif);font-size:13px;margin-bottom:5px}
+.fcard .tr{font-size:11px;color:var(--muted);border-top:1px dashed var(--line2);padding-top:4px}
+.pairs{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:2px 8px;font-family:var(--serif);font-size:13px}
+.pair .why{grid-column:1/-1;font-family:var(--sans);font-size:11px;color:var(--muted)}
+.chain{display:grid;gap:3px;font-family:var(--serif);font-size:13.5px}
+.chain div:not(:first-child)::before{content:'= ';color:var(--rc);font-weight:800}
+.traps{display:grid;grid-template-columns:1fr 1fr;gap:5px 16px;font-size:12px}
+.traps s{color:#ff9aa9}
+.traps b{color:var(--gold);font-weight:700}
+.traps small{display:block;color:#b9c0d8;font-size:10.5px}
+.prow{display:flex;align-items:center;gap:7px;margin-top:9px;flex-wrap:wrap}
+.prow .tag{margin:0}
+.prow button{background:var(--rc);border-color:var(--rc);color:#fff}
+.prow button:hover:not(:disabled){background:var(--rc);filter:brightness(.9)}
+.fixl{display:grid;gap:6px}
+.fixq{display:grid;grid-template-columns:18px minmax(0,1fr);gap:2px 6px;font-size:12px}
+.fixq>i{font-style:normal;font-weight:800;color:var(--rc)}
+.fixq .wr{font-family:var(--serif);font-size:13px;color:var(--bad)}
+.fixq input{grid-column:2}
+body.deck-flow .pairs,body.deck-flow .pair,body.deck-flow .traps,body.deck-flow .vs{grid-template-columns:1fr}
 </style></head><body><header class="topbar">
  <span class="state" id="topTitle"></span>
  <span class="right">
@@ -539,25 +582,107 @@ kwt: {
   ],
 },
 
-/* ---------- rung 4 · wish machine ---------- */
+/* ---------- rung 4 · wish: grammar (3 sheets) + practice (2 sheets) ---------- */
 wish: {
-  lanes: [
-    ['Now', 'wish / if only + past simple', 'I wish I <u>knew</u> the answer.', 'I don’t know it — and I regret that now.', 'Жаль, что я не знаю.'],
-    ['Then', 'wish / if only + past perfect', 'I wish I <u>had listened</u>.', 'I didn’t listen — too late.', 'Жаль, что я не послушала.'],
-    ['Annoyed', 'wish + would', 'I wish you <u>would stop</u> that!', 'Other people or things, never yourself: <s>I wish I would</s>.', 'Ну когда же ты перестанешь!'],
-    ['Can’t', 'wish + could', 'I wish I <u>could</u> fly.', 'Ability you don’t have.', 'Жаль, что я не умею летать.'],
-    ['Prefer', 'would rather + you + past', 'I’d rather you <u>didn’t</u> tell her.', 'Same subject: I’d rather stay. Different: I’d rather you stayed.', 'Я бы предпочла, чтобы ты…'],
-    ['Late!', 'it’s (high) time + past', 'It’s high time we <u>left</u>.', 'Past form, present meaning: we should have gone already.', 'Давно пора уходить.'],
+  /* sheet 1 · one step back: [fact, wish (html), what changes, RU note] */
+  shift: [
+    ['I don’t know the answer.', 'I wish I <u>knew</u> the answer.', 'present simple → past simple', 'Жаль, что я не знаю.'],
+    ['I’m not tall.', 'I wish I <u>were</u> taller.', 'am / is / are → <b>were</b> (every person)', 'Жаль, что я невысокая.'],
+    ['I’m working on Saturday.', 'I wish I <u>weren’t working</u> on Saturday.', 'present continuous → past continuous', 'Жаль, что я работаю в субботу.'],
+    ['I don’t live near my friends.', 'I wish I <u>lived</u> closer to my friends.', 'a fact about now → past simple', 'Жаль, что я живу не рядом.'],
+    ['I have to get up at six.', 'I wish I <u>didn’t have to</u> get up at six.', 'have to → didn’t have to', 'Жаль, что приходится вставать в 6.'],
+    ['I can’t come to the party.', 'I wish I <u>could</u> come to the party.', 'can → <b>could</b>', 'Жаль, что я не могу прийти.'],
+    ['I haven’t finished my project.', 'I wish I <u>had finished</u> my project.', 'present perfect → past perfect', 'Жаль, что я не закончила.'],
+    ['I ate too much last night.', 'I wish I <u>hadn’t eaten</u> so much.', 'past simple → <b>past perfect</b>', 'Жаль, что я столько съела.'],
+    ['I couldn’t go to the concert.', 'I wish I <u>could have gone</u> / <u>had been able to go</u>.', 'couldn’t → could have + V3', 'Жаль, что я не смогла пойти.'],
+    ['He keeps using my laptop.', 'I wish he <u>would stop</u> using my laptop.', 'annoying habit of someone else → <b>would</b>', 'Ну когда он перестанет брать мой ноутбук!'],
   ],
+  /* sheet 2 · past simple vs could vs would: [label, form, examples, the trap] */
+  forms: [
+    ['A state now', 'wish + past simple', 'I wish I <u>had</u> more free time.<br>I wish I <u>lived</u> closer to work.<br>I wish you <u>were</u> here.', 'Not <s>would have</s>: <s>I wish I would have enough time.</s> A state is not behaviour — nobody can “decide” to have time.'],
+    ['Ability · possibility', 'wish + could + V', 'I can’t swim → I wish I <u>could</u> swim.<br>I can’t come → I wish I <u>could come</u>.<br>Past: I wish I <u>could have helped</u>.', 'Not <s>I wish I came</s> (that is about a fact, not ability). For <b>your own</b> wish to act: <b>could</b>, never <s>I wish I would</s>.'],
+    ['Somebody else · annoyed', 'wish + would + V', 'I wish he <u>would stop</u> interrupting.<br>I wish it <u>would stop</u> raining!<br>I wish you <u>would come</u> with us. (a request)', 'Only for <b>another</b> person or thing. Not with states: <s>I wish he would be taller</s> → were. OK with behaviour: I wish you’d be quiet.'],
+  ],
+  /* small contrasts: [left, right, explanation] */
+  pairs: [
+    ['I wish he <u>didn’t use</u> my laptop.', 'I wish he <u>would stop using</u> my laptop.', 'Left: I just dislike the fact. Right: he keeps doing it and it annoys me → <b>keeps / always / still</b> → would.'],
+    ['I wish I <u>lived</u> closer.', 'I wish I <u>could live</u> closer.', 'Left: the simple fact. Right: something stops me (money, parents). For “I don’t live…” the expected answer is <b>lived</b>.'],
+    ['I wish I <u>could come</u> to the party.', 'I wish I <u>had come</u> to the party.', 'Left: I can’t come — the party is now / in the future. Right: I didn’t come — the party is over.'],
+    ['I wish I <u>spoke</u> Spanish.', 'I wish I <u>could speak</u> Spanish.', 'Both fine: “I don’t speak” vs “I’m not able to speak”. Almost the same meaning.'],
+  ],
+  /* sheet 3 · the rest of the unreal-past family: [label, form, examples, the trap, RU] */
+  family: [
+    ['would rather · same person', 'I’d rather + V (no to)', 'I’d rather <u>stay</u> at home.<br>I’d rather <u>not go</u>.<br>I’d rather <u>walk</u> than <u>take</u> the bus.<br>Past: I’d rather <u>have gone</u> to Venice.', 'Not <s>I’d rather to stay</s>, not <s>I’d rather don’t go</s>.', 'Я бы лучше…'],
+    ['would rather · another person', 'I’d rather + he / you + past simple', 'I’d rather you <u>didn’t tell</u> anyone.<br>I’d rather he <u>stopped</u> interrupting me.<br>Past: I’d rather you <u>hadn’t told</u> her.', 'Subject pronoun: <b>he / she / they</b>, not <s>him / her / them</s>. Past form, not <s>stop</s>, not <s>you not telling</s>.', 'Я бы предпочла, чтобы ты…'],
+    ['It’s (high / about) time', 'It’s time + subject + past simple', 'It’s high time you <u>went</u> to bed.<br>It’s about time we <u>left</u>.<br>Or: It’s time <u>to go</u>. It’s time <u>for you to go</u>.', 'Present meaning, past form: not <s>you go</s>, not <s>you had gone</s>. high / about = “already late!” (criticism).', 'Давно пора…'],
+    ['as if / as though', 'as if + past (not true)', 'He talks as if he <u>knew</u> everything. (he doesn’t)<br>She looked as if she <u>had seen</u> a ghost.<br>Real: It looks as if it’s going to rain.', 'Unreal now → past simple / were; unreal past → had + V3.', 'Как будто бы…'],
+    ['Suppose / supposing', 'suppose + past = imagine', '<u>Suppose</u> you lost your phone — what would you do?<br>Supposing he <u>had refused</u>?', 'Same step back as the second / third conditional.', 'Представь, что…'],
+    ['wish vs hope', 'hope = possible · wish = unreal', 'I <u>hope</u> you <u>pass</u>. (possible)<br>I <u>wish</u> you <u>had passed</u>. (you didn’t)<br>wish + noun: I wish you <u>luck</u>!<br>wish + to = want (formal): I wish <u>to complain</u>.', 'Not <s>I wish you pass</s>, not <s>I wish it will stop</s>.', 'hope — надеюсь; wish — жаль / хотелось бы'],
+  ],
+  /* one meaning, many forms — the olympiad transformation chain */
+  chain: [
+    'I <u>wish</u> I <u>had listened</u> to you.',
+    '<u>If only</u> I <u>had listened</u> to you!',
+    'I <u>regret not listening</u> to you.',
+    'It’s a <u>pity</u> / <u>shame</u> I <u>didn’t listen</u> to you.',
+    'I <u>should have listened</u> to you.',
+    'I’m <u>sorry</u> I <u>didn’t listen</u> to you.',
+  ],
+  /* the traps (from real mistakes): [wrong, right, why] */
+  traps: [
+    ['I wish I would have enough time.', 'I wish I had enough time.', 'state now → past simple'],
+    ['I wish I called her yesterday.', 'I wish I had called her yesterday.', 'yesterday → had + V3'],
+    ['I wish I would have listened.', 'I wish I had listened.', 'never would have after wish'],
+    ['I wish could stay longer.', 'I wish I could stay longer.', 'wish + subject + verb'],
+    ['I wish I came, but I can’t.', 'I wish I could come.', 'can’t → could'],
+    ['It’s high time you go to bed.', 'It’s high time you went to bed.', 'it’s time → past'],
+    ['I’d rather him stop it.', 'I’d rather he stopped it.', 'he + past simple'],
+    ['I wish you pass the exam.', 'I hope you pass the exam.', 'possible → hope'],
+  ],
+  /* practice 1 · gaps: [situation, sentence, answers, why] */
   gaps: [
-    ['I don’t know the answer.', 'I wish I ___ the answer.', ['knew'], 'Now → past simple.'],
-    ['I said something rude. Big mistake.', 'I wish I ___ that.', ['hadn\'t said', 'had not said'], 'Then → past perfect.'],
-    ['You keep tapping your pen. Stop!', 'I wish you ___ tapping your pen!', ['would stop', '\'d stop'], 'Annoyance → would.'],
-    ['We don’t have enough time.', 'If only we ___ more time!', ['had'], 'If only = wish, same tenses.'],
-    ['She didn’t go to the party. Now she’s sorry.', 'She wishes she ___ to the party.', ['had gone', '\'d gone'], 'Then → had gone.'],
-    ['Your room is a mess. Tidy it — now!', 'It’s high time you ___ your room.', ['tidied'], 'It’s high time + past simple.'],
-    ['Please don’t read my diary.', 'I’d rather you ___ my diary.', ['didn\'t read', 'did not read'], 'would rather + another person + past simple.'],
-    ['Everyone is swimming. I can’t swim.', 'I wish I ___ swim.', ['could'], 'Ability → could.'],
+    ['I don’t know the answer.', 'I wish I ___ the answer.', ['knew'], 'A state now → past simple.'],
+    ['I’m not tall enough for the team.', 'I wish I ___ taller.', ['were', 'was'], 'be → <b>were</b> for every person (unreal form). <i>was</i> is spoken English — accepted, but in an exam write <b>were</b>.'],
+    ['She isn’t here.', 'If only she ___ here!', ['were', 'was'], 'If only = wish, same rule: she is → she <b>were</b>.'],
+    ['I’m working this weekend.', 'I wish I ___ this weekend.', ['weren\'t working', 'were not working', 'wasn\'t working', 'was not working'], 'present continuous → past continuous; be → were.'],
+    ['I can’t come to the party.', 'I wish I ___ to the party.', ['could come'], 'can’t → <b>could</b>. Not <i>came</i>: that is not about ability.'],
+    ['I have to get up at six.', 'I wish I ___ get up at six.', ['didn\'t have to', 'did not have to'], 'have to → didn’t have to.'],
+    ['I haven’t finished my project.', 'I wish I ___ my project.', ['had finished', '\'d finished'], 'present perfect → past perfect.'],
+    ['I ate too much last night.', 'I wish I ___ so much last night.', ['hadn\'t eaten', 'had not eaten'], 'last night = past → had + V3.'],
+    ['I forgot to call Gran yesterday.', 'I wish I ___ Gran yesterday.', ['had called', '\'d called', 'hadn\'t forgotten to call', 'had not forgotten to call'], 'yesterday → had called. Not <i>called</i> — that would mean now.'],
+    ['I couldn’t go to the concert.', 'I wish I ___ to the concert.', ['could have gone', 'had been able to go', '\'d been able to go'], 'couldn’t → could have + V3 (or had been able to).'],
+    ['My brother keeps using my laptop.', 'I wish he ___ using my laptop.', ['would stop', '\'d stop'], 'keeps doing + annoyed → <b>would</b>.'],
+    ['It’s been raining for days.', 'I wish it ___ raining.', ['would stop', '\'d stop'], 'Something outside your control → would.'],
+    ['I don’t live near my friends.', 'I wish I ___ closer to my friends.', ['lived'], 'A fact → past simple. <i>could live</i> would add “something stops me”.'],
+    ['You’re still playing games at midnight.', 'It’s high time you ___ to bed.', ['went'], 'It’s high time + subject + <b>past simple</b>.'],
+    ['Please don’t tell anyone my secrets.', 'I’d rather you ___ anyone my secrets.', ['didn\'t tell', 'did not tell'], 'would rather + another person + past simple.'],
+    ['I want him to stop interrupting me.', 'I’d rather he ___ interrupting me.', ['stopped'], '<b>he</b> (not him) + past simple.'],
+  ],
+  /* practice 2a · choose: [sentence, options, correct index, why] */
+  mcq: [
+    ['I ___ you good luck in the exam!', ['wish', 'hope'], 0, 'wish + person + noun = a greeting: I wish you luck.'],
+    ['I ___ you pass the exam.', ['wish', 'hope'], 1, 'Possible future → hope + present.'],
+    ['I wish I ___ taller.', ['am', 'were', 'would be'], 1, 'be → were. Not would: height is a state.'],
+    ['___ I you, I’d apologise.', ['Were', 'Was', 'If'], 0, 'Inversion only with <b>Were</b> — never Was.'],
+    ['I wish I ___ swim.', ['would', 'could', 'can'], 1, 'Ability → could. Never “I wish I would”.'],
+    ['I wish you ___ making that noise!', ['will stop', 'would stop', 'stop'], 1, 'Somebody annoying → would.'],
+    ['She wishes she ___ to the party last week.', ['went', 'had gone', 'would go'], 1, 'last week → had + V3.'],
+    ['It’s about time we ___ home.', ['go', 'went', 'had gone'], 1, 'It’s about time + past simple.'],
+    ['I’d rather ___ at home tonight.', ['stay', 'to stay', 'stayed'], 0, 'Same person → would rather + bare infinitive.'],
+    ['I’d rather you ___ me earlier. Now it’s too late.', ['told', 'had told', 'would tell'], 1, 'Another person + the past → past perfect.'],
+    ['He talks as if he ___ the boss. (He isn’t.)', ['is', 'were', 'would be'], 1, 'as if + unreal → past / were.'],
+    ['I really ___ it doesn’t rain tomorrow.', ['wish', 'hope'], 1, 'Possible → hope. wish + will is impossible.'],
+  ],
+  /* practice 2b · fix the mistake: [wrong sentence, accepted answers, why] */
+  fix: [
+    ['I wish I would have enough free time.', ['I wish I had enough free time.'], 'A state now → past simple: had.'],
+    ['I wish I called my grandmother yesterday.', ['I wish I had called my grandmother yesterday.', 'I wish I\'d called my grandmother yesterday.'], 'yesterday → had called.'],
+    ['I wish could stay with you longer.', ['I wish I could stay with you longer.'], 'wish needs a subject: I wish <b>I</b> could.'],
+    ['I wish I came to the party, but I can’t.', ['I wish I could come to the party, but I can\'t.', 'I wish I could come to the party but I can\'t.', 'I wish I could come to the party, but I cannot.'], 'can’t → could come.'],
+    ['It’s high time you go to bed.', ['It\'s high time you went to bed.', 'It is high time you went to bed.'], 'it’s high time + past simple: went.'],
+    ['I’d rather him stop interrupting me.', ['I\'d rather he stopped interrupting me.', 'I would rather he stopped interrupting me.', 'I\'d rather he didn\'t interrupt me.', 'I would rather he didn\'t interrupt me.'], 'he (not him) + past simple.'],
+    ['I’d rather you not telling everyone my secrets.', ['I\'d rather you didn\'t tell everyone my secrets.', 'I would rather you didn\'t tell everyone my secrets.', 'I\'d rather you stopped telling everyone my secrets.', 'I would rather you stopped telling everyone my secrets.'], 'you + past simple: didn’t tell / stopped telling.'],
+    ['If only I would have listened to you!', ['If only I had listened to you!', 'If only I\'d listened to you!'], 'Never would have after wish / if only → had listened.'],
   ],
 },
 
@@ -729,20 +854,21 @@ const titles=['Start · the Willett sentence','Start · the ladder',
  'Rung 1 · zero & first',
  'Rung 2 · type switcher','Rung 2 · second & third',
  'Rung 3 · beyond if','Rung 3 · transformations',
- 'Rung 4 · wish machine','Rung 4 · real papers',
+ 'Rung 4 · wish rules: one step back','Rung 4 · wish rules: past, could, would','Rung 4 · would rather, it’s time, as if',
+ 'Rung 4 · wish machine','Rung 4 · wish clinic','Rung 4 · real papers',
  'Rung 5 · mixed conditionals',
  'Rung 6 · inversion forge','Rung 6 · judge the traps','Rung 6 · spot it in real texts',
  'Rung 7 · the “if not for” family','Rung 7 · real transformations','Rung 7 · what-if history',
  'Arena · open cloze','Arena · extra word','Arena · sprint 16','Arena · writing',
  'Finish · homework','Finish · cheat sheet & score','Finish · hacks & sources'];
-const RUNG=[0,0,1,2,2,3,3,4,4,5,6,6,6,7,7,7,8,8,8,8,9,9,9];
+const RUNG=[0,0,1,2,2,3,3,4,4,4,4,4,4,5,6,6,6,7,7,7,8,8,8,8,9,9,9];
 const RC=['#f26b3a','#d68a00','#2f9e62','#2386b5','#0f8f89','#d6457a','#3a58d6','#1d2640','#c2410c','#1d2640'];
 const RCBG=['#fff1e8','#fff5dc','#e6f5ec','#e3f1f9','#dff3f2','#fce8ef','#e8ecfc','#e7e9f0','#fdeee4','#e7e9f0'];
 const RUNGNAME=['Start','Rung 1 · A2–B1','Rung 2 · B1','Rung 3 · B1–B2','Rung 4 · B2','Rung 5 · B2','Rung 6 · B2+','Rung 7 · C1','Arena · olympiad','Finish'];
 /* which exercise belongs to which rung (ladder progress + score table) */
-const EXR={hookq:0,r1:1,sort:2,r2:2,lmcq:3,k_linkers:3,wishg:4,k_wish:4,mixed:5,tiles:6,judge:6,spot:6,pick:7,k_inv:7,history:7,cloze:8,extra:8,sprint:8,writing:8,k_hw:9};
+const EXR={hookq:0,r1:1,sort:2,r2:2,lmcq:3,k_linkers:3,wishg:4,wishc:4,wishf:4,k_wish:4,mixed:5,tiles:6,judge:6,spot:6,pick:7,k_inv:7,history:7,cloze:8,extra:8,sprint:8,writing:8,k_hw:9};
 const EXNAME={hookq:'Willett sentence quiz',r1:'Zero & first',sort:'Sort the ifs',r2:'Second & third',lmcq:'Beyond if · choice',k_linkers:'Beyond if · transformations',
- wishg:'Wish machine',k_wish:'Wish · real papers',mixed:'Mixed conditionals',tiles:'Inversion forge',judge:'Judge the traps',spot:'Spot it in real texts',
+ wishg:'Wish machine',wishc:'Wish clinic · choose',wishf:'Wish clinic · fix it',k_wish:'Wish · real papers',mixed:'Mixed conditionals',tiles:'Inversion forge',judge:'Judge the traps',spot:'Spot it in real texts',
  pick:'If-not-for family',k_inv:'Real transformations',history:'What-if history',cloze:'Open cloze',extra:'Extra word',sprint:'Sprint 16',writing:'Writing',k_hw:'Homework'};
 
 const blank=()=>({slide:0,answers:{},scores:{},open:{},sprint:{i:0,pick:{},done:false,start:0}});
@@ -812,10 +938,10 @@ function render(){
 }
 function after(){
  if(current===0)hookGate();
- if([6,8,14,20].includes(current))document.querySelectorAll('.kwt input').forEach(el=>wc(el.dataset.save));
- if(current===15)D.history.forEach((_,i)=>histLive(i));
- if(current===18)sprintDraw();
- if(current===19)writingLive();
+ if([6,12,18,24].includes(current))document.querySelectorAll('.kwt input').forEach(el=>wc(el.dataset.save));
+ if(current===19)D.history.forEach((_,i)=>histLive(i));
+ if(current===22)sprintDraw();
+ if(current===23)writingLive();
 }
 function live(id){
  if(id==='hookT')hookGate();
@@ -862,9 +988,9 @@ function openModel(){if(words(val('hookT'))<4)return;S.open.model=1;persist();re
 /* ============================================================
    02 · THE LADDER
    ============================================================ */
-const FIRST=[0,2,3,5,7,9,10,13,16];
+const FIRST=[0,2,3,5,7,13,14,17,20];
 function rungProgress(r){let n=0,t=0;for(const k in EXR)if(EXR[k]===r&&REG_T[k]){t+=REG_T[k];n+=(S.scores[k]||{}).n||0}return t?n/t:0}
-const REG_T={hookq:3,r1:10,sort:10,r2:10,lmcq:8,k_linkers:6,wishg:8,k_wish:9,mixed:8,tiles:6,judge:12,spot:8,pick:6,k_inv:10,history:6,cloze:10,extra:10,sprint:16,writing:6,k_hw:10};
+const REG_T={hookq:3,r1:10,sort:10,r2:10,lmcq:8,k_linkers:6,wishg:16,wishc:12,wishf:8,k_wish:9,mixed:8,tiles:6,judge:12,spot:8,pick:6,k_inv:10,history:6,cloze:10,extra:10,sprint:16,writing:6,k_hw:10};
 function ladder(){
  return head('From <span class="acc">if</span> to <span class="acc">had it not been for</span>: 7 rungs up','Every rung is built on the one below. The sky in the top bar moves from sunrise to night as you climb. Click a step to jump there; the white bar fills as you score.')+
  `<div class="ladder">${D.rungs.map((r,i)=>{const p=rungProgress(i);return `<button type="button" class="step" style="--c:${RC[i]};background:${RC[i]};height:${30+i*8.5}%" onclick="go(${FIRST[i]})"><b>${esc(r[0])}</b><span>${esc(r[1])}</span><em>${esc(r[2])}</em><div class="bar"><i style="width:${Math.round(p*100)}%"></i></div></button>`}).join('')}</div>
@@ -934,17 +1060,78 @@ function wc(id){
  let msg=n+' word'+(n===1?'':'s'),cls='wc';
  if(n){if(!has){msg+=' · key word missing';cls+=' no'}else if(lim&&n>lim[1]){msg+=' · too long';cls+=' no'}else if(lim&&n<lim[0]){msg+=' · too short';cls+=' no'}else cls+=' ok'}
  el.textContent=msg;el.className=cls}
-function kwtSheet(set,title,lead){return head(title,lead)+kwtBlock(set)+toolrow('k_'+set)}
+function kwtSheet(set,title,lead,extra=''){return head(title,lead,extra)+kwtBlock(set)+toolrow('k_'+set)}
 
 /* ============================================================
-   RUNG 4 · wish machine
+   RUNG 4 · wish — grammar first (3 sheets), then practice
+   (2 sheets + real papers). Rules link to practice and back.
    ============================================================ */
+const W_RULES=[7,8,9],W_MACHINE=10,W_CLINIC=11,W_REAL=12;
+function ruBtn(){return `<button type="button" class="tool" aria-pressed="${!!S.open.ru}" onclick="ruToggle()">RU notes: ${S.open.ru?'on':'off'}</button>`}
+function ruToggle(){S.open.ru=!S.open.ru;persist();render()}
+function practiseRow(){return `<div class="prow"><span class="tag">Practise it</span>
+ <button type="button" onclick="go(${W_MACHINE})">▸ Wish machine · 16 situations</button>
+ <button type="button" onclick="go(${W_CLINIC})">▸ Wish clinic · choose &amp; fix</button>
+ <button type="button" onclick="go(${W_REAL})">▸ Real olympiad papers</button></div>`}
+function ruleBtns(){return ['one step back','past · could · would','would rather · time'].map((t,i)=>`<button type="button" class="tool" onclick="go(${W_RULES[i]})">📖 Rule: ${t}</button>`).join('')}
+const rn=t=>`<span class="rn">${esc(t)}</span>`;
+
+function wishShift(){
+ const d=D.wish;
+ return `<div class="wsheet ${S.open.ru?'ru-on':''}">`+head('Wish = one <span class="acc">step back</span> in time','After <b>wish</b> / <b>if only</b> the verb moves one step into the past. Here the past form does not mean past time — it means <b>“not real”</b>.',ruBtn())+
+ `<div class="grid g-side" style="grid-template-columns:minmax(0,1fr) 380px">
+  <div class="card"><span class="tag">Fact → wish</span><table class="wtab"><thead><tr><th>The fact (real)</th><th>The wish (unreal)</th><th>What changes</th></tr></thead>
+   <tbody>${d.shift.map(r=>`<tr><td class="fact">${esc(r[0])}</td><td class="w">${r[1]}${rn(r[3])}</td><td class="chg">${r[2]}</td></tr>`).join('')}</tbody></table></div>
+  <div class="grid" style="align-content:start;gap:9px">
+   <div class="card dark"><span class="tag">be → were · why not was?</span>
+    <div class="vs"><div><b>was</b> = real past<i>I was tired yesterday.</i><small>It really happened.</small></div><div><b>were</b> = unreal<i>I wish I were taller.</i><small>I’m not — I only imagine it.</small></div></div>
+    <p class="small" style="color:#f5f1e8">English kept a special <b style="color:var(--gold)">unreal form</b> of <i>be</i> (the subjunctive): <b style="color:var(--gold)">were</b> for every person — I / he / she / it were.</p>
+    <p style="font-family:var(--serif);font-size:13px">If I <u>were</u> you… · If only he <u>were</u> here! · as if she <u>were</u> the boss · <u>Were</u> I you…</p>
+    <p class="small"><b style="color:#fff">Is <i>was</i> wrong?</b> Not in speech: <i>I wish I was…</i> is very common. But in exams, olympiad keys and formal writing write <b style="color:var(--gold)">were</b> — it is never marked wrong. In inversion only <b style="color:var(--gold)">Were</b>: <s style="color:#ff9aa9">Was I you</s>.</p>
+    ${rn('was — реальное прошлое, were — нереальная (сослагательная) форма для всех лиц. В разговоре was не ошибка, но на экзамене пиши were; в инверсии только Were.')}</div>
+   <div class="card tint"><span class="tag">Now or then? Look at the time word</span>
+    <p><b>now · today · at the moment · always</b> → past simple / were / could</p>
+    <p><b>yesterday · last night · ago · then</b> → had + V3</p>
+    <p class="small">Never after wish: <s>will</s> · <s>would have</s>. After <b>wished</b> the tense does not move again: <i>She wished she knew. He wished he had studied.</i></p>
+    ${rn('Сейчас → Past Simple; про прошлое → Past Perfect. После wished времена не сдвигаются ещё раз.')}</div>
+  </div></div>${practiseRow()}</div>`}
+
+function wishForms(){
+ const d=D.wish;
+ return `<div class="wsheet ${S.open.ru?'ru-on':''}">`+head('<span class="acc">Past</span>, <span class="acc">could</span> or <span class="acc">would</span>?','Ask one question first: is it a <b>state</b>, an <b>ability</b>, or <b>somebody else’s behaviour</b>?',ruBtn())+
+ `<div class="grid g3">${d.forms.map((f,i)=>`<div class="fcard"><b class="l">${esc(f[0])}</b><div class="f">${esc(f[1])}</div><div class="ex">${f[2]}</div><div class="tr">${f[3]}</div>${rn(['Состояние сейчас → Past Simple.','Не умею / не могу → could.','Кто-то другой раздражает → would. Про себя — нельзя.'][i])}</div>`).join('')}</div>
+ <div class="grid" style="grid-template-columns:minmax(0,1fr) 300px;margin-top:9px">
+  <div class="card"><span class="tag">Close pairs — what is the difference?</span><div class="pairs">${d.pairs.map(p=>`<div class="pair"><div>${p[0]}</div><div>${p[1]}</div><div class="why">${p[2]}</div></div>`).join('')}</div></div>
+  <div class="card dark"><span class="tag">If only = wish, but stronger</span><p style="font-family:var(--serif);font-size:13.5px">If only I <u>knew</u>!<br>If only I <u>had listened</u>!<br>If only it <u>would stop</u> raining!</p>
+   <p class="small">Same tenses as wish, usually with “!”. It can start a sentence on its own.</p>${rn('If only — «если бы только…», то же, что wish, но эмоциональнее.')}</div>
+ </div>${practiseRow()}</div>`}
+
+function wishFamily(){
+ const d=D.wish;
+ return `<div class="wsheet ${S.open.ru?'ru-on':''}">`+head('The unreal-past <span class="acc">family</span>: would rather, it’s time, as if','The same trick outside wish: a <b>past form</b> with a <b>present meaning</b>. These are favourite olympiad transformations.',ruBtn())+
+ `<div class="grid g3">${d.family.map(f=>`<div class="fcard"><b class="l">${esc(f[0])}</b><div class="f">${esc(f[1])}</div><div class="ex">${f[2]}</div><div class="tr">${f[3]}</div>${rn(f[4])}</div>`).join('')}</div>
+ <div class="grid" style="grid-template-columns:330px minmax(0,1fr);margin-top:9px">
+  <div class="card tint"><span class="tag">One meaning, six forms (transformations!)</span><div class="chain">${d.chain.map(c=>`<div>${c}</div>`).join('')}</div></div>
+  <div class="card dark"><span class="tag">The 8 traps — real mistakes</span><div class="traps">${d.traps.map(t=>`<div><s>${esc(t[0])}</s> → <b>${esc(t[1])}</b><small>${esc(t[2])}</small></div>`).join('')}</div></div>
+ </div>${practiseRow()}</div>`}
+
 function wish(){
- const d=D.wish;reg('wishg',d.gaps.map((g,i)=>({id:'wg'+i,a:g[2],why:g[3]})));
- return head('The <span class="acc">wish</span> machine','Wish = a conditional without the result. Same step back in time: now → past simple, past → past perfect.')+
- `<div class="lanes">${d.lanes.map(l=>`<div class="lane"><b>${esc(l[0])}</b><div class="f">${esc(l[1])}</div><div class="ex">${l[2]}</div><div class="small">${l[3]}</div><div class="ru" style="font-size:11px">${esc(l[4])}</div></div>`).join('')}</div>
- <div class="card" style="margin-top:9px"><span class="tag">Turn the situation into a wish</span>
-  <div class="gaps">${d.gaps.map((g,i)=>`<div class="gq" ${whyAttr('wishg',g[3])}><i>${i+1}</i><span><span class="sit">${esc(g[0])}</span>${esc(g[1].split('___')[0])}${input('wg'+i,'Wish '+(i+1))}${esc(g[1].split('___')[1])}</span></div>`).join('')}</div>${toolrow('wishg')}</div>`}
+ const d=D.wish;reg('wishg',d.gaps.map((g,i)=>({id:'wq'+i,a:g[2],why:g[3]})));
+ return head('The <span class="acc">wish</span> machine: 16 situations','Turn each situation into a wish. Check, then click a red answer to see why. Stuck? Open the rule.',ruleBtns())+
+ `<div class="card"><span class="tag">Turn the situation into a wish</span>
+  <div class="gaps">${d.gaps.map((g,i)=>`<div class="gq" ${whyAttr('wishg',g[3])}><i>${i+1}</i><span><span class="sit">${esc(g[0])}</span>${esc(g[1].split('___')[0])}${input('wq'+i,'Wish '+(i+1))}${esc(g[1].split('___')[1])}</span></div>`).join('')}</div>${toolrow('wishg')}</div>`}
+
+/* contractions do not matter in the clinic: hadn't = had not, it's = it is */
+const nfree=s=>norm(s).replace(/\bcan't\b/g,'cannot').replace(/\bwon't\b/g,'will not').replace(/n't\b/g,' not').replace(/\bit's\b/g,'it is').replace(/\bi'd rather\b/g,'i would rather').replace(/\s+/g,' ');
+function wishClinic(){
+ const d=D.wish;
+ reg('wishc',d.mcq.map((q,i)=>({id:'wm'+i,a:[String(q[2])],kind:'choice',why:q[3]})));
+ reg('wishf',d.fix.map((q,i)=>({id:'wf'+i,a:q[1],kind:'free',why:'<b>'+esc(q[1][0])+'</b> — '+q[2]})));
+ return head('Wish <span class="acc">clinic</span>: choose &amp; fix','Left: pick the form. Right: every sentence has one mistake — write the whole sentence correctly.',ruleBtns())+
+ `<div class="grid g2">
+  <div class="card"><span class="tag">Choose the right form</span><div class="mcq">${d.mcq.map((q,i)=>`<div class="mq" ${whyAttr('wishc',q[3])}><i>${i+1}</i><div>${esc(q[0])} ${choice('wm'+i,q[1])}</div></div>`).join('')}</div>${toolrow('wishc')}</div>
+  <div class="card"><span class="tag">Fix the mistake</span><div class="fixl">${d.fix.map((q,i)=>`<div class="fixq" ${whyAttr('wishf','<b>'+esc(q[1][0])+'</b> — '+q[2])}><i>${i+1}</i><span class="wr">${esc(q[0])}</span>${input('wf'+i,'Correct sentence '+(i+1))}</div>`).join('')}</div>${toolrow('wishf')}</div>
+ </div>`}
 
 /* ============================================================
    RUNG 5 · mixed
@@ -1125,7 +1312,7 @@ function cheat(){
   [1,'Zero · First','If + present, present / will','If it rains, we’ll stay in.'],
   [2,'Second · Third','If + past, would · If + had V3, would have V3','If I had known, I’d have come.'],
   [3,'Beyond if','unless = if not · in case = precaution','Take it in case it rains.'],
-  [4,'Wish','now → past · then → past perfect · would','I wish I had listened.'],
+  [4,'Wish','now → past (be → were) · then → had V3 · could = ability · would = others','I wish I were there. I’d rather he left.'],
   [5,'Mixed','had V3 → would + now','If I’d slept, I wouldn’t be tired.'],
   [6,'Inversion','Should you… · Were I (to)… · Had I…','Had I known, I’d have come.'],
   [7,'If not for','Had it not been for / Were it not for / But for + noun','Had it not been for Willett…'],
@@ -1148,6 +1335,7 @@ function sources(){
 function itemVal(it){if(it.kind==='tiles')return tileText(+it.id.slice(2));if(it.kind==='spot')return getSel(+it.id.slice(2)).map(k=>tokens(D.inv.spot[+it.id.slice(2)][0])[k]).map(clean).join(' ');return String(val(it.id))}
 function isOk(it){const v=itemVal(it);
  if(it.kind==='choice')return it.a.includes(v);
+ if(it.kind==='free')return it.a.map(nfree).includes(nfree(v));
  if(it.kind==='tiles')return norm(v)===norm(it.a[0]);
  if(it.kind==='spot')return v===tokens(it.a[0]).map(clean).join(' ');
  return it.a.map(norm).includes(norm(v))}
@@ -1182,8 +1370,8 @@ function resetAll(){if(!confirm('Delete every answer and score on this device?')
 /* ---------------- wiring ---------------- */
 const renderers=[hook,ladder,rung1,switcher,rung2,linkers,
  ()=>kwtSheet('linkers','Transform it: <span class="acc">unless · in case · as long as · otherwise</span>','Key word transformation, olympiad style: use the word in capitals, do not change it, keep the meaning. The counter checks length and the key word; contractions count as two words.'),
- wish,
- ()=>kwtSheet('wish','Real papers: <span class="acc">wish · regret · would rather</span>','Nine items from real municipal papers, official keys. Watch the switch: the same regret can be <i>wish + past perfect</i> or <i>regret + not + -ing</i>.'),
+ wishShift,wishForms,wishFamily,wish,wishClinic,
+ ()=>kwtSheet('wish','Real papers: <span class="acc">wish · regret · would rather</span>','Nine items from real municipal papers, official keys. Watch the switch: the same regret can be <i>wish + past perfect</i> or <i>regret + not + -ing</i>.',ruleBtns()),
  mixed,forge,judge,spot,family,
  ()=>kwtSheet('inv','Real & olympiad transformations: <span class="acc">But for · Were · Had · Should</span>','The first three are real municipal items (Moscow, Tatarstan, Krasnoyarsk). The rest are built the same way, from easy to hard.'),
  history,cloze,extra,sprint,writing,homework,cheat,sources];
@@ -1194,7 +1382,7 @@ $('next').onclick=()=>go(current+1);
 document.addEventListener('keydown',e=>{
  if(e.ctrlKey||e.metaKey||e.altKey)return;const t=e.target;
  if(t&&(t.isContentEditable||/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)))return;
- if(current===18&&/^[1-4]$/.test(e.key)&&!S.sprint.done){e.preventDefault();sprintPick(+e.key-1);return}
+ if(current===22&&/^[1-4]$/.test(e.key)&&!S.sprint.done){e.preventDefault();sprintPick(+e.key-1);return}
  if(t&&t.tagName==='BUTTON'&&(e.key===' '||e.key==='Enter'))return;
  if(e.key==='ArrowRight'){e.preventDefault();go(current+1)}
  else if(e.key==='ArrowLeft'){e.preventDefault();go(current-1)}
@@ -1202,7 +1390,7 @@ document.addEventListener('keydown',e=>{
 function fullscreen(){if(!document.fullscreenElement)document.documentElement.requestFullscreen?.().catch(()=>toast('Full screen is not available here.'));else document.exitFullscreen?.()}
 window.addEventListener('beforeunload',persist);
 render();
-if(S.sprint.start&&!S.sprint.done&&current===18)startClock(12);
+if(S.sprint.start&&!S.sprint.done&&current===22)startClock(12);
 </script><style>/* ============================================================
    DECK LAYER · общий слой презентации для всех уроков.
    Сцена ровно 1280×720 — стандартный слайд PowerPoint 16:9
